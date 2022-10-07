@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-// const { dbHost, dbPass, dbName, dbPort, dbUser } = require("../app/config");
+const mongoose = require('mongoose')
+const { dbHost, dbPass, dbName, dbPort, dbUser } = require('../config')
 
-// mongoose.connect(`mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}?authSource=admin`);
-mongoose.connect("mongodb+srv://ablahum:nasigule@mycluster.gmgwy.mongodb.net/foodstore?retryWrites=true&w=majority");
-const db = mongoose.connection;
+mongoose.connect(`mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}?authSource=admin`)
+// mongoose.connect('mongodb+srv://ablahum:nasigule@mycluster.gmgwy.mongodb.net/foodstore?retryWrites=true&w=majority')
+const db = mongoose.connection
 
-module.exports = db;
+module.exports = db
