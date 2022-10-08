@@ -1,8 +1,11 @@
-import React from "react";
-import { Container } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import styled from "styled-components";
-import { Heading, Pagination, Tags, Product } from "../components";
+import { Container } from 'react-bootstrap'
+import styled from 'styled-components'
+
+import { Heading, Pagination, Tags, Product } from '../components'
+
+const Wrapper = styled.div`
+  min-height: 100vh;
+`
 
 const TopBar = styled.div`
   display: flex;
@@ -18,27 +21,24 @@ const TopBar = styled.div`
     flex-direction: column;
     align-items: center;
   }
-`;
-
-const Master = styled.div`
-  min-height: 100vh;
-`;
+`
 
 const Home = () => {
   return (
-    <Master>
-      <Heading title="OUR MENUS" />
-      <Container className="py-5">
+    <Wrapper>
+      <Heading title='OUR MENUS' />
+
+      <Container className='py-5'>
         <TopBar>
           <Pagination />
+
           <Tags />
         </TopBar>
-        <div>
-          <Product />
-        </div>
-      </Container>
-    </Master>
-  );
-};
 
-export default Home;
+        <Product />
+      </Container>
+    </Wrapper>
+  )
+}
+
+export default Home

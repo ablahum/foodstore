@@ -1,15 +1,19 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { Dropdown } from "react-bootstrap";
-import styled from "styled-components";
-import { categoryChanges } from "../app/myReducer/action";
+import { useDispatch } from 'react-redux'
+import { Dropdown } from 'react-bootstrap'
+import styled from 'styled-components'
+
+import { categoryChanges } from '../app/myReducer/action'
 
 const Button = styled(Dropdown.Toggle)`
   color: #fff;
   font-weight: 500;
   margin: 0.5em;
   border: none;
-`;
+
+  @media (max-width: 425px) {
+    display: none;
+  }
+`
 
 const Item = styled(Dropdown.Item)`
   :hover {
@@ -22,30 +26,27 @@ const Item = styled(Dropdown.Item)`
     color: #000;
     background-color: #fd9843;
   }
-`;
+`
 
-const Category = () => {
-  const dispatch = useDispatch();
-
-  const categories = [
-    { name: "ALL PRODUCTS...", value: "" },
-    { name: "FOOD", value: "Food" },
-    { name: "DRINK", value: "Drink" },
-    { name: "DESSERT", value: "Dessert" },
-  ];
+const Category = ({ categories }) => {
+  const dispatch = useDispatch()
 
   return (
     <Dropdown>
-      <Button variant="primary">| CATEGORY</Button>
-      <Dropdown.Menu variant="light">
+      <Button variant='primary'>| CATEGORY</Button>
+
+      <Dropdown.Menu>
+        <Item value='' onClick={() => dispatch(categoryChanges(''))}>
+          All Products...
+        </Item>
         {categories.map((category, i) => (
-          <Item key={i} value={category.value} onClick={() => dispatch(categoryChanges(category.value))}>
+          <Item key={i} value={category.name} onClick={() => dispatch(categoryChanges(category.name))}>
             {category.name}
           </Item>
         ))}
       </Dropdown.Menu>
     </Dropdown>
-  );
-};
+  )
+}
 
-export default Category;
+export default Category

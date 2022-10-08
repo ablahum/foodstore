@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { ButtonGroup, ToggleButton } from "react-bootstrap";
-import styled from "styled-components";
+import { ToggleButton } from 'react-bootstrap'
+import styled from 'styled-components'
 
 const Button = styled(ToggleButton)`
   color: #fff;
@@ -8,38 +7,25 @@ const Button = styled(ToggleButton)`
   font-size: 1rem;
   border: none;
   padding: 0 2em;
-`;
 
-const RoleButton = (props) => {
-  const [radioValue, setRadioValue] = useState("user");
+  @media (max-width: 440px) {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1em;
+  }
+`
 
-  const radios = [
-    { name: "USER", value: "user" },
-    { name: "ADMIN", value: "admin" },
-  ];
-
-  useEffect(() => {
-    props.onChange(radioValue);
-  });
-
+const Role = ({ roles, role, setRole }) => {
   return (
-    <ButtonGroup>
-      {radios.map((radio, idx) => (
-        <Button
-          key={idx}
-          id={`radio-${idx}`}
-          type="radio"
-          variant={idx % 2 ? "outline-primary" : "outline-primary"}
-          name="radio"
-          value={radio.value}
-          checked={radioValue === radio.value}
-          onChange={(e) => setRadioValue(e.currentTarget.value)}
-        >
+    <>
+      {roles.map((radio, idx) => (
+        <Button key={idx} id={`radio-${idx}`} type='radio' variant={idx % 2 ? 'outline-primary' : 'outline-primary'} name='radio' value={radio.value} checked={role === radio.value} onChange={(e) => setRole(e.currentTarget.value)}>
           {radio.name}
         </Button>
       ))}
-    </ButtonGroup>
-  );
-};
+    </>
+  )
+}
 
-export default RoleButton;
+export default Role
