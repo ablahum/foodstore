@@ -26,6 +26,14 @@ const FormWrapper = styled.div`
   margin: auto;
   border-radius: 10px;
   box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 1);
+
+  @media (max-width: 991px) {
+    width: 65%;
+  }
+
+  @media (max-width: 767px) {
+    width: 85%;
+  }
 `
 
 const Submit = styled(Button)`
@@ -42,6 +50,11 @@ const Register = () => {
     password: '',
   })
   const [role, setRole] = useState('user')
+  const roles = [
+    { name: 'USER', value: 'user' },
+    { name: 'ADMIN', value: 'admin' },
+  ]
+
   const [errorMessages, setErrorMessages] = useState([])
 
   const navigate = useNavigate()
@@ -100,22 +113,26 @@ const Register = () => {
           <Form>
             <Form.Group className='mb-3'>
               <Form.Label>NAME:</Form.Label>
+
               <Form.Control type='text' id='name' placeholder='Your name...' value={data.name} onChange={(e) => handleChanges(e)} className='h-50' />
             </Form.Group>
 
             <Form.Group className='mb-3'>
               <Form.Label>EMAIL:</Form.Label>
+
               <Form.Control type='email' id='email' placeholder='Your email...' value={data.email} onChange={(e) => handleChanges(e)} className='h-50' />
             </Form.Group>
 
             <Form.Group className='mb-3'>
               <Form.Label>PASSWORD:</Form.Label>
+
               <Form.Control type='password' id='password' placeholder='Your password...' value={data.password} onChange={(e) => handleChanges(e)} className='h-50' />
             </Form.Group>
 
             <div className='mb-3 d-flex'>
               <Form.Label className='me-4 mb-0 align-self-center'>ROLE:</Form.Label>
-              <Role onChange={(e) => setRole(e)} />
+
+              <Role roles={roles} role={role} setRole={setRole} />
             </div>
 
             {errorMessages.length > 0 && <ShowErrors errors={errorMessages} />}

@@ -13,5 +13,8 @@ import ProfileTags from './ProfileTags'
 import ConfirmBox from './ConfirmBox'
 import Role from './Role'
 import Modal from './Modal'
+import Category from './Category'
+import Search from './Search'
+import Navigation from './Navigation'
 
-export { Header, Footer, Heading, Pagination, Tags, Product, Navigator, Profile, Order, Products, Categories, ProfileTags, ConfirmBox, Role, Modal }
+export { Header, Footer, Heading, Pagination, Tags, Product, Navigator, Profile, Order, Products, Categories, ProfileTags, ConfirmBox, Role, Modal, Category, Search, Navigation }

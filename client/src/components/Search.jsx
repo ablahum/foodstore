@@ -1,21 +1,16 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { FormControl, InputGroup } from "react-bootstrap";
-import styled from "styled-components";
-import { searchChanges } from "../app/myReducer/action";
+import { useDispatch } from 'react-redux'
+import { FormControl, InputGroup } from 'react-bootstrap'
 
-const Master = styled(InputGroup)`
-  margin: 0 1em;
-`;
+import { searchChanges } from '../app/myReducer/action'
 
 const Search = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   return (
-    <Master>
-      <FormControl placeholder="Search products..." onKeyUp={(e) => dispatch(searchChanges(e.target.value))} />
-    </Master>
-  );
-};
+    <InputGroup className='mx-3'>
+      <FormControl placeholder='Search products...' onKeyUp={(e) => dispatch(searchChanges(e.target.value))} />
+    </InputGroup>
+  )
+}
 
-export default Search;
+export default Search

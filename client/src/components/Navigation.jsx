@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom'
 import { Nav, Button, Dropdown } from 'react-bootstrap'
 import { AiOutlineShoppingCart, AiOutlinePoweroff } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
-import axios from 'axios'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { roleChanges, userIdChanges } from '../app/myReducer/action'
 import { logout } from '../apis/auth'
 
@@ -129,14 +129,18 @@ const Navigation = () => {
         <>
           <CartButton onClick={toCart}>
             <AiOutlineShoppingCart style={Icons} />
+
             <Counter>{cartState.length}</Counter>
           </CartButton>
+
           <Dropdown>
             <ProfileButton>
               <FiUser style={Icons} />
             </ProfileButton>
+
             <Dropdown.Menu variant='light'>
               <MyProfile onClick={() => navigate('/me')}>MY PROFILE</MyProfile>
+
               <Logout onClick={() => handleLogout()}>
                 <AiOutlinePoweroff className='me-1' />
                 LOGOUT
@@ -149,6 +153,7 @@ const Navigation = () => {
           <CartButton onClick={() => loginAlert()}>
             <AiOutlineShoppingCart style={Icons} />
           </CartButton>
+
           <ProfileButton onClick={() => navigate('/login')}>
             <FiUser style={Icons} />
           </ProfileButton>
