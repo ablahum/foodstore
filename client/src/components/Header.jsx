@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react'
 import { Navbar, Container } from 'react-bootstrap'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { Category, Search, Navigation } from '../components'
+import { roleChanges, userIdChanges } from '../app/myReducer/action'
+import { Category, Search, NavBar } from '../components'
 import { getAll } from '../apis/category'
+import { logout } from '../apis/auth'
 
 const Wrapper = styled(Navbar)`
   box-shadow: 0px 10px 50px -15px rgba(0, 0, 0, 1);
@@ -33,14 +36,46 @@ const Brand2 = styled.span`
 `
 
 const Header = () => {
+  let cartState = useSelector((state) => state.cart)
+
   const [categories, setCategories] = useState([])
 
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const getCategories = async () => {
     const res = await getAll()
 
     setCategories(res.data)
+  }
+
+  const loginAlert = () => {
+    alert('Please login first')
+    navigate('/login')
+  }
+
+  const toCart = () => {
+    if (cartState.length > 0) {
+      navigate('/cart')
+    } else {
+      alert('Please provide an item')
+    }
+  }
+
+  const handleLogout = async () => {
+    try {
+      const res = await logout()
+
+      alert(res.data.message)
+      localStorage.removeItem('token')
+
+      dispatch(roleChanges(''))
+      dispatch(userIdChanges(''))
+
+      navigate('/')
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   useEffect(() => {
@@ -58,7 +93,7 @@ const Header = () => {
 
         <Search />
 
-        <Navigation />
+        <NavBar cartState={cartState} navigate={navigate} loginAlert={loginAlert} toCart={toCart} handleLogout={handleLogout} />
       </Container>
     </Wrapper>
   )

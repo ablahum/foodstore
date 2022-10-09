@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
-import axios from "axios";
-import styled from "styled-components";
+import { useState } from 'react'
+import { Form, Button } from 'react-bootstrap'
+import styled from 'styled-components'
+
+import { updateOne } from '../apis/category'
 
 const Popup = styled.div`
   width: 100%;
@@ -13,79 +14,72 @@ const Popup = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8);
-`;
+`
 
-const Main = styled.div`
+const Wrapper = styled.div`
   width: 45em;
   border-radius: 10px;
   padding: 2em;
   background-color: #fff;
   box-shadow: 0px 10px 50px -15px rgba(0, 0, 0, 1);
   position: relative;
-`;
+`
 
-const BackButton = styled(Button)`
+const CancelBtn = styled(Button)`
   width: 40%;
   background-color: transparent;
   font-weight: 600;
   margin-right: 1em;
-`;
+`
 
-const NextButton = styled(Button)`
+const ConfirmBtn = styled(Button)`
   width: 60%;
   color: #fff;
   font-weight: 600;
   border: none;
-`;
+`
 
-const UpdateCategoryBox = (props) => {
-  const [name, setName] = useState("");
+const UpdateCategoryBox = ({ id, trigger, setTrigger }) => {
+  const [name, setName] = useState('')
 
-  const handleSubmit = (sub) => {
-    sub.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-    const fetch = async () => {
-      axios.put(
-        `http://localhost:4000/api/categories/${props.value}`,
-        {
-          name,
-        },
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
-    };
+    try {
+      const res = await updateOne(id, { name })
 
-    alert("Update category successfull");
-    window.location.reload();
-    props.setTrigger(false);
+      alert(res.data.message)
+      setTrigger(false)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
-    fetch();
-  };
-
-  return props.trigger ? (
+  return trigger ? (
     <Popup>
-      <Main>
-        <h2 className="fw-bold mb-4">UPDATE ADDRESS</h2>
+      <Wrapper>
+        <h2 className='fw-bold mb-4'>UPDATE CATEGORY</h2>
+
         <Form onSubmit={(e) => handleSubmit(e)}>
-          <Form.Group className="mb-2 d-flex">
-            <Form.Label className="w-50 m-0 align-self-center">NAME</Form.Label>
-            <Form.Control className="w-50 h-50 w-75" type="text" id="nama" placeholder="Category name" onChange={(e) => setName(e.target.value)} />
+          <Form.Group className='mb-2 d-flex'>
+            <Form.Label className='w-50 m-0 align-self-center'>NAME</Form.Label>
+
+            <Form.Control className='w-50 h-50 w-75' type='text' id='nama' placeholder='Category name' onChange={(e) => setName(e.target.value)} />
           </Form.Group>
-          <div className="mt-4 d-flex">
-            <BackButton onClick={() => props.setTrigger(false)}>CANCEL</BackButton>
-            <NextButton type="submit" className="m-0">
+
+          <div className='mt-4 d-flex'>
+            <CancelBtn onClick={() => setTrigger(false)}>CANCEL</CancelBtn>
+
+            <ConfirmBtn type='submit' className='m-0'>
               CONFIRM
-            </NextButton>
+            </ConfirmBtn>
           </div>
         </Form>
-      </Main>
+      </Wrapper>
     </Popup>
   ) : (
-    ""
-  );
-};
+    ''
+  )
+}
 
-export default UpdateCategoryBox;
+export default UpdateCategoryBox
