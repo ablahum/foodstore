@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import { tagsChanges } from '../app/myReducer/action'
-import { getAll } from '../apis/tag'
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,7 +20,6 @@ const Title = styled.h2`
   }
 `
 
-// const Toggle = styled.div`
 const Toggle = styled(ToggleButtonGroup)`
   @media (max-width: 767px) {
     margin-top: 1em;
@@ -43,28 +40,15 @@ const TagButton = styled(ToggleButton)`
   padding: 0.2em 1.3em;
 `
 
-const Tags = () => {
+const Tags = ({ tags }) => {
   let globalState = useSelector((state) => state.my)
 
-  const [tags, setTags] = useState([])
-
   const dispatch = useDispatch()
-
-  const getTags = async () => {
-    const res = await getAll()
-
-    setTags(res.data)
-  }
-
-  useEffect(() => {
-    getTags()
-  }, [])
 
   return (
     <Wrapper>
       <Title>Search Menu by Tags:</Title>
 
-      {/* <Toggle> */}
       <Toggle type='checkbox' value={globalState.tags} onChange={(e) => dispatch(tagsChanges(e))}>
         {tags &&
           tags.map((tag, i) => (
@@ -73,7 +57,6 @@ const Tags = () => {
             </TagButton>
           ))}
       </Toggle>
-      {/* </Toggle> */}
     </Wrapper>
   )
 }

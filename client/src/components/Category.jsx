@@ -4,12 +4,18 @@ import styled from 'styled-components'
 
 import { categoryChanges } from '../app/myReducer/action'
 
-const Button = styled(Dropdown.Toggle)`
+const Btn = styled(Dropdown.Toggle)`
   color: #fff;
   font-weight: 500;
   margin: 0.5em;
   border: none;
 
+  &:before {
+    content: '|';
+    margin-right: 0.5rem;
+  }
+
+  ,
   @media (max-width: 425px) {
     display: none;
   }
@@ -33,7 +39,7 @@ const Category = ({ categories }) => {
 
   return (
     <Dropdown>
-      <Button variant='primary'>| CATEGORY</Button>
+      <Btn variant='primary'>CATEGORY</Btn>
 
       <Dropdown.Menu>
         <Item value='' onClick={() => dispatch(categoryChanges(''))}>

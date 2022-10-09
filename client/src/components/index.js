@@ -15,6 +15,9 @@ import Role from './Role'
 import Modal from './Modal'
 import Category from './Category'
 import Search from './Search'
-import Navigation from './Navigation'
+import NavBar from './NavBar'
+import NewCategoryBox from './NewCategoryBox'
+import UpdateCategoryBox from './UpdateCategoryBox'
+import DeleteCategoryBox from './DeleteCategoryBox'
 
-export { Header, Footer, Heading, Pagination, Tags, Product, Navigator, Profile, Order, Products, Categories, ProfileTags, ConfirmBox, Role, Modal, Category, Search, Navigation }
+export { Header, Footer, Heading, Pagination, Tags, Product, Navigator, Profile, Order, Products, Categories, ProfileTags, ConfirmBox, Role, Modal, Category, Search, NavBar, NewCategoryBox, UpdateCategoryBox, DeleteCategoryBox }

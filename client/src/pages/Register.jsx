@@ -36,7 +36,7 @@ const FormWrapper = styled.div`
   }
 `
 
-const Submit = styled(Button)`
+const SubmitBtn = styled(Button)`
   color: #fff;
   width: 100%;
   font-weight: 600;

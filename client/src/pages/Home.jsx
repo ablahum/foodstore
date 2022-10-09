@@ -1,7 +1,10 @@
+import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import { Heading, Pagination, Tags, Product } from '../components'
+import { getAll } from '../apis/tag'
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -24,6 +27,18 @@ const TopBar = styled.div`
 `
 
 const Home = () => {
+  const [tags, setTags] = useState([])
+
+  const getTags = async () => {
+    const res = await getAll()
+
+    setTags(res.data)
+  }
+
+  useEffect(() => {
+    getTags()
+  }, [])
+
   return (
     <Wrapper>
       <Heading title='OUR MENUS' />
@@ -32,7 +47,7 @@ const Home = () => {
         <TopBar>
           <Pagination />
 
-          <Tags />
+          <Tags tags={tags} />
         </TopBar>
 
         <Product />

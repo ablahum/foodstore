@@ -12,3 +12,19 @@ export const createOne = async (payload) => {
     },
   })
 }
+
+export const updateOne = async (id, payload) => {
+  return await axios.put(`${config.api_host}/api/tags/${id}`, payload, {
+    headers: {
+      Authorization: localStorage.getItem('token'),
+    },
+  })
+}
+
+export const deleteOne = async (id) => {
+  return await axios.delete(`${config.api_host}/api/tags/${id}`, {
+    headers: {
+      Authorization: localStorage.getItem('token'),
+    },
+  })
+}

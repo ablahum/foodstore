@@ -25,7 +25,10 @@ const createOne = async (req, res, next) => {
     const category = new Category(payload)
     await category.save()
 
-    return res.status(201).json(category)
+    return res.status(201).json({
+      message: 'Create category successful',
+      category,
+    })
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.status(400).json({
@@ -48,7 +51,10 @@ const updateOne = async (req, res, next) => {
       runValidators: true,
     })
 
-    return res.status(200).json(category)
+    return res.status(200).json({
+      message: 'Update category successful',
+      category,
+    })
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.status(400).json({
@@ -67,7 +73,10 @@ const deleteOne = async (req, res, next) => {
   try {
     const category = await Category.findByIdAndDelete(id)
 
-    return res.status(200).json(category)
+    return res.status(200).json({
+      message: 'Delete category successful',
+      category,
+    })
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.status(400).json({

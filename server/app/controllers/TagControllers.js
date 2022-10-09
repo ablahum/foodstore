@@ -64,7 +64,10 @@ const createOne = async (req, res, next) => {
     const tag = new Tag(payload)
     await tag.save()
 
-    return res.status(201).json(tag)
+    return res.status(201).json({
+      message: 'Create tag successful',
+      tag,
+    })
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.status(400).json({
@@ -87,7 +90,10 @@ const updateOne = async (req, res, next) => {
       runValidators: true,
     })
 
-    return res.status(200).json(tag)
+    return res.status(200).json({
+      message: 'Update tag successful',
+      tag,
+    })
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.status(400).json({
@@ -101,10 +107,15 @@ const updateOne = async (req, res, next) => {
 }
 
 const deleteOne = async (req, res, next) => {
-  try {
-    const tag = await Tag.findByIdAndDelete(req.params.id)
+  const { id } = req.params
 
-    return res.status(200).json(tag)
+  try {
+    const tag = await Tag.findByIdAndDelete(id)
+
+    return res.status(200).json({
+      message: 'Delete tag successful',
+      tag,
+    })
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.status(400).json({
