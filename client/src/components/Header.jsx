@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { roleChanges, userIdChanges } from '../app/myReducer/action'
 import { Category, Search, NavBar } from '../components'
-import { getAll } from '../apis/category'
+import { getAll } from '../apis/categories'
 import { logout } from '../apis/auth'
 
 const Wrapper = styled(Navbar)`

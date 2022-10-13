@@ -5,7 +5,7 @@ import { MdDeleteForever } from 'react-icons/md'
 import styled from 'styled-components'
 
 import { NewCategoryBox, UpdateCategoryBox, DeleteCategoryBox } from '../components'
-import { getAll } from '../apis/category'
+import { getAll } from '../apis/categories'
 
 const UpdateBtn = styled(Button)`
   background-color: transparent;

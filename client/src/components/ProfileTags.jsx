@@ -9,7 +9,7 @@ import UpdateTagsBox from './UpdateTagsBox'
 import DeleteTagsBox from './DeleteTagsBox'
 
 import axios from 'axios'
-import { getAll } from '../apis/tag'
+import { getAll } from '../apis/tags'
 
 const UpdateBtn = styled(Button)`
   background-color: transparent;

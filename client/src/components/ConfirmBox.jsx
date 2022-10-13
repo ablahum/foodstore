@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { Table, Alert, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
@@ -7,8 +6,8 @@ import rupiah from 'rupiah-format'
 
 import { total } from '../utils'
 import { useSelector } from 'react-redux'
-import { getAll } from '../apis/cart'
-import { createOne } from '../apis/order'
+import { getAll } from '../apis/carts'
+import { createOne } from '../apis/orders'
 
 const Popup = styled.div`
   width: 100%;
@@ -22,7 +21,7 @@ const Popup = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
 `
 
-const Main = styled.div`
+const Wrapper = styled.div`
   width: 45em;
   border-radius: 10px;
   padding: 2em;
@@ -55,7 +54,8 @@ const ConfirmBox = ({ relatedAddress, payment, address, trigger, setTrigger }) =
 
   const [cartItems, setCartItems] = useState([])
   const getOrderId = cartItems.map((item) => item._id)
-  const [fee, setFee] = useState(20000)
+
+  const fee = 20000
 
   const navigate = useNavigate()
 
@@ -113,60 +113,79 @@ const ConfirmBox = ({ relatedAddress, payment, address, trigger, setTrigger }) =
 
   return trigger ? (
     <Popup>
-      <Main>
+      <Wrapper>
         <h2 className='fw-bold mb-4'>ORDER CONFIRMATION</h2>
+
         <div>
           <TableBox>
             <Table hover bordered size='md' className='px-3 py-3'>
               <thead>
                 <tr>
                   <th></th>
+
                   <th>Item Name</th>
+
                   <th>Qty</th>
+
                   <th className='text-end'>Sub Total</th>
                 </tr>
               </thead>
+
               <tbody>
                 {cartItems.map((item) => (
                   <tr key={item._id}>
                     <td className='text-center p-0'>
                       <img src={`http://localhost:4000/public/${item.image}`} alt={item.image} style={{ width: '80px' }} />
                     </td>
+
                     <td>{item.name}</td>
+
                     <td>{item.qty}</td>
+
                     <td className='text-end'>{rupiah.convert(item.qty * item.price)}</td>
                   </tr>
                 ))}
               </tbody>
             </Table>
           </TableBox>
+
           <div>
             <div className='d-flex justify-content-between mb-2'>
               <h5 className='fs-6 m-0 align-self-center'>ADDRESS :</h5>
+
               <h5 className='m-0'>{address}</h5>
             </div>
+
             <div className='d-flex justify-content-between mb-2'>
               <h5 className='fs-6 m-0 align-self-center'>PAYMENT METHOD :</h5>
+
               <h5 className='m-0'>{payment}</h5>
             </div>
+
             <div className='d-flex justify-content-between mb-3'>
               <h5 className='fs-6 m-0 align-self-center'>FEE :</h5>
+
               <h5 className='m-0'>{rupiah.convert(fee)}</h5>
             </div>
           </div>
+
           <div className='d-flex justify-content-between mb-2'>
             <h5 className='m-0'>TOTAL :</h5>
+
             <h4 className='fw-bold m-0'>{rupiah.convert(total(cartItems) + fee)}</h4>
           </div>
         </div>
+
         <Alert variant='danger' className='text-center fw-bold fs-5 mt-3 mb-0 py-2'>
           Is the information above correct?
         </Alert>
+
         <div className='mt-3 d-flex'>
           <BackButton onClick={() => setTrigger(false)}>NO, CHANGE THE INFORMATION</BackButton>
+
           <NextButton onClick={handleSubmit}>YES, PROCEED THE ORDER</NextButton>
         </div>
-      </Main>
+      </Wrapper>
     </Popup>
   ) : (
     ''

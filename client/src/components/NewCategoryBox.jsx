@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styled from 'styled-components'
-import { createOne } from '../apis/category'
+import { createOne } from '../apis/categories'
 
 const Popup = styled.div`
   width: 100%;

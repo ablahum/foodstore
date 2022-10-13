@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, Button } from 'react-bootstrap'
 import axios from 'axios'
 import styled from 'styled-components'
-import { deleteOne } from '../apis/category'
+import { deleteOne } from '../apis/categories'
 
 const Popup = styled.div`
   width: 100%;
@@ -16,7 +16,7 @@ const Popup = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
 `
 
-const Main = styled.div`
+const Wrapper = styled.div`
   width: 45em;
   border-radius: 10px;
   padding: 2em;
@@ -55,7 +55,7 @@ const DeleteCategoryBox = ({ id, trigger, setTrigger }) => {
 
   return trigger ? (
     <Popup>
-      <Main>
+      <Wrapper>
         <h2 className='fw-bold mb-4'>DELETE CATEGORY</h2>
 
         <Alert variant='danger' className='text-center fw-bold fs-5 mt-3 mb-0 py-2'>
@@ -69,7 +69,7 @@ const DeleteCategoryBox = ({ id, trigger, setTrigger }) => {
             CONFIRM
           </ConfirmBtn>
         </div>
-      </Main>
+      </Wrapper>
     </Popup>
   ) : (
     ''

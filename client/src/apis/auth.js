@@ -1,6 +1,14 @@
 import axios from 'axios'
 import { config } from '../config'
 
+export const getMe = async () => {
+  return await axios.get(`${config.api_host}/auth/me`, {
+    headers: {
+      Authorization: localStorage.getItem('token'),
+    },
+  })
+}
+
 export const register = async (payload) => {
   return await axios.post(`${config.api_host}/auth/register`, payload)
 }
