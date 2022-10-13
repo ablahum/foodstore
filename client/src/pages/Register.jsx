@@ -34,6 +34,10 @@ const FormWrapper = styled.div`
   @media (max-width: 767px) {
     width: 85%;
   }
+
+  @media (max-width: 425px) {
+    width: 100%;
+  }
 `
 
 const SubmitBtn = styled(Button)`
@@ -137,9 +141,9 @@ const Register = () => {
 
             {errorMessages.length > 0 && <ShowErrors errors={errorMessages} />}
 
-            <Submit href='#' className='mt-3' onClick={(e) => handleSubmit(e)}>
+            <SubmitBtn href='#' className='mt-3' onClick={(e) => handleSubmit(e)}>
               SIGN IN
-            </Submit>
+            </SubmitBtn>
           </Form>
 
           <p className='text-center mt-3 mb-0'>
