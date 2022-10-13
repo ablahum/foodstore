@@ -8,3 +8,11 @@ export const getAll = async () => {
     },
   })
 }
+
+export const deleteOne = async (id) => {
+  return await axios.delete(`${config.api_host}/api/carts/${id}`, {
+    headers: {
+      Authorization: localStorage.getItem('token'),
+    },
+  })
+}

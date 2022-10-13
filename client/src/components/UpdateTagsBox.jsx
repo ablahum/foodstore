@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styled from 'styled-components'
 
-import { updateOne } from '../apis/tag'
+import { updateOne } from '../apis/tags'
 
 const Popup = styled.div`
   width: 100%;

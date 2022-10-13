@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux'
 
 import { Heading, ConfirmBox } from '../components'
 import { ShowErrors, total } from '../utils'
-import { getAll as getCart } from '../apis/cart'
-import { getAll as getAddress } from '../apis/delivery-address'
+import { getAll as getCart } from '../apis/carts'
+import { getAll as getAddress } from '../apis/delivery-addresses'
 
 const Main = styled.div`
   background-color: #fff;

@@ -1,7 +1,7 @@
 import { Alert, Button } from 'react-bootstrap'
 import styled from 'styled-components'
 
-import { deleteOne } from '../apis/product'
+import { deleteOne } from '../apis/products'
 
 const Popup = styled.div`
   width: 100%;
@@ -24,14 +24,14 @@ const Wrapper = styled.div`
   position: relative;
 `
 
-const BackButton = styled(Button)`
+const CancelBtn = styled(Button)`
   width: 40%;
   background-color: transparent;
   font-weight: 600;
   margin-right: 1em;
 `
 
-const NextButton = styled(Button)`
+const ConfirmBtn = styled(Button)`
   width: 60%;
   color: #fff;
   font-weight: 600;
@@ -62,11 +62,11 @@ const DeleteProductBox = ({ id, trigger, setTrigger }) => {
         </Alert>
 
         <div className='mt-3 d-flex'>
-          <BackButton onClick={() => setTrigger(false)}>CANCEL</BackButton>
+          <CancelBtn onClick={() => setTrigger(false)}>CANCEL</CancelBtn>
 
-          <NextButton onClick={(e) => handleSubmit(e)} className='m-0'>
+          <ConfirmBtn onClick={(e) => handleSubmit(e)} className='m-0'>
             CONFIRM
-          </NextButton>
+          </ConfirmBtn>
         </div>
       </Wrapper>
     </Popup>

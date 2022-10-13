@@ -1,7 +1,7 @@
 import { Alert, Button } from 'react-bootstrap'
 import styled from 'styled-components'
 
-import { deleteOne } from '../apis/tag'
+import { deleteOne } from '../apis/tags'
 
 const Popup = styled.div`
   width: 100%;

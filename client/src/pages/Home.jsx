@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import { Heading, Pagination, Tags, Product } from '../components'
-import { getAll } from '../apis/tag'
+import { getAll } from '../apis/tags'
 
 const Wrapper = styled.div`
   min-height: 100vh;
