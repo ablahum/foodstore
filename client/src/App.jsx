@@ -22,29 +22,65 @@ function App() {
       <PersistGate persistor={persistor}>
         <Router>
           <Routes>
-            <Route path='register' element={<Register />} />
+            <Route
+              path='register'
+              element={<Register />}
+            />
 
-            <Route path='login' element={<Login />} />
+            <Route
+              path='login'
+              element={<Login />}
+            />
 
-            <Route path='/' element={<Layout items={<Home />} />} />
+            <Route
+              path='/'
+              element={<Layout items={<Home />} />}
+            />
 
-            <Route path='/me' element={<Layout items={<Account />} />}>
-              <Route path='profile' element={<Profile />} />
+            <Route
+              path='/me'
+              element={<Layout items={<Account />} />}
+            >
+              <Route
+                path='profile'
+                element={<Profile />}
+              />
 
-              <Route path='order' element={<Order />} />
+              <Route
+                path='order'
+                element={<Order />}
+              />
 
-              <Route path='products' element={<Products />} />
+              <Route
+                path='products'
+                element={<Products />}
+              />
 
-              <Route path='categories' element={<Categories />} />
+              <Route
+                path='categories'
+                element={<Categories />}
+              />
 
-              <Route path='tags' element={<ProfileTags />} />
+              <Route
+                path='tags'
+                element={<ProfileTags />}
+              />
             </Route>
 
-            <Route path='cart' element={<Layout items={<Cart />} />} />
+            <Route
+              path='cart'
+              element={<Layout items={<Cart />} />}
+            />
 
-            <Route path='checkout' element={<Checkout />} />
+            <Route
+              path='checkout'
+              element={<Checkout />}
+            />
 
-            <Route path='invoice' element={<Invoice />} />
+            <Route
+              path='invoice'
+              element={<Invoice />}
+            />
           </Routes>
         </Router>
       </PersistGate>
