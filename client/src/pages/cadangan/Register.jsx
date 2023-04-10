@@ -118,42 +118,77 @@ const Register = () => {
             <Form.Group className='mb-3'>
               <Form.Label>NAME:</Form.Label>
 
-              <Form.Control type='text' id='name' placeholder='Your name...' value={data.name} onChange={(e) => handleChanges(e)} className='h-50' />
+              <Form.Control
+                type='text'
+                id='name'
+                placeholder='Your name...'
+                value={data.name}
+                onChange={(e) => handleChanges(e)}
+                className='h-50'
+              />
             </Form.Group>
 
             <Form.Group className='mb-3'>
               <Form.Label>EMAIL:</Form.Label>
 
-              <Form.Control type='email' id='email' placeholder='Your email...' value={data.email} onChange={(e) => handleChanges(e)} className='h-50' />
+              <Form.Control
+                type='email'
+                id='email'
+                placeholder='Your email...'
+                value={data.email}
+                onChange={(e) => handleChanges(e)}
+                className='h-50'
+              />
             </Form.Group>
 
             <Form.Group className='mb-3'>
               <Form.Label>PASSWORD:</Form.Label>
 
-              <Form.Control type='password' id='password' placeholder='Your password...' value={data.password} onChange={(e) => handleChanges(e)} className='h-50' />
+              <Form.Control
+                type='password'
+                id='password'
+                placeholder='Your password...'
+                value={data.password}
+                onChange={(e) => handleChanges(e)}
+                className='h-50'
+              />
             </Form.Group>
 
             <div className='mb-3 d-flex'>
               <Form.Label className='me-4 mb-0 align-self-center'>ROLE:</Form.Label>
 
-              <Role roles={roles} role={role} setRole={setRole} />
+              <Role
+                roles={roles}
+                role={role}
+                setRole={setRole}
+              />
             </div>
 
             {errorMessages.length > 0 && <ShowErrors errors={errorMessages} />}
 
-            <SubmitBtn href='#' className='mt-3' onClick={(e) => handleSubmit(e)}>
-              SIGN IN
+            <SubmitBtn
+              href='#'
+              className='mt-3'
+              onClick={(e) => handleSubmit(e)}
+            >
+              SIGN UP
             </SubmitBtn>
           </Form>
 
           <p className='text-center mt-3 mb-0'>
             Already have an account?{' '}
-            <Link to='/login' className='text-decoration-none'>
+            <Link
+              to='/login'
+              className='text-decoration-none'
+            >
               Sign In
             </Link>{' '}
             instead
             <br />
-            <Link to='/' className='text-decoration-none'>
+            <Link
+              to='/'
+              className='text-decoration-none'
+            >
               ← Back to home
             </Link>
           </p>

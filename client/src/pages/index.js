@@ -1,9 +1,7 @@
-import Register from "./Register";
-import Login from "./Login";
-import Home from "./Home";
-import Account from "./Account";
-import Cart from "./Cart";
-import Checkout from "./Checkout";
-import Invoice from "./Invoice";
-
-export { Register, Login, Home, Account, Cart, Checkout, Invoice };
+export { default as Register } from './Register'
+export { default as Login } from './Login'
+export { default as Home } from './Home'
+export { default as Account } from './Account'
+export { default as Cart } from './Cart'
+export { default as Checkout } from './Checkout'
+export { default as Invoice } from './Invoice'

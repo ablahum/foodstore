@@ -4,7 +4,12 @@ const { Header, Title, Body, Footer } = ModalBootstrap
 
 const Modal = (props) => {
   return (
-    <ModalBootstrap {...props} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
+    <ModalBootstrap
+      {...props}
+      size='lg'
+      aria-labelledby='contained-modal-title-vcenter'
+      centered
+    >
       <Header closeButton>
         <Title id='contained-modal-title-vcenter'>{props.title}</Title>
       </Header>
