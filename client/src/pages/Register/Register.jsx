@@ -4,8 +4,8 @@ import { Container, Form } from 'react-bootstrap'
 
 import { Role } from '../../components'
 import { ShowErrors } from '../../utils'
-import { Wrapper, FormWrapper, SubmitBtn } from './style'
 import { register } from '../../apis/auth'
+import { Wrapper, FormWrapper, SubmitBtn } from './style'
 
 const Register = () => {
   const [data, setData] = useState({
@@ -70,90 +70,91 @@ const Register = () => {
 
   return (
     <Wrapper>
-      <Container>
-        <FormWrapper>
-          <h2 className='text-center fw-bold mb-4'>SIGN UP</h2>
+      <FormWrapper>
+        <h2 className='text-center fw-bold mb-4'>SIGN UP</h2>
 
-          <Form>
-            <Form.Group className='mb-3'>
-              <Form.Label>NAME:</Form.Label>
+        <Form>
+          <Form.Group className='mb-3'>
+            <Form.Label>NAME:</Form.Label>
 
-              <Form.Control
-                type='text'
-                id='name'
-                placeholder='Your name...'
-                value={data.name}
-                onChange={(e) => handleChanges(e)}
-                className='h-50'
-              />
-            </Form.Group>
+            <Form.Control
+              type='text'
+              id='name'
+              placeholder='Your name...'
+              value={data.name}
+              onChange={(e) => handleChanges(e)}
+              className='h-50'
+            />
+          </Form.Group>
 
-            <Form.Group className='mb-3'>
-              <Form.Label>EMAIL:</Form.Label>
+          <Form.Group className='mb-3'>
+            <Form.Label>EMAIL:</Form.Label>
 
-              <Form.Control
-                type='email'
-                id='email'
-                placeholder='Your email...'
-                value={data.email}
-                onChange={(e) => handleChanges(e)}
-                className='h-50'
-              />
-            </Form.Group>
+            <Form.Control
+              type='email'
+              id='email'
+              placeholder='Your email...'
+              value={data.email}
+              onChange={(e) => handleChanges(e)}
+              className='h-50'
+            />
+          </Form.Group>
 
-            <Form.Group className='mb-3'>
-              <Form.Label>PASSWORD:</Form.Label>
+          <Form.Group className='mb-3'>
+            <Form.Label>PASSWORD:</Form.Label>
 
-              <Form.Control
-                type='password'
-                id='password'
-                placeholder='Your password...'
-                value={data.password}
-                onChange={(e) => handleChanges(e)}
-                className='h-50'
-              />
-            </Form.Group>
+            <Form.Control
+              type='password'
+              id='password'
+              placeholder='Your password...'
+              value={data.password}
+              onChange={(e) => handleChanges(e)}
+              className='h-50'
+            />
+          </Form.Group>
 
-            <div className='mb-3 d-flex'>
-              <Form.Label className='me-4 mb-0 align-self-center'>ROLE:</Form.Label>
+          <div className='mb-3 d-flex'>
+            <Form.Label className='me-4 mb-0 align-self-center'>ROLE:</Form.Label>
 
-              <Role
-                roles={roles}
-                role={role}
-                setRole={setRole}
-              />
-            </div>
+            <Role
+              roles={roles}
+              role={role}
+              setRole={setRole}
+            />
+          </div>
 
-            {errorMessages.length > 0 && <ShowErrors errors={errorMessages} />}
+          {errorMessages.length > 0 && <ShowErrors errors={errorMessages} />}
 
-            <SubmitBtn
-              href='#'
-              className='mt-3'
-              onClick={(e) => handleSubmit(e)}
-            >
-              SIGN UP
-            </SubmitBtn>
-          </Form>
+          <SubmitBtn
+            href='#'
+            className='mt-3'
+            onClick={(e) => handleSubmit(e)}
+          >
+            SIGN UP
+          </SubmitBtn>
+        </Form>
 
-          <p className='text-center mt-3 mb-0'>
-            Already have an account?{' '}
-            <Link
-              to='/login'
-              className='text-decoration-none'
-            >
-              Sign In
-            </Link>{' '}
-            instead
-            <br />
-            <Link
-              to='/'
-              className='text-decoration-none'
-            >
-              ← Back to home
-            </Link>
-          </p>
-        </FormWrapper>
-      </Container>
+        <p className='text-center mt-3 mb-0'>
+          Already have an account?
+          <Link
+            to='/login'
+            className='text-decoration-none'
+          >
+            {' '}
+            Sign In{' '}
+          </Link>
+          instead
+        </p>
+
+        <p className='text-center'>
+          <Link
+            to='/'
+            className='text-decoration-none'
+          >
+            ← Back to home
+          </Link>
+        </p>
+      </FormWrapper>
     </Wrapper>
   )
 }

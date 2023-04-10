@@ -2,27 +2,32 @@ import { Button, Modal as ModalBootstrap } from 'react-bootstrap'
 
 const { Header, Title, Body, Footer } = ModalBootstrap
 
-const Modal = (props) => {
-  return (
-    <ModalBootstrap
-      {...props}
-      size='lg'
-      aria-labelledby='contained-modal-title-vcenter'
-      centered
-    >
-      <Header closeButton>
-        <Title id='contained-modal-title-vcenter'>{props.title}</Title>
-      </Header>
+const Modal = ({ show, handleClose, title, message }) => (
+  <ModalBootstrap
+    show={show}
+    onHide={handleClose}
+    backdrop='static'
+    size='md'
+    aria-labelledby='contained-modal-title-vcenter'
+    centered
+  >
+    <Header closeButton>
+      <Title id='contained-modal-title-vcenter'>{title}</Title>
+    </Header>
 
-      <Body>
-        <p>{props.message}</p>
-      </Body>
+    <Body>
+      <p>{message}</p>
+    </Body>
 
-      <Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Footer>
-    </ModalBootstrap>
-  )
-}
+    <Footer>
+      <Button
+        className='text-light'
+        onClick={() => handleClose()}
+      >
+        OK
+      </Button>
+    </Footer>
+  </ModalBootstrap>
+)
 
 export default Modal

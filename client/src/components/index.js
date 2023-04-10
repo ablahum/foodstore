@@ -19,3 +19,5 @@ export { default as NavBar } from './NavBar'
 export { default as NewCategoryBox } from './NewCategoryBox'
 export { default as UpdateCategoryBox } from './UpdateCategoryBox'
 export { default as DeleteCategoryBox } from './DeleteCategoryBox'
+
+export { default as Form } from './Form'
