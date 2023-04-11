@@ -1,9 +1,8 @@
 import styled from 'styled-components'
-import { Button } from 'react-bootstrap'
-import bgHero from '../../assets/banner-1.jpg'
+import bg from '../../assets/banner-1.jpg'
 
 export const Wrapper = styled.div`
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${bgHero});
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${bg});
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -31,11 +30,4 @@ export const FormWrapper = styled.div`
   @media (max-width: 425px) {
     width: 90%;
   }
-`
-
-export const SubmitBtn = styled(Button)`
-  color: #fff;
-  width: 100%;
-  font-weight: 600;
-  border: none;
 `
