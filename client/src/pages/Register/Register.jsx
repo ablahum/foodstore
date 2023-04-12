@@ -12,7 +12,6 @@ const Register = () => {
     password: '',
     role: 'user',
   })
-  // const [role, setRole] = useState('user')
   const [messages, setMessages] = useState([])
   const [show, setShow] = useState(false)
 
@@ -22,7 +21,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // const { name, email, password } = data
     const { name, email, password, role } = data
 
     // validation
@@ -86,7 +84,6 @@ const Register = () => {
           messages={messages}
           role={data.role}
           handleChanges={handleChanges}
-          // handleRoleChanges={handleRoleChanges}
           handleSubmit={handleSubmit}
         />
 
