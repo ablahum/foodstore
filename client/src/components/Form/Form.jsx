@@ -1,12 +1,12 @@
 import { Form as Wrapper } from 'react-bootstrap'
 
-import { ShowErrors } from '../../utils'
+import { ErrorMessages } from '../../components'
 import { SubmitBtn } from './style'
 import Role from '../Roles'
 
 const { Group, Label, Control } = Wrapper
 
-const Form = ({ register, messages, data, role, roles, setRole, handleChanges, handleSubmit }) => (
+const Form = ({ register, messages, data, role, handleChanges, handleSubmit }) => (
   <Wrapper
     action='/login'
     method='post'
@@ -57,14 +57,13 @@ const Form = ({ register, messages, data, role, roles, setRole, handleChanges, h
         <Label className='me-4 mb-0 align-self-center'>ROLE:</Label>
 
         <Role
-          roles={roles}
           role={role}
-          setRole={setRole}
+          handleChanges={handleChanges}
         />
       </Group>
     )}
 
-    {messages.length > 0 && <ShowErrors errors={messages} />}
+    {messages.length > 0 && <ErrorMessages errors={messages} />}
 
     <SubmitBtn
       href='#'

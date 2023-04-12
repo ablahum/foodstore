@@ -57,14 +57,20 @@ const DeleteTagsBox = ({ id, trigger, setTrigger }) => {
       <Wrapper>
         <h2 className='fw-bold mb-4'>DELETE TAG</h2>
 
-        <Alert variant='danger' className='text-center fw-bold fs-5 mt-3 mb-0 py-2'>
+        <Alert
+          variant='danger'
+          className='text-center fw-bold fs-5 mt-3 mb-0 py-2'
+        >
           Are you sure want to delete tag?
         </Alert>
 
         <div className='mt-3 d-flex'>
           <CancelBtn onClick={() => setTrigger(false)}>CANCEL</CancelBtn>
 
-          <ConfirmBtn onClick={(e) => handleSubmit(e)} className='m-0'>
+          <ConfirmBtn
+            onClick={(e) => handleSubmit(e)}
+            className='m-0'
+          >
             CONFIRM
           </ConfirmBtn>
         </div>

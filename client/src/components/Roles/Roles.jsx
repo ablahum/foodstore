@@ -1,22 +1,32 @@
 import { Button } from './style'
 
-const Roles = ({ roles, role, setRole }) => (
+const Roles = ({ role, handleChanges }) => (
   <>
-    {roles.map((radio, idx) => (
-      <Button
-        key={idx}
-        id={`radio-${idx}`}
-        type='radio'
-        className='text-light'
-        variant={idx % 2 ? 'outline-primary' : 'outline-primary'}
-        name='radio'
-        value={radio.value}
-        checked={role === radio.value}
-        onChange={(e) => setRole(e.currentTarget.value)}
-      >
-        {radio.name}
-      </Button>
-    ))}
+    <Button
+      id='radio-1'
+      type='radio'
+      name='role'
+      value='user'
+      className='text-light'
+      variant='outline-primary'
+      checked={role === 'user'}
+      onChange={(e) => handleChanges(e)}
+    >
+      USER
+    </Button>
+
+    <Button
+      id='radio-2'
+      type='radio'
+      name='role'
+      value='admin'
+      className='text-light'
+      variant='outline-primary'
+      checked={role === 'admin'}
+      onChange={(e) => handleChanges(e)}
+    >
+      ADMIN
+    </Button>
   </>
 )
 

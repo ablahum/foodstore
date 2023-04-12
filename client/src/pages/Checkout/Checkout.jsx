@@ -4,8 +4,8 @@ import { Container, Table, Form } from 'react-bootstrap'
 import rupiah from 'rupiah-format'
 import { useSelector } from 'react-redux'
 
-import { Heading, ConfirmBox } from '../../components'
-import { ShowErrors, total } from '../../utils'
+import { Heading, ConfirmBox, ErrorMessages } from '../../components'
+import { total } from '../../utils'
 import { Main, Summary, Total, Next } from './style'
 import { getAll as getCart } from '../../apis/carts'
 import { getAll as getAddress } from '../../apis/delivery-addresses'
@@ -131,7 +131,7 @@ const Checkout = () => {
                   ))}
                 </Form.Select>
 
-                {addressError.length > 0 && <ShowErrors errors={addressError} />}
+                {addressError.length > 0 && <ErrorMessages errors={addressError} />}
               </div>
 
               <div className='mb-4'>
@@ -148,7 +148,7 @@ const Checkout = () => {
                   ))}
                 </Form.Select>
 
-                {paymentError.length > 0 && <ShowErrors errors={paymentError} />}
+                {paymentError.length > 0 && <ErrorMessages errors={paymentError} />}
               </div>
             </div>
           </div>

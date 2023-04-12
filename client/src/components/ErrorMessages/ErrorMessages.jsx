@@ -1,10 +1,4 @@
-import styled from 'styled-components'
-
-const List = styled.p`
-  color: red;
-  margin: auto;
-  font-weight: 600;
-`
+import { List } from './style'
 
 const ErrorMessages = ({ errors }) => {
   return (
