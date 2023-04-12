@@ -10,12 +10,9 @@ const Register = () => {
     name: '',
     email: '',
     password: '',
+    role: 'user',
   })
-  const [role, setRole] = useState('user')
-  const roles = [
-    { name: 'USER', value: 'user' },
-    { name: 'ADMIN', value: 'admin' },
-  ]
+  // const [role, setRole] = useState('user')
   const [messages, setMessages] = useState([])
   const [show, setShow] = useState(false)
 
@@ -25,7 +22,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const { name, email, password } = data
+    // const { name, email, password } = data
+    const { name, email, password, role } = data
 
     // validation
     let message = []
@@ -49,7 +47,6 @@ const Register = () => {
           password,
           role,
         })
-
         setMessages([res.data.message])
         setShow(true)
       } catch (err) {
@@ -58,11 +55,19 @@ const Register = () => {
     }
   }
 
-  const handleChanges = (e) =>
-    setData(() => ({
-      ...data,
-      [e.target.id]: e.target.value,
-    }))
+  const handleChanges = (e) => {
+    if (e.target.id.includes('radio')) {
+      setData({
+        ...data,
+        [e.target.name]: e.target.value,
+      })
+    } else {
+      setData(() => ({
+        ...data,
+        [e.target.id]: e.target.value,
+      }))
+    }
+  }
 
   const handleClose = () => {
     setShow(false)
@@ -79,10 +84,9 @@ const Register = () => {
           register
           data={data}
           messages={messages}
-          roles={roles}
-          role={role}
-          setRole={setRole}
+          role={data.role}
           handleChanges={handleChanges}
+          // handleRoleChanges={handleRoleChanges}
           handleSubmit={handleSubmit}
         />
 

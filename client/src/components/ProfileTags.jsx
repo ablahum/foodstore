@@ -65,7 +65,10 @@ const Tags = () => {
       <div className='mb-3 d-flex justify-content-between'>
         <h2 className='fw-bold fs-3 d-inline mb-0'>LIST OF TAGS</h2>
 
-        <Button className='text-light py-0 px-3' onClick={handleNew}>
+        <Button
+          className='text-light py-0 px-3'
+          onClick={handleNew}
+        >
           ADD NEW TAGS
         </Button>
       </div>
@@ -78,7 +81,10 @@ const Tags = () => {
         <>
           {tags.map((tag) => (
             <div key={tag._id}>
-              <div className='d-flex justify-content-between' key={tag._id}>
+              <div
+                className='d-flex justify-content-between'
+                key={tag._id}
+              >
                 <div className='p-3'>
                   <h5 className='mb-2 text-muted'>Name:</h5>
 
@@ -102,9 +108,20 @@ const Tags = () => {
         </>
       )}
 
-      <NewTagsBox trigger={newTags} setTrigger={setNewTags} />
-      <UpdateTagsBox trigger={updateTags} setTrigger={setUpdateTags} id={tagsId} />
-      <DeleteTagsBox trigger={deleteTags} setTrigger={setDeleteTags} id={tagsId} />
+      <NewTagsBox
+        trigger={newTags}
+        setTrigger={setNewTags}
+      />
+      <UpdateTagsBox
+        trigger={updateTags}
+        setTrigger={setUpdateTags}
+        id={tagsId}
+      />
+      <DeleteTagsBox
+        trigger={deleteTags}
+        setTrigger={setDeleteTags}
+        id={tagsId}
+      />
     </div>
   )
 }
