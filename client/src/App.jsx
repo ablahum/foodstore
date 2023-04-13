@@ -3,18 +3,16 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import { store, persistor } from './app/store'
-import { Header, Footer, Profile, Order, Products, Categories, ProfileTags } from './components'
+import { Header, Footer, Profile, Order, Products, CategoryList, ProfileTags } from './components'
 import { Register, Login, Home, Account, Cart, Checkout, Invoice } from './pages'
 
-const Layout = ({ items }) => {
-  return (
-    <>
-      <Header />
-      {items}
-      <Footer />
-    </>
-  )
-}
+const Layout = ({ items }) => (
+  <>
+    <Header />
+    {items}
+    <Footer />
+  </>
+)
 
 function App() {
   return (
@@ -57,8 +55,8 @@ function App() {
               />
 
               <Route
-                path='categories'
-                element={<Categories />}
+                path='category'
+                element={<CategoryList />}
               />
 
               <Route

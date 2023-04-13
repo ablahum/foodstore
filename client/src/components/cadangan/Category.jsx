@@ -15,7 +15,6 @@ const Btn = styled(Dropdown.Toggle)`
     margin-right: 0.5rem;
   }
 
-  ,
   @media (max-width: 425px) {
     display: none;
   }
@@ -42,11 +41,18 @@ const Category = ({ categories }) => {
       <Btn variant='primary'>CATEGORY</Btn>
 
       <Dropdown.Menu>
-        <Item value='' onClick={() => dispatch(categoryChanges(''))}>
+        <Item
+          value=''
+          onClick={() => dispatch(categoryChanges(''))}
+        >
           All Products...
         </Item>
         {categories.map((category, i) => (
-          <Item key={i} value={category.name} onClick={() => dispatch(categoryChanges(category.name))}>
+          <Item
+            key={i}
+            value={category.name}
+            onClick={() => dispatch(categoryChanges(category.name))}
+          >
             {category.name}
           </Item>
         ))}

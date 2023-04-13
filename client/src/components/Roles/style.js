@@ -8,7 +8,7 @@ export const Button = styled(ToggleButton)`
   border: none;
   padding: 0 2em;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     padding: 0 0.8em;
   }
 `

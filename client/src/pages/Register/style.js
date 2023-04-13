@@ -19,15 +19,15 @@ export const FormWrapper = styled.div`
   border-radius: 10px;
   box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 1);
 
-  @media (max-width: 992px) {
+  @media screen and (max-width: 991px) {
     width: 50%;
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     width: 70%;
   }
 
-  @media (max-width: 425px) {
+  @media screen and (max-width: 425px) {
     width: 90%;
   }
 `
