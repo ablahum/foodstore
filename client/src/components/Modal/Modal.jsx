@@ -11,7 +11,7 @@ const Modal = ({ show, handleClose, title, message }) => (
     aria-labelledby='contained-modal-title-vcenter'
     centered
   >
-    <Header closeButton>
+    <Header>
       <Title id='contained-modal-title-vcenter'>{title}</Title>
     </Header>
 

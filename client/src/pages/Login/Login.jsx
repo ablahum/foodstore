@@ -6,6 +6,7 @@ import { roleChanges, userIdChanges } from '../../app/myReducer/action'
 import { login } from '../../apis/auth'
 import { Form, Modal } from '../../components'
 import { Wrapper, FormWrapper } from './style'
+import { validateEmail } from '../../utils'
 
 const Login = () => {
   const [data, setData] = useState({
@@ -25,7 +26,10 @@ const Login = () => {
 
     // validation
     let message = []
+
     if (email.length === 0 || password.length === 0) message = [...message, 'Email or password cannot be empty']
+
+    if (email.length > 0 && validateEmail(email) === false) message = [...message, 'Invalid email address']
 
     if (message.length > 0) {
       setMessages(message)

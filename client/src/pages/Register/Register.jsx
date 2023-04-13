@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { register } from '../../apis/auth'
 import { Form, Modal } from '../../components'
 import { Wrapper, FormWrapper } from './style'
+import { validateEmail } from '../../utils'
 
 const Register = () => {
   const [data, setData] = useState({
@@ -29,6 +30,8 @@ const Register = () => {
 
     if (email.length === 0) message = [...message, 'Email cannot be empty']
 
+    if (email.length > 0 && validateEmail(email) === false) message = [...message, 'Invalid email address']
+
     if (password.length === 0) {
       message = [...message, 'Password cannot be empty']
     } else if (password.length < 8) {
@@ -45,6 +48,7 @@ const Register = () => {
           password,
           role,
         })
+
         setMessages([res.data.message])
         setShow(true)
       } catch (err) {
