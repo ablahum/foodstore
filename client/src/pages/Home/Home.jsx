@@ -2,16 +2,20 @@ import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 
 import { Heading, Pagination, Tags, Product } from '../../components'
-import { Wrapper, TopBar } from './style'
+import { Wrapper, Top } from './style'
 import { getAll } from '../../apis/tags'
 
 const Home = () => {
   const [tags, setTags] = useState([])
 
   const getTags = async () => {
-    const res = await getAll()
+    try {
+      const res = await getAll()
 
-    setTags(res.data)
+      setTags(res.data)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   useEffect(() => {
@@ -23,11 +27,11 @@ const Home = () => {
       <Heading title='OUR MENUS' />
 
       <Container className='py-5'>
-        <TopBar>
+        <Top>
           <Pagination />
 
           <Tags tags={tags} />
-        </TopBar>
+        </Top>
 
         <Product />
       </Container>

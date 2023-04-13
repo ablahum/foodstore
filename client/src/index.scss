@@ -1,11 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-* {
-  font-family: 'Inter', sans-serif;
-}
-
 $primary: #fd7e14;
 $secondary: #b85502;
+$white: #ffffff;
 $dark: #1c1f23;
+$muted: #6c757d;
+
+:root {
+  --muted: #{$muted};
+  --white: #{$white};
+  --sans-serif: 'Inter', sans-serif;
+  --serif: 'Noe Display', serif;
+}
+
+*,
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: var(--sans-serif);
+}
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
