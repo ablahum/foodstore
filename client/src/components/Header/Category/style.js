@@ -6,16 +6,36 @@ const { Toggle } = Dropdown
 export const Btn = styled(Toggle)`
   color: #fff;
   font-weight: 500;
-  margin: 0.5em;
+  margin: 0 0.5em;
   border: none;
 
   &:before {
     content: '|';
-    margin-right: 0.5rem;
+    margin-right: 0.5em;
   }
 
-  @media (max-width: 425px) {
+  @media screen and (max-width: 767px) {
+    margin-left: 0;
+  }
+
+  @media screen and (max-width: 425px) {
     display: none;
+  }
+`
+
+export const BtnSm = styled(Toggle)`
+  color: #fff;
+  font-weight: 500;
+  margin: 0;
+  border: none;
+  display: none;
+
+  @media screen and (max-width: 425px) {
+    display: inline;
+
+    &:after {
+      display: none;
+    }
   }
 `
 

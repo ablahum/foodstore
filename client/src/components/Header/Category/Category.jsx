@@ -1,8 +1,9 @@
 import { useDispatch } from 'react-redux'
 import { Dropdown } from 'react-bootstrap'
+import { GiHamburgerMenu } from 'react-icons/gi'
 
 import { categoryChanges } from '../../../app/myReducer/action'
-import { Btn, Item } from './style'
+import { Btn, BtnSm, Item } from './style'
 
 const { Menu } = Dropdown
 
@@ -13,6 +14,10 @@ const Category = ({ categories }) => {
     <Dropdown>
       <Btn variant='primary'>CATEGORY</Btn>
 
+      <BtnSm variant='primary'>
+        <GiHamburgerMenu />
+      </BtnSm>
+
       <Menu>
         <Item
           value=''
@@ -20,6 +25,7 @@ const Category = ({ categories }) => {
         >
           All Products...
         </Item>
+
         {categories.map((category, i) => (
           <Item
             key={i}

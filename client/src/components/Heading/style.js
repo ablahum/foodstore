@@ -15,6 +15,10 @@ export const Wrapper = styled.div`
   @media screen and (max-width: 767px) {
     height: 15em;
   }
+
+  @media screen and (max-width: 425px) {
+    height: 10em;
+  }
 `
 
 export const Title = styled.h1`
@@ -28,6 +32,7 @@ export const Title = styled.h1`
   }
 
   @media screen and (max-width: 425px) {
+    font-size: 3rem;
     letter-spacing: 1rem;
     text-align: center;
   }

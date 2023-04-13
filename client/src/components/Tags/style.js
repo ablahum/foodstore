@@ -4,6 +4,10 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 767px) {
+    margin-top: 0.5em;
+  }
 `
 
 export const Title = styled.h2`
@@ -18,10 +22,6 @@ export const Title = styled.h2`
 `
 
 export const Toggle = styled(ToggleButtonGroup)`
-  @media screen and (max-width: 767px) {
-    margin-top: 1em;
-  }
-
   @media screen and (max-width: 425px) {
     /* display: flex;
     flex-wrap: wrap; */
@@ -32,7 +32,5 @@ export const Toggle = styled(ToggleButtonGroup)`
 `
 
 export const Tag = styled(ToggleButton)`
-  /* font-size: 1rem; */
-  /* font-weight: 500; */
   padding: 0.2em 1.3em;
 `

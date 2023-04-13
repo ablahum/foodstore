@@ -36,10 +36,10 @@ const Header = () => {
     setShow(true)
     setNotification({
       title: 'Please login first',
-      message: 'Please login to continue shopping',
+      message: 'You need to login to continue shopping',
     })
 
-    navigate('/login')
+    // navigate('/login')
   }
 
   const toCart = () => {

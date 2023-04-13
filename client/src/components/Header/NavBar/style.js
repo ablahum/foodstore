@@ -1,7 +1,15 @@
-import { Button, Dropdown } from 'react-bootstrap'
+import { Button, Dropdown, Nav } from 'react-bootstrap'
 import styled from 'styled-components'
 
 const { Toggle, Item } = Dropdown
+
+export const Wrapper = styled(Nav)`
+  margin-left: 0.5em;
+
+  @media screen and (max-width: 425px) {
+    margin-left: 0;
+  }
+`
 
 export const CartBtn = styled(Button)`
   background-color: #f8f9fa;
@@ -10,14 +18,14 @@ export const CartBtn = styled(Button)`
   position: relative;
 
   :hover {
-    background-color: #fd9843;
+    background-color: var(--primary-light);
   }
 `
 
 export const Counter = styled.p`
   font-size: 0.8rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--white);
   background-color: red;
   padding: 0 6px;
   border-radius: 100%;
@@ -34,7 +42,7 @@ export const ProfileBtn = styled(Toggle)`
   margin-left: 0.3em;
 
   :hover {
-    background-color: #fd9843;
+    background-color: var(--primary-light);
   }
 
   ::after {
@@ -44,29 +52,29 @@ export const ProfileBtn = styled(Toggle)`
 
 export const MyProfile = styled(Item)`
   :hover {
-    color: #fff;
-    background-color: #fd7e14;
+    color: var(--white);
+    background-color: var(--primary);
   }
 
   :active {
     font-weight: 500;
-    color: #000;
-    background-color: #fd9843;
+    color: var(--black);
+    background-color: var(--primary-light);
   }
 `
 
 export const Logout = styled(Item)`
-  color: #fff;
+  color: var(--white);
   background-color: #dc3545;
 
   :hover {
-    color: #fff;
+    color: var(--white);
     background-color: #b52b39;
   }
 
   :active {
     font-weight: 500;
-    color: #000;
-    background-color: #fd9843;
+    color: var(--black);
+    background-color: var(--primary-light);
   }
 `
