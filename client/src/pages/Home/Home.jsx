@@ -26,7 +26,7 @@ const Home = () => {
     <Wrapper>
       <Heading title='OUR MENUS' />
 
-      <Container className='py-5'>
+      <Container className='py-md-5 py-4'>
         <Top>
           <Pagination />
 

@@ -84,6 +84,7 @@ const Login = () => {
           </Link>
           now
         </p>
+
         <p className='text-center'>
           <Link
             to='/'

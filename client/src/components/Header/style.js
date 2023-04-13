@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const { Brand } = Navbar
 
 export const Wrapper = styled(Navbar)`
+  background-color: var(--white);
   box-shadow: 0px 10px 50px -15px rgba(0, 0, 0, 1);
   position: sticky;
   top: 0;
@@ -15,7 +16,8 @@ export const Brand1 = styled(Brand)`
   font-size: 1.8rem;
   font-weight: 800;
   letter-spacing: -0.13rem;
-  margin-right: 2rem;
+  margin-right: 1rem;
+  padding: 0;
   cursor: pointer;
 
   @media screen and (max-width: 767px) {

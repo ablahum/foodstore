@@ -1,8 +1,8 @@
-import { Nav, Dropdown } from 'react-bootstrap'
+import { Dropdown } from 'react-bootstrap'
 import { AiOutlineShoppingCart, AiOutlinePoweroff } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
 
-import { CartBtn, Counter, ProfileBtn, MyProfile, Logout } from './style'
+import { Wrapper, CartBtn, Counter, ProfileBtn, MyProfile, Logout } from './style'
 
 const Icons = {
   color: '#000',
@@ -10,7 +10,7 @@ const Icons = {
 }
 
 const NavBar = ({ cartState, navigate, loginAlert, toCart, handleLogout }) => (
-  <Nav>
+  <Wrapper>
     <CartBtn onClick={() => (localStorage.getItem('token') ? toCart() : loginAlert())}>
       <AiOutlineShoppingCart style={Icons} />
 
@@ -37,7 +37,7 @@ const NavBar = ({ cartState, navigate, loginAlert, toCart, handleLogout }) => (
         <FiUser style={Icons} />
       </ProfileBtn>
     )}
-  </Nav>
+  </Wrapper>
 )
 
 export default NavBar
