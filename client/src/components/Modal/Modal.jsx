@@ -21,7 +21,7 @@ const Modal = ({ show, handleClose, title, message }) => (
 
     <Footer>
       <Button
-        className='text-light'
+        className='text-light w-100'
         onClick={() => handleClose()}
       >
         OK
