@@ -6,7 +6,7 @@ export const Title = styled.h2`
   margin: 0;
   margin-right: 1em;
 
-  @media screen and (max-width: 1199px) {
+  @media screen and (max-width: 991px) {
     display: none;
   }
 `

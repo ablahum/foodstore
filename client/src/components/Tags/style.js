@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   align-items: center;
 
   @media screen and (max-width: 767px) {
-    margin-top: 0.5em;
+    margin-top: 1em;
   }
 `
 
