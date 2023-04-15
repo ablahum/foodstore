@@ -23,11 +23,8 @@ export const Title = styled.h2`
 
 export const Toggle = styled(ToggleButtonGroup)`
   @media screen and (max-width: 425px) {
-    /* display: flex;
-    flex-wrap: wrap; */
-
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
   }
 `
 
