@@ -16,7 +16,7 @@ const Modal = ({ show, handleClose, title, message }) => (
     </Header>
 
     <Body>
-      <p>{message}</p>
+      <p className='m-0'>{message}</p>
     </Body>
 
     <Footer>

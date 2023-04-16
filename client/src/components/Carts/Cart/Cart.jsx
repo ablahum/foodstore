@@ -1,25 +1,16 @@
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-import { addItem, clearItem, removeItem } from '../../../app/cart/actions'
+import { addItem, removeItem } from '../../../app/cart/actions'
 import rupiah from 'rupiah-format'
 
 import { subTotal, total } from '../../../utils'
 import { Counter, NextBtn } from './style'
 
-const Cart = ({ setShow, setNotification, cartItems, handleSubmit }) => {
+const Cart = ({ cartItems, handleSubmit }) => {
   const cartState = useSelector((state) => state.cart)
 
   const dispatch = useDispatch()
-
-  // const decrement = (params) => {
-  //   if (params.qty <= 1) {
-  //     setShow(true)
-  //     setNotification({ title: 'Remove item', message: 'Are you sure want to remove the item?' })
-  //   } else {
-  //     dispatch(removeItem(params))
-  //   }
-  // }
 
   return (
     <div className='h-100 d-flex flex-column justify-content-between'>
@@ -27,6 +18,7 @@ const Cart = ({ setShow, setNotification, cartItems, handleSubmit }) => {
         <Table
           size='sm'
           hover
+          responsive
         >
           <thead>
             <tr>
@@ -52,7 +44,6 @@ const Cart = ({ setShow, setNotification, cartItems, handleSubmit }) => {
                   <td>{item.name}</td>
                   <td>{rupiah.convert(item.price)}</td>
                   <td className='d-flex'>
-                    {/* <Counter onClick={() => decrement(item)}> */}
                     <Counter onClick={() => dispatch(removeItem(item))}>
                       <AiOutlineMinus className='text-dark' />
                     </Counter>
