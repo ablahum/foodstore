@@ -13,8 +13,7 @@ const { Menu } = Dropdown
 
 const NavBar = ({ cartState, navigate, setTrigger, handleLogout }) => (
   <Wrapper>
-    {/* <CartBtn onClick={() => (localStorage.getItem('token') ? toCart() : loginAlert())}> */}
-    <CartBtn onClick={() => setTrigger(true)}>
+    <CartBtn onClick={() => (localStorage.getItem('token') ? setTrigger(true) : navigate('/login'))}>
       <AiOutlineShoppingCart style={Icons} />
 
       {localStorage.getItem('token') && <Counter>{cartState.length}</Counter>}
