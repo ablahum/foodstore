@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { roleChanges, userIdChanges } from '../../app/myReducer/action'
-import { Category, Search, NavBar, Modal } from '../../components'
+import { Category, Search, NavBar, Modal, Carts } from '../../components'
 import { getAll } from '../../apis/categories'
 import { logout } from '../../apis/auth'
 import { Wrapper, Brand1, Brand2 } from './style'
@@ -13,6 +13,7 @@ const Header = () => {
   let cartState = useSelector((state) => state.cart)
 
   const [categories, setCategories] = useState([])
+  const [cartTrigger, setCartTrigger] = useState(false)
   const [show, setShow] = useState(false)
   const [notification, setNotification] = useState({
     title: '',
@@ -29,28 +30,6 @@ const Header = () => {
       setCategories(res.data)
     } catch (err) {
       console.log(err)
-    }
-  }
-
-  const loginAlert = async () => {
-    setShow(true)
-    setNotification({
-      title: 'Please login first',
-      message: 'You need to login to continue shopping',
-    })
-
-    // navigate('/login')
-  }
-
-  const toCart = () => {
-    if (cartState.length > 0) {
-      navigate('/cart')
-    } else {
-      setShow(true)
-      setNotification({
-        title: 'Please provide an item',
-        message: 'You need to provide an item to continue to cart',
-      })
     }
   }
 
@@ -87,9 +66,11 @@ const Header = () => {
   return (
     <Wrapper>
       <Container>
-        <Brand1 onClick={() => navigate('/')}>
-          FOOD<Brand2>STORE</Brand2>
-        </Brand1>
+        <div onClick={() => navigate('/')}>
+          <Brand1>
+            FOOD<Brand2>STORE</Brand2>
+          </Brand1>
+        </div>
 
         <Category categories={categories} />
 
@@ -98,11 +79,15 @@ const Header = () => {
         <NavBar
           cartState={cartState}
           navigate={navigate}
-          loginAlert={loginAlert}
-          toCart={toCart}
+          setTrigger={setCartTrigger}
           handleLogout={handleLogout}
         />
       </Container>
+
+      <Carts
+        trigger={cartTrigger}
+        setTrigger={setCartTrigger}
+      />
 
       <Modal
         show={show}

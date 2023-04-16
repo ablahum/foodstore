@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 
 import { Heading, Pagination, Tags, Product } from '../../components'
-import { Wrapper, Top } from './style'
 import { getAll } from '../../apis/tags'
+import { Wrapper, Top } from './style'
 
 const Home = () => {
   const [tags, setTags] = useState([])

@@ -9,8 +9,13 @@ $dark: #1c1f23;
 $muted: #6c757d;
 
 :root {
+  --primary: #{$primary};
+  --primary-light: #{$primary-light};
+  --secondary: #{$secondary};
   --muted: #{$muted};
   --white: #{$white};
+  --black: #{$black};
+  --dark: #{$dark};
   --sans-serif: 'Inter', sans-serif;
   --serif: 'Noe Display', serif;
 }

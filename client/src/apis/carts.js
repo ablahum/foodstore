@@ -9,6 +9,18 @@ export const getAll = async () => {
   })
 }
 
+export const putAll = async (payload) => {
+  return await axios.put(
+    `${config.api_host}/api/carts`,
+    { items: payload },
+    {
+      headers: {
+        Authorization: localStorage.getItem('token'),
+      },
+    }
+  )
+}
+
 export const deleteOne = async (id) => {
   return await axios.delete(`${config.api_host}/api/carts/${id}`, {
     headers: {
