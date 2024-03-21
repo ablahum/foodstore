@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const { dbHost, dbPass, dbName, dbPort, dbUser } = require('../config')
+const { dbHost, dbPass, dbName, dbPort, dbUser, dbReplica } = require('../config')
 
-mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}.baw8glc.mongodb.net/${dbName}?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}?replicaSet=${dbReplica}&ssl=true&authSource=admin`)
 
 const db = mongoose.connection
 

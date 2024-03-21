@@ -4,8 +4,8 @@ const passport = require('passport')
 
 const { getToken } = require('../../utils')
 const config = require('../../config')
-const User = require('../user/model')
 // const User = require('../models/User')
+const { User } = require('../models')
 
 const { secretkey } = config
 

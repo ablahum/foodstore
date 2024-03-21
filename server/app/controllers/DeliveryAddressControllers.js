@@ -1,8 +1,8 @@
 const { subject } = require('@casl/ability')
 
 const { policyFor } = require('../../utils')
-const DeliveryAddress = require('../deliveryAddress/model')
 // const DeliveryAddress = require('../models/DeliveryAddress')
+const { DeliveryAddress } = require('../models')
 
 const getAll = async (req, res, next) => {
   const { skip = 0, limit = 10 } = req.query

@@ -1,12 +1,10 @@
 const path = require('path')
 const fs = require('fs')
 
-const Product = require('../product/model')
-const Category = require('../category/model')
-const Tags = require('../tag/model')
 // const Product = require('../models/Product')
 // const Category = require('../models/Category')
 // const Tags = require('../models/Tag')
+const { Product, Category, Tags } = require('../models')
 
 const getAll = async (req, res, next) => {
   const { page = 1, perPage = 8, tags = [], category = '', q = '' } = req.query

@@ -1,11 +1,11 @@
 const { subject } = require('@casl/ability')
 
 const { policyFor } = require('../../utils')
-const Invoice = require('../invoice/model')
 // const Invoice = require('../models/Invoice')
+const { Invoice } = require('../models')
 
 const getOne = async (req, res, next) => {
-  const { order_id } = req.params
+  const { order_id } = req.param
   const user = req.user
 
   try {

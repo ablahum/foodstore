@@ -1,13 +1,10 @@
 const { Types } = require('mongoose')
 
-const DeliveryAddress = require('../deliveryAddress/model')
-const Order = require('../order/model')
-const Orderitem = require('../order-item/model')
-const CartItem = require('../cart-item/model')
-// const DeliveryAddress = require('../models/DeliveryAddress')
+const DeliveryAddress = require('../models/DeliveryAddress')
 // const Order = require('../models/Order')
 // const OrderItem = require('../models/OrderItem')
 // const CartItem = require('../models/CartItem')
+const { Order, OrderItem, CartItem } = require('../models')
 
 const getAll = async (req, res, next) => {
   const { skip = 0, limit = 10 } = req.query
@@ -73,7 +70,7 @@ const createOne = async (req, res, next) => {
       user: _id,
     })
 
-    let orderItems = await Orderitem.insertMany(
+    let orderItems = await OrderItem.insertMany(
       items.map((item) => ({
         ...item,
         name: item.product.name,

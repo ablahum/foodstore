@@ -1,7 +1,6 @@
-const Product = require('../product/model')
-const CartItem = require('../cart-item/model')
 // const Product = require('../models/Product')
 // const CartItem = require('../models/CartItem')
+const { Product, CartItem } = require('../models')
 
 const getOne = async (req, res, next) => {
   const { _id } = req.user

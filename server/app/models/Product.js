@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema, model } = mongoose
 
-const Product = Schema(
+const productSchema = Schema(
   {
     name: {
       type: String,
@@ -27,4 +27,4 @@ const Product = Schema(
   { timestamps: true }
 )
 
-module.exports = model('Product', Product)
+module.exports = model('Product', productSchema)

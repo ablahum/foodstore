@@ -3,7 +3,7 @@ const { Schema, model } = mongoose
 const AutoIncrement = require('mongoose-sequence')(mongoose)
 const bcrypt = require('bcrypt')
 
-const User = Schema(
+const userSchema = Schema(
   {
     user_id: Number,
     name: {
@@ -30,10 +30,10 @@ const User = Schema(
 )
 
 // USER_ID AUTO INCREMENT
-User.plugin(AutoIncrement, { inc_field: 'user_id' })
+userSchema.plugin(AutoIncrement, { inc_field: 'user_id' })
 
 // EMAIL FORMAT VALIDATION
-User.path('email').validate(
+userSchema.path('email').validate(
   function (value) {
     const EMAIL_RE = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
     return EMAIL_RE.test(value)
@@ -42,7 +42,7 @@ User.path('email').validate(
 )
 
 // EXISTING EMAIL VALIDATION
-User.path('email').validate(
+userSchema.path('email').validate(
   async function (value) {
     try {
       const count = await this.model('User').count({ email: value })
@@ -56,9 +56,9 @@ User.path('email').validate(
 
 // HASH THE PASSWORD
 const HASH_ROUND = 10
-User.pre('save', function (next) {
+userSchema.pre('save', function (next) {
   this.password = bcrypt.hashSync(this.password, HASH_ROUND)
   next()
 })
 
-module.exports = model('User', User)
+module.exports = model('User', userSchema)

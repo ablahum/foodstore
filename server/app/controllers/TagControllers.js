@@ -1,9 +1,7 @@
-const Tag = require('../tag/model')
-const Category = require('../category/model')
-const Product = require('../product/model')
 // const Tag = require('../models/Tag')
 // const Category = require('../models/Category')
 // const Product = require('../models/Product')
+const { Tag, Category, Product } = require('../models')
 
 const getAll = async (req, res, next) => {
   try {
