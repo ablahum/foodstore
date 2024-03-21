@@ -1,9 +1,6 @@
 const { Types } = require('mongoose')
 
 const DeliveryAddress = require('../models/DeliveryAddress')
-// const Order = require('../models/Order')
-// const OrderItem = require('../models/OrderItem')
-// const CartItem = require('../models/CartItem')
 const { Order, OrderItem, CartItem } = require('../models')
 
 const getAll = async (req, res, next) => {

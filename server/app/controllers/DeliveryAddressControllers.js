@@ -1,7 +1,6 @@
 const { subject } = require('@casl/ability')
 
 const { policyFor } = require('../../utils')
-// const DeliveryAddress = require('../models/DeliveryAddress')
 const { DeliveryAddress } = require('../models')
 
 const getAll = async (req, res, next) => {
