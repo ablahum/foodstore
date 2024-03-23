@@ -73,6 +73,9 @@ const createOne = async (req, res, next) => {
   let payload = req.body
   const image = req.file
 
+  // console.log(payload)
+  // console.log(req.file)
+
   try {
     // change category name to category id
     if (payload.category) {
