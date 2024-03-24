@@ -4,12 +4,11 @@ const passport = require('passport')
 
 const { getToken } = require('../../utils')
 const config = require('../../config')
-// const User = require('../models/User')
 const { User } = require('../models')
 
 const { secretkey } = config
 
-// PASSPORTJS STRATEGY
+// passportjs strategy
 const localStrategy = async (email, password, done) => {
   try {
     const user = await User.findOne({ email }).select('-__v -createdAt -updatedAt -cart_items -token')
@@ -64,7 +63,7 @@ const login = async (req, res, next) => {
 
     if (!user) return res.status(400).json({ message: 'Email or password is incorrect' })
 
-    // GENERATE TOKEN
+    // generate token
     const signed = jwt.sign(user, secretkey)
 
     await User.findByIdAndUpdate(user._id, {
@@ -84,7 +83,7 @@ const login = async (req, res, next) => {
 const logout = async (req, res) => {
   const token = getToken(req)
 
-  // DETACH TOKEN
+  // detach token
   const user = await User.findOneAndUpdate(
     {
       token: { $in: [token] },

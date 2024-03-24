@@ -1,5 +1,3 @@
-// const Product = require('../models/Product')
-// const CartItem = require('../models/CartItem')
 const { Product, CartItem } = require('../models')
 
 const getOne = async (req, res, next) => {

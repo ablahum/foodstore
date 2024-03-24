@@ -1,10 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 
-// const Product = require('../models/Product')
-// const Category = require('../models/Category')
-// const Tags = require('../models/Tag')
-const { Product, Category, Tags } = require('../models')
+const { Product, Category, Tag } = require('../models')
 
 const getAll = async (req, res, next) => {
   const { page = 1, perPage = 8, tags = [], category = '', q = '' } = req.query
@@ -19,7 +16,7 @@ const getAll = async (req, res, next) => {
       }
     }
 
-    // CHANGE CATEGORY NAME TO CATEGORY ID
+    // change category name to category id
     if (category.length) {
       const categoryResult = await Category.findOne({
         // POPULATE
@@ -37,9 +34,9 @@ const getAll = async (req, res, next) => {
       }
     }
 
-    // CHANGE TAGS NAME TO TAGS ID
+    // change tags name to tags id
     if (tags.length) {
-      const tagsResult = await Tags.find({
+      const tagsResult = await Tag.find({
         name: {
           $in: tags,
         },
@@ -76,11 +73,14 @@ const createOne = async (req, res, next) => {
   let payload = req.body
   const image = req.file
 
+  // console.log('payload:', payload)
+  // console.log('req.file::', req.file)
+
   try {
-    // CHANGE CATEGORY NAME TO CATEGORY ID
+    // change category name to category id
     if (payload.category) {
       const category = await Category.findOne({
-        // POPULATE
+        // populate
         name: {
           $regex: payload.category,
           $options: 'i',
@@ -97,9 +97,9 @@ const createOne = async (req, res, next) => {
       }
     }
 
-    // CHANGE TAGS NAME TO TAGS ID
+    // change tags name to tags id
     if (payload.tags && payload.tags.length > 0) {
-      const tags = await Tags.find({
+      const tags = await Tag.find({
         name: {
           $in: payload.tags,
         },
@@ -116,10 +116,9 @@ const createOne = async (req, res, next) => {
     }
 
     if (image) {
-      // GET IMAGE EXTENSION
+      // get image extension
       const originalExt = image.originalname.split('.')[image.originalname.split('.').length - 1]
 
-      // const fileName = image.filename + '.' + originalExt
       const fileName = `${image.filename}.${originalExt}`
       const _path = image.path
 
@@ -135,6 +134,7 @@ const createOne = async (req, res, next) => {
             ...payload,
             image: fileName,
           })
+
           await product.save()
 
           return res.status(201).json({
@@ -181,10 +181,10 @@ const updateOne = async (req, res, next) => {
   const image = req.file
 
   try {
-    // CHANGE CATEGORY NAME TO CATEGORY ID
+    // change category name to category id
     if (payload.category) {
       const category = await Category.findOne({
-        // POPULATE
+        // populate
         name: {
           $regex: payload.category,
           $options: 'i',
@@ -201,9 +201,9 @@ const updateOne = async (req, res, next) => {
       }
     }
 
-    // CHANGE TAGS NAME TO TAGS ID
+    // change tags name to tags id
     if (payload.tags && payload.tags.length > 0) {
-      const tags = await Tags.find({
+      const tags = await Tag.find({
         name: {
           $in: payload.tags,
         },
@@ -220,7 +220,7 @@ const updateOne = async (req, res, next) => {
     }
 
     if (image) {
-      // GET IMAGE EXTENSION
+      // get image extension
       const originalExt = image.originalname.split('.')[image.originalname.split('.').length - 1]
 
       const fileName = `${image.filename}.${originalExt}`
