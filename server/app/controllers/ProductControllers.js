@@ -73,9 +73,6 @@ const createOne = async (req, res, next) => {
   let payload = req.body
   const image = req.file
 
-  // console.log('payload:', payload)
-  // console.log('req.file::', req.file)
-
   try {
     // change category name to category id
     if (payload.category) {
@@ -99,9 +96,17 @@ const createOne = async (req, res, next) => {
 
     // change tags name to tags id
     if (payload.tags && payload.tags.length > 0) {
+      const tagsArr = []
+
+      payload.tags.forEach((tag) => {
+        let separated = tag.split(', ')
+
+        separated.forEach((str) => tagsArr.push(str))
+      })
+
       const tags = await Tag.find({
         name: {
-          $in: payload.tags,
+          $in: tagsArr,
         },
       })
 
@@ -203,9 +208,17 @@ const updateOne = async (req, res, next) => {
 
     // change tags name to tags id
     if (payload.tags && payload.tags.length > 0) {
+      const tagsArr = []
+
+      payload.tags.forEach((tag) => {
+        let separated = tag.split(', ')
+
+        separated.forEach((str) => tagsArr.push(str))
+      })
+
       const tags = await Tag.find({
         name: {
-          $in: payload.tags,
+          $in: tagsArr,
         },
       })
 
@@ -241,10 +254,14 @@ const updateOne = async (req, res, next) => {
             fs.unlinkSync(currentImage)
           }
 
-          const result = await Product.findByIdAndUpdate(id, {
-            ...payload,
-            image: fileName,
-          })
+          let result = await Product.findByIdAndUpdate(
+            id,
+            {
+              ...payload,
+              image: fileName,
+            },
+            { new: true }
+          )
 
           return res.status(200).json({
             message: 'Update product successful',
