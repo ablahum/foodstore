@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 
-const { Product, Category, Tags } = require('../models')
+const { Product, Category, Tag } = require('../models')
 
 const getAll = async (req, res, next) => {
   const { page = 1, perPage = 8, tags = [], category = '', q = '' } = req.query
@@ -36,7 +36,7 @@ const getAll = async (req, res, next) => {
 
     // change tags name to tags id
     if (tags.length) {
-      const tagsResult = await Tags.find({
+      const tagsResult = await Tag.find({
         name: {
           $in: tags,
         },
@@ -73,8 +73,8 @@ const createOne = async (req, res, next) => {
   let payload = req.body
   const image = req.file
 
-  // console.log(payload)
-  // console.log(req.file)
+  // console.log('payload:', payload)
+  // console.log('req.file::', req.file)
 
   try {
     // change category name to category id
@@ -99,7 +99,7 @@ const createOne = async (req, res, next) => {
 
     // change tags name to tags id
     if (payload.tags && payload.tags.length > 0) {
-      const tags = await Tags.find({
+      const tags = await Tag.find({
         name: {
           $in: payload.tags,
         },
@@ -119,7 +119,6 @@ const createOne = async (req, res, next) => {
       // get image extension
       const originalExt = image.originalname.split('.')[image.originalname.split('.').length - 1]
 
-      // const fileName = image.filename + '.' + originalExt
       const fileName = `${image.filename}.${originalExt}`
       const _path = image.path
 
@@ -135,6 +134,7 @@ const createOne = async (req, res, next) => {
             ...payload,
             image: fileName,
           })
+
           await product.save()
 
           return res.status(201).json({
@@ -203,7 +203,7 @@ const updateOne = async (req, res, next) => {
 
     // change tags name to tags id
     if (payload.tags && payload.tags.length > 0) {
-      const tags = await Tags.find({
+      const tags = await Tag.find({
         name: {
           $in: payload.tags,
         },
