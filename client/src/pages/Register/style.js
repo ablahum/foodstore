@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import bg from '../../assets/banner-1.jpg'
+import bg from '../../assets/bg.png'
 
 export const Wrapper = styled.div`
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${bg});

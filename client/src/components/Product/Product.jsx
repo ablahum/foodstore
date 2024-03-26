@@ -23,7 +23,7 @@ const Product = () => {
       setLoading(true)
       const res = await getAll()
 
-      setProducts(res.data)
+      setProducts(res.data.products)
       setLoading(false)
     } catch (err) {
       console.log(err)
@@ -63,17 +63,21 @@ const Product = () => {
 
   // search product by tags
   useEffect(() => {
+    let params = ''
+
     if (globalState.tags.length === 2) {
-      getProductByParams(`?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}`)
+      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}`
     } else if (globalState.tags.length === 3) {
-      getProductByParams(`?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}`)
+      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}`
     } else if (globalState.tags.length === 4) {
-      getProductByParams(`?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}&tags[]=${globalState.tags[3]}`)
+      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}&tags[]=${globalState.tags[3]}`
     } else if (globalState.tags.length === 5) {
-      getProductByParams(`?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}&tags[]=${globalState.tags[3]}&tags[]=${globalState.tags[4]}`)
+      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}&tags[]=${globalState.tags[3]}&tags[]=${globalState.tags[4]}`
     } else {
-      getProductByParams(`?tags[]=${globalState.tags}`)
+      params = `?tags[]=${globalState.tags}`
     }
+
+    getProductByParams(params)
   }, [globalState.tags])
 
   // login validation

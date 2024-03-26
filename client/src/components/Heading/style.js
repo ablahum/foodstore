@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import banner from '../../assets/banner-2.jpg'
+import banner from '../../assets/banner.png'
 
 export const Wrapper = styled.div`
   color: var(--white);
