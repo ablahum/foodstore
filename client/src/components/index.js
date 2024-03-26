@@ -20,7 +20,6 @@ export { default as UpdateCategoryBox } from './UpdateCategoryBox'
 export { default as DeleteCategoryBox } from './DeleteCategoryBox'
 export { default as Cart } from './Carts/Cart'
 export { default as EmptyCart } from './Carts/EmptyCart'
-
 export { default as Form } from './Form'
 export { default as Roles } from './Roles'
 export { default as Modal } from './Modal'

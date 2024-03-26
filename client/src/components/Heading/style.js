@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import bgHero from '../../assets/banner-2.jpg'
+import banner from '../../assets/banner-2.jpg'
 
 export const Wrapper = styled.div`
   color: var(--white);
   height: 20em;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bgHero});
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${banner});
   background-size: cover;
   background-position: bottom;
   background-attachment: fixed;
