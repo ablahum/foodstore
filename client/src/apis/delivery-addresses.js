@@ -2,7 +2,7 @@ import axios from 'axios'
 import { config } from '../config'
 
 export const getAll = async () => {
-  return await axios.get(`${config.api_host}/api/delivery-addresses`, {
+  return await axios.get(`${config.apiHost}/api/delivery-addresses`, {
     headers: {
       Authorization: localStorage.getItem('token'),
     },
@@ -10,7 +10,7 @@ export const getAll = async () => {
 }
 
 export const createOne = async (payload) => {
-  return await axios.post(`${config.api_host}/api/delivery-addresses`, payload, {
+  return await axios.post(`${config.apiHost}/api/delivery-addresses`, payload, {
     headers: {
       Authorization: localStorage.getItem('token'),
     },
@@ -18,7 +18,7 @@ export const createOne = async (payload) => {
 }
 
 export const updateOne = async (id, payload) => {
-  return await axios.put(`${config.api_host}/api/delivery-addresses/${id}`, payload, {
+  return await axios.put(`${config.apiHost}/api/delivery-addresses/${id}`, payload, {
     headers: {
       Authorization: localStorage.getItem('token'),
     },
@@ -26,7 +26,7 @@ export const updateOne = async (id, payload) => {
 }
 
 export const deleteOne = async (id) => {
-  return await axios.delete(`${config.api_host}/api/delivery-addresses/${id}`, {
+  return await axios.delete(`${config.apiHost}/api/delivery-addresses/${id}`, {
     headers: {
       Authorization: localStorage.getItem('token'),
     },
