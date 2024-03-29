@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Navigate, Link, useLocation, useNavigate } from 'react-router-dom'
 import { Container, Table, Spinner } from 'react-bootstrap'
-import { Heading } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
 import rupiah from 'rupiah-format'
 import { Main, BackButton } from './style'
+
+import { Heading } from '../../components'
 import { clearItem } from '../../app/cart/actions'
+import { getAll } from '../../apis/orders'
+import { getOne } from '../../apis/invoices'
 
 const Invoice = () => {
   const cartState = useSelector((state) => state.cart)
@@ -22,11 +24,7 @@ const Invoice = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/orders', {
-          headers: {
-            Authorization: localStorage.getItem('token'),
-          },
-        })
+        const res = await getAll()
 
         setOrderId(res.data.data[0]._id)
       } catch (err) {
@@ -40,11 +38,7 @@ const Invoice = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/invoices/${orderId}`, {
-          headers: {
-            Authorization: localStorage.getItem('token'),
-          },
-        })
+        const res = await getOne(orderId)
 
         setData(res.data)
         setLoading(false)
