@@ -7,8 +7,6 @@ import styled from 'styled-components'
 import NewTagsBox from './NewTagsBox'
 import UpdateTagsBox from './UpdateTagsBox'
 import DeleteTagsBox from './DeleteTagsBox'
-
-import axios from 'axios'
 import { getAll } from '../apis/tags'
 
 const UpdateBtn = styled(Button)`

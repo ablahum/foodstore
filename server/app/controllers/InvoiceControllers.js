@@ -4,7 +4,7 @@ const { policyFor } = require('../../utils')
 const { Invoice } = require('../models')
 
 const getOne = async (req, res, next) => {
-  const { order_id } = req.param
+  const { order_id } = req.params
   const user = req.user
 
   try {
