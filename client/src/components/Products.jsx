@@ -3,9 +3,8 @@ import { Spinner, Button } from 'react-bootstrap'
 import { FiEdit } from 'react-icons/fi'
 import { MdDeleteForever } from 'react-icons/md'
 import styled from 'styled-components'
-import axios from 'axios'
 
-import { getAll } from '../apis/products'
+import { getSpecific } from '../apis/products'
 import NewProductBox from './NewProductBox'
 import UpdateProductBox from './UpdateProductBox'
 import DeleteProductBox from './DeleteProductBox'
@@ -54,9 +53,7 @@ const Products = () => {
 
   const getProducts = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/api/products?perPage=100')
-
-      // const res = await getAll()
+      const res = await getSpecific('?perPage=100')
 
       setProducts(res.data.products)
       setLoading(false)
@@ -78,7 +75,10 @@ const Products = () => {
       <div className='mb-3 d-flex justify-content-between'>
         <h2 className='fw-bold fs-3 d-inline mb-0'>LIST OF PRODUCTS</h2>
 
-        <Button className='text-light py-0 px-3' onClick={handleNew}>
+        <Button
+          className='text-light py-0 px-3'
+          onClick={handleNew}
+        >
           ADD NEW PRODUCTS
         </Button>
       </div>
@@ -90,9 +90,16 @@ const Products = () => {
       ) : (
         <Wrapper>
           {products.map((product) => (
-            <div className='row g-0' key={product._id}>
+            <div
+              className='row g-0'
+              key={product._id}
+            >
               <div className='col-md-3'>
-                <img src={`http://localhost:4000/public/${product.image}`} alt={product.name} className='img-fluid rounded-start' />
+                <img
+                  src={`http://localhost:4000/public/${product.image}`}
+                  alt={product.name}
+                  className='img-fluid rounded-start'
+                />
               </div>
 
               <Detail className='col-md-7'>
@@ -108,7 +115,10 @@ const Products = () => {
                   <FiEdit className='fs-5 text-dark' />
                 </Update>
 
-                <Delete onClick={() => handleDelete(product._id)} className='m-0'>
+                <Delete
+                  onClick={() => handleDelete(product._id)}
+                  className='m-0'
+                >
                   <MdDeleteForever className='fs-5 text-dark' />
                 </Delete>
               </div>
@@ -119,9 +129,20 @@ const Products = () => {
         </Wrapper>
       )}
 
-      <NewProductBox trigger={newProduct} setTrigger={setNewProduct} />
-      <UpdateProductBox trigger={updateProduct} setTrigger={setUpdateProduct} id={productId} />
-      <DeleteProductBox trigger={deleteProduct} setTrigger={setDeleteProduct} id={productId} />
+      <NewProductBox
+        trigger={newProduct}
+        setTrigger={setNewProduct}
+      />
+      <UpdateProductBox
+        trigger={updateProduct}
+        setTrigger={setUpdateProduct}
+        id={productId}
+      />
+      <DeleteProductBox
+        trigger={deleteProduct}
+        setTrigger={setDeleteProduct}
+        id={productId}
+      />
     </div>
   )
 }

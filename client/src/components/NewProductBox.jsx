@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import { createOne } from '../apis/products'
 import { getAll as getAllCategory } from '../apis/categories'
+import axios from 'axios'
 // import { getAll as getAllTag } from '../apis/tag'
 
 const Popup = styled.div`
@@ -100,7 +101,7 @@ const NewProductBox = ({ trigger, setTrigger }) => {
       alert(res.data.message)
       setTrigger(false)
     } catch (err) {
-      console.error(err)
+      console.log(err)
     }
   }
 
@@ -113,34 +114,66 @@ const NewProductBox = ({ trigger, setTrigger }) => {
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0 align-self-center'>NAME</Form.Label>
 
-            <Form.Control className='h-50 w-75' type='text' id='name' placeholder='Product name' onChange={(e) => handleChanges(e)} />
+            <Form.Control
+              className='h-50 w-75'
+              type='text'
+              id='name'
+              placeholder='Product name'
+              onChange={(e) => handleChanges(e)}
+            />
           </Form.Group>
 
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0 align-self-center'>PRICE</Form.Label>
 
-            <Form.Control className='h-50 w-75' type='text' id='price' placeholder='Product price' onChange={(e) => handleChanges(e)} />
+            <Form.Control
+              className='h-50 w-75'
+              type='text'
+              id='price'
+              placeholder='Product price'
+              onChange={(e) => handleChanges(e)}
+            />
           </Form.Group>
 
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0'>DESCRIPTION</Form.Label>
 
-            <Form.Control as='textarea' rows={3} className='h-50 w-75' type='text' id='description' placeholder='Product description' onChange={(e) => handleChanges(e)} />
+            <Form.Control
+              as='textarea'
+              rows={3}
+              className='h-50 w-75'
+              type='text'
+              id='description'
+              placeholder='Product description'
+              onChange={(e) => handleChanges(e)}
+            />
           </Form.Group>
 
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0 align-self-center'>IMAGE</Form.Label>
 
-            <Form.Control type='file' id='image' className='h-50 w-75' onChange={(e) => setImage(e.target.files[0])} />
+            <Form.Control
+              type='file'
+              id='image'
+              className='h-50 w-75'
+              onChange={(e) => setImage(e.target.files[0])}
+            />
           </Form.Group>
 
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0 align-self-center'>CATEGORY</Form.Label>
 
-            <Form.Select className='h-50 w-75' id='category' onChange={(e) => handleChanges(e)}>
+            <Form.Select
+              className='h-50 w-75'
+              id='category'
+              onChange={(e) => handleChanges(e)}
+            >
               <option>Product category</option>
               {categories.map((category) => (
-                <option value={category.name} key={category._id}>
+                <option
+                  value={category.name}
+                  key={category._id}
+                >
                   {category.name}
                 </option>
               ))}
@@ -148,7 +181,10 @@ const NewProductBox = ({ trigger, setTrigger }) => {
           </Form.Group>
 
           <Form.Group className='mb-2 d-flex'>
-            <Form.Label className='w-50 m-0 align-self-center' onClick={() => console.log(data)}>
+            <Form.Label
+              className='w-50 m-0 align-self-center'
+              onClick={() => console.log(data)}
+            >
               TAGS
             </Form.Label>
 
@@ -160,13 +196,22 @@ const NewProductBox = ({ trigger, setTrigger }) => {
                   </TagButton>
                 ))}
             </ToggleButtonGroup> */}
-            <Form.Control className='h-50 w-75' type='text' id='tags' placeholder='Product tags' onChange={(e) => handleChanges(e)} />
+            <Form.Control
+              className='h-50 w-75'
+              type='text'
+              id='tags'
+              placeholder='Product tags'
+              onChange={(e) => handleChanges(e)}
+            />
           </Form.Group>
 
           <div className='mt-4 d-flex'>
             <CancelBtn onClick={() => setTrigger(false)}>CANCEL</CancelBtn>
 
-            <ConfirmBtn type='submit' className='m-0'>
+            <ConfirmBtn
+              type='submit'
+              className='m-0'
+            >
               CONFIRM
             </ConfirmBtn>
           </div>

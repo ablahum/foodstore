@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import { updateOne } from '../apis/products'
 import { getAll as getAllCategory } from '../apis/categories'
+import axios from 'axios'
 
 const Popup = styled.div`
   width: 100%;
@@ -95,34 +96,69 @@ const UpdateProductBox = ({ id, trigger, setTrigger }) => {
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0 align-self-center'>NAME</Form.Label>
 
-            <Form.Control className='h-50 w-75' type='text' id='name' value={data.name} onChange={(e) => handleChanges(e)} placeholder='New product name' />
+            <Form.Control
+              className='h-50 w-75'
+              type='text'
+              id='name'
+              value={data.name}
+              onChange={(e) => handleChanges(e)}
+              placeholder='New product name'
+            />
           </Form.Group>
 
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0 align-self-center'>PRICE</Form.Label>
 
-            <Form.Control className='h-50 w-75' type='text' id='price' value={data.price} onChange={(e) => handleChanges(e)} placeholder='New product price' />
+            <Form.Control
+              className='h-50 w-75'
+              type='text'
+              id='price'
+              value={data.price}
+              onChange={(e) => handleChanges(e)}
+              placeholder='New product price'
+            />
           </Form.Group>
 
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0'>DESCRIPTION</Form.Label>
 
-            <Form.Control as='textarea' rows={3} className='h-50 w-75' type='text' id='description' value={data.description} onChange={(e) => handleChanges(e)} placeholder='New product description' />
+            <Form.Control
+              as='textarea'
+              rows={3}
+              className='h-50 w-75'
+              type='text'
+              id='description'
+              value={data.description}
+              onChange={(e) => handleChanges(e)}
+              placeholder='New product description'
+            />
           </Form.Group>
 
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0 align-self-center'>IMAGE</Form.Label>
 
-            <Form.Control type='file' id='image' className='h-50 w-75' onChange={(e) => setImage(e.target.files[0])} />
+            <Form.Control
+              type='file'
+              id='image'
+              className='h-50 w-75'
+              onChange={(e) => setImage(e.target.files[0])}
+            />
           </Form.Group>
 
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0 align-self-center'>CATEGORY</Form.Label>
 
-            <Form.Select className='h-50 w-75' id='category' onChange={(e) => handleChanges(e)}>
+            <Form.Select
+              className='h-50 w-75'
+              id='category'
+              onChange={(e) => handleChanges(e)}
+            >
               <option>New product category</option>
               {categories.map((category) => (
-                <option value={category.name} key={category._id}>
+                <option
+                  value={category.name}
+                  key={category._id}
+                >
                   {category.name}
                 </option>
               ))}
@@ -132,13 +168,23 @@ const UpdateProductBox = ({ id, trigger, setTrigger }) => {
           <Form.Group className='mb-2 d-flex'>
             <Form.Label className='w-50 m-0 align-self-center'>TAGS</Form.Label>
 
-            <Form.Control className='h-50 w-75' type='text' id='tags' value={data.tags} onChange={(e) => handleChanges(e)} placeholder='New product tags' />
+            <Form.Control
+              className='h-50 w-75'
+              type='text'
+              id='tags'
+              value={data.tags}
+              onChange={(e) => handleChanges(e)}
+              placeholder='New product tags'
+            />
           </Form.Group>
 
           <div className='mt-4 d-flex'>
             <CancelBtn onClick={() => setTrigger(false)}>CANCEL</CancelBtn>
 
-            <ConfirmBtn type='submit' className='m-0'>
+            <ConfirmBtn
+              type='submit'
+              className='m-0'
+            >
               CONFIRM
             </ConfirmBtn>
           </div>

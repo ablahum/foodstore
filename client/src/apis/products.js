@@ -2,7 +2,7 @@ import axios from 'axios'
 import { config } from '../config'
 
 export const getAll = async () => {
-  return await axios.get(`${config.apiHost}/api/products`)
+  return await axios.get(`${config.apiHost}/api/products}`)
 }
 
 export const getSpecific = async (params) => {

@@ -55,7 +55,7 @@ function App() {
               />
 
               <Route
-                path='category'
+                path='categories'
                 element={<CategoryList />}
               />
 
