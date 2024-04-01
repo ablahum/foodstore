@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 
 import { roleChanges, userIdChanges } from '../../app/myReducer/action'
 import { login } from '../../apis/auth'
-import { Form, Modal } from '../../components'
+import { Form, Notification } from '../../components'
 import { Wrapper, FormWrapper } from './style'
 import { validateEmail } from '../../utils'
 
@@ -95,7 +95,7 @@ const Login = () => {
         </p>
       </FormWrapper>
 
-      <Modal
+      <Notification
         show={show}
         handleClose={handleClose}
         title={messages}

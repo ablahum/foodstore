@@ -92,7 +92,7 @@ const Product = () => {
   }
 
   return (
-    <div>
+    <>
       {loading ? (
         <div className='text-center mt-5'>
           <Spinner animation='border' />
@@ -139,7 +139,7 @@ const Product = () => {
             ))}
         </Row>
       )}
-    </div>
+    </>
   )
 }
 

@@ -4,10 +4,8 @@ import { FiEdit } from 'react-icons/fi'
 import { MdDeleteForever } from 'react-icons/md'
 import styled from 'styled-components'
 
-import NewTagsBox from './NewTagsBox'
-import UpdateTagsBox from './UpdateTagsBox'
-import DeleteTagsBox from './DeleteTagsBox'
-import { getAll } from '../apis/tags'
+import { Modal, NewTagsBox, UpdateTagsBox, DeleteTagsBox } from './Modal'
+import { getAll, createOne, updateOne, deleteOne } from '../apis/tags'
 
 const UpdateBtn = styled(Button)`
   background-color: transparent;
@@ -25,7 +23,8 @@ const DeleteBtn = styled(Button)`
 
 const Tags = () => {
   const [tags, setTags] = useState([])
-  const [tagsId, setTagsId] = useState('')
+  const [tagName, setTagName] = useState('')
+  const [tagId, setTagId] = useState('')
 
   const [loading, setLoading] = useState(true)
 
@@ -34,13 +33,15 @@ const Tags = () => {
   const [deleteTags, setDeleteTags] = useState(false)
 
   const handleNew = () => setNewTags(true)
+
   const handleUpdate = (params) => {
     setUpdateTags(true)
-    setTagsId(params)
+    setTagId(params)
   }
+
   const handleDelete = (params) => {
     setDeleteTags(true)
-    setTagsId(params)
+    setTagId(params)
   }
 
   const getTags = async () => {
@@ -48,6 +49,45 @@ const Tags = () => {
 
     setTags(res.data)
     setLoading(false)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const res = await createOne({ name: tagName })
+
+      alert(res.data.message)
+      setNewTags(false)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const handleUpdateTag = async (e) => {
+    e.preventDefault()
+
+    try {
+      const res = await updateOne(tagId, { name: tagName })
+
+      alert(res.data.message)
+      setUpdateTags(false)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const handleDeleteTag = async (e) => {
+    e.preventDefault()
+
+    try {
+      const res = await deleteOne(tagId)
+
+      alert(res.data.message)
+      setDeleteTags(false)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   useEffect(() => {
@@ -106,19 +146,27 @@ const Tags = () => {
         </>
       )}
 
-      <NewTagsBox
+      <Modal
         trigger={newTags}
         setTrigger={setNewTags}
+        type={'tag'}
+        setName={setTagName}
+        submit={handleSubmit}
       />
-      <UpdateTagsBox
+      <Modal
         trigger={updateTags}
         setTrigger={setUpdateTags}
-        id={tagsId}
+        type={'tag'}
+        isUpdate
+        setName={setTagName}
+        submit={handleUpdateTag}
       />
-      <DeleteTagsBox
+      <Modal
         trigger={deleteTags}
         setTrigger={setDeleteTags}
-        id={tagsId}
+        type={'tag'}
+        isDelete
+        submit={handleDeleteTag}
       />
     </div>
   )

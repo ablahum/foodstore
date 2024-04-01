@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { roleChanges, userIdChanges } from '../../app/myReducer/action'
-import { Category, Search, NavBar, Modal, Carts } from '../../components'
+import { Category, Search, NavBar, Notification, Carts } from '../../components'
 import { getAll } from '../../apis/categories'
 import { logout } from '../../apis/auth'
 import { Wrapper, Brand1, Brand2 } from './style'
@@ -89,7 +89,7 @@ const Header = () => {
         setTrigger={setCartTrigger}
       />
 
-      <Modal
+      <Notification
         show={show}
         handleClose={handleClose}
         title={notification.title}

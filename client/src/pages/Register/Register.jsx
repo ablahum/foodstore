@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 
 import { register } from '../../apis/auth'
-import { Form, Modal } from '../../components'
+import { Form, Notification } from '../../components'
 import { Wrapper, FormWrapper } from './style'
 import { validateEmail } from '../../utils'
 
@@ -113,7 +113,7 @@ const Register = () => {
         </p>
       </FormWrapper>
 
-      <Modal
+      <Notification
         show={show}
         handleClose={handleClose}
         title={messages}
