@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import { store, persistor } from './app/store'
-import { Header, Footer, Profile, Order, Products, CategoryList, ProfileTags } from './components'
+import { Header, Footer, Profile, Order, Products, CategoryList, Tags } from './components'
 import { Register, Login, Home, Account, Cart, Checkout, Invoice } from './pages'
 
 const Layout = ({ items }) => (
@@ -61,7 +61,7 @@ function App() {
 
               <Route
                 path='tags'
-                element={<ProfileTags />}
+                element={<Tags />}
               />
             </Route>
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 
-import { Heading, Pagination, Tags, Product } from '../../components'
+import { Heading, Pagination, Tag, Product } from '../../components'
 import { getAll } from '../../apis/tags'
 import { Wrapper, Top } from './style'
 
@@ -30,7 +30,7 @@ const Home = () => {
         <Top>
           <Pagination />
 
-          <Tags tags={tags} />
+          <Tag tags={tags} />
         </Top>
 
         <Product />
