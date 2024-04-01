@@ -1,7 +1,7 @@
 import { Form as Wrapper } from 'react-bootstrap'
 
 import { ErrorMessages } from '../../components'
-import { SubmitBtn } from './style'
+import { Submit } from './style'
 import Role from '../Roles'
 
 const { Group, Label, Control } = Wrapper
@@ -65,13 +65,13 @@ const Form = ({ register, messages, data, role, handleChanges, handleSubmit }) =
 
     {messages.length > 0 && <ErrorMessages errors={messages} />}
 
-    <SubmitBtn
+    <Submit
       href='#'
       className='mt-3'
       onClick={(e) => handleSubmit(e)}
     >
-      SIGN IN
-    </SubmitBtn>
+      {register ? 'SIGN UP' : 'SIGN IN'}
+    </Submit>
   </Wrapper>
 )
 

@@ -42,31 +42,36 @@ const Tags = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const name = tagName
 
     let message = []
 
-    if (tagName.length === 0) message = [...message, 'Name cannot be empty']
+    if (name.length === 0) message = [...message, 'Name cannot be empty']
 
     if (message.length > 0) {
       setMessages(message)
     } else {
       try {
+        // console.log({ name })
+        // console.log({ tagName })
+
         let res = {}
 
         if (submitType === 'create') {
-          res = await createOne({ name: tagName })
+          res = await createOne({ name })
           setCreateTag(false)
         } else if (submitType === 'update') {
-          res = await updateOne(tagId, { name: tagName })
+          res = await updateOne(tagId, { name })
           setUpdateTag(false)
-          setTagId('')
         } else if (submitType === 'delete') {
           res = await deleteOne(tagId)
           setDeleteTag(false)
-          setTagId('')
         }
 
         alert(res.data.message)
+        setTagName('')
+        setTagId('')
+        setMessages([])
         getTags()
       } catch (err) {
         console.error(err)
@@ -100,7 +105,7 @@ const Tags = () => {
           {tags.map((tag) => (
             <div key={tag._id}>
               <div className='d-flex justify-content-between p-3'>
-                <div className=''>
+                <div>
                   <h5 className='mb-2 text-muted'>Name:</h5>
 
                   <h3 className='m-0 fs-4 fw-bold'>{tag.name}</h3>
