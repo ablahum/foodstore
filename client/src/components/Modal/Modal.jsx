@@ -38,7 +38,7 @@ const Confirm = styled(Button)`
   border: none;
 `
 
-const Modal = ({ type, trigger, setTrigger, setName, submit, isUpdate, isDelete }) => {
+const Modal = ({ messages, type, trigger, setTrigger, setName, submit, isUpdate, isDelete }) => {
   return trigger ? (
     <Popup>
       <Wrapper>
@@ -54,7 +54,7 @@ const Modal = ({ type, trigger, setTrigger, setName, submit, isUpdate, isDelete 
             Are you sure want to delete {type}?
           </Alert>
         ) : (
-          <Form>
+          <Form messages={messages}>
             <Group className='d-flex'>
               <Label className='w-50 m-0 align-self-center'>NAME</Label>
 

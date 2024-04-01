@@ -4,90 +4,81 @@ import { FiEdit } from 'react-icons/fi'
 import { MdDeleteForever } from 'react-icons/md'
 
 import { Modal } from '../Modal'
-import { getAll, createOne, updateOne, deleteOne } from '../../apis/tags'
+import { getAll, createOne, updateOne, deleteOne } from '../../apis/categories'
 
-const Tags = () => {
-  const [tags, setTags] = useState([])
-  const [tagName, setTagName] = useState('')
-  const [tagId, setTagId] = useState('')
+const Categories = () => {
+  const [categories, setCategories] = useState([])
+  const [categoryName, setCategoryName] = useState('')
+  const [categoryId, setCategoryId] = useState('')
 
   const [submitType, setSubmitType] = useState('')
 
   const [isLoading, setIsLoading] = useState(true)
-  const [messages, setMessages] = useState([])
 
-  const [createTag, setCreateTag] = useState(false)
-  const [updateTag, setUpdateTag] = useState(false)
-  const [deleteTag, setDeleteTag] = useState(false)
+  const [createCategory, setCreateCategory] = useState(false)
+  const [updateCategory, setUpdateCategory] = useState(false)
+  const [deleteCategory, setDeleteCategory] = useState(false)
 
-  const getTags = async () => {
+  const getCategories = async () => {
     const res = await getAll()
 
-    setTags(res.data)
+    setCategories(res.data)
     setIsLoading(false)
   }
 
   const triggerModal = (type, params = '') => {
     setSubmitType(type)
-    setTagId(params)
+    setCategoryId(params)
 
     if (type === 'create') {
-      setCreateTag(true)
+      setCreateCategory(true)
     } else if (type === 'update') {
-      setUpdateTag(true)
+      setUpdateCategory(true)
     } else if (type === 'delete') {
-      setDeleteTag(true)
+      setDeleteCategory(true)
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    let message = []
+    try {
+      let res = {}
 
-    if (tagName.length === 0) message = [...message, 'Name cannot be empty']
-
-    if (message.length > 0) {
-      setMessages(message)
-    } else {
-      try {
-        let res = {}
-
-        if (submitType === 'create') {
-          res = await createOne({ name: tagName })
-          setCreateTag(false)
-        } else if (submitType === 'update') {
-          res = await updateOne(tagId, { name: tagName })
-          setUpdateTag(false)
-          setTagId('')
-        } else if (submitType === 'delete') {
-          res = await deleteOne(tagId)
-          setDeleteTag(false)
-          setTagId('')
-        }
-
-        alert(res.data.message)
-        getTags()
-      } catch (err) {
-        console.error(err)
+      if (submitType === 'create') {
+        res = await createOne({ name: categoryName })
+        setCreateCategory(false)
+      } else if (submitType === 'update') {
+        res = await updateOne(categoryId, { name: categoryName })
+        setUpdateCategory(false)
+        setCategoryId('')
+      } else if (submitType === 'delete') {
+        res = await deleteOne(categoryId)
+        setDeleteCategory(false)
+        setCategoryId('')
       }
+
+      alert(res.data.message)
+      getCategories()
+    } catch (err) {
+      console.error(err)
     }
   }
 
   useEffect(() => {
-    getTags()
+    getCategories()
   }, [])
 
   return (
     <>
       <div className='mb-3 d-flex justify-content-between'>
-        <h2 className='fw-bold fs-3 d-inline mb-0'>LIST OF TAGS</h2>
+        <h2 className='fw-bold fs-3 d-inline mb-0'>LIST OF CATEGORIES</h2>
 
         <Button
           className='text-light py-0 px-3'
           onClick={() => triggerModal('create')}
         >
-          ADD NEW TAGS
+          ADD NEW CATEGORIES
         </Button>
       </div>
 
@@ -97,7 +88,7 @@ const Tags = () => {
         </div>
       ) : (
         <>
-          {tags.map((tag) => (
+          {categories.map((tag) => (
             <div key={tag._id}>
               <div className='d-flex justify-content-between p-3'>
                 <div className=''>
@@ -130,32 +121,29 @@ const Tags = () => {
       )}
 
       <Modal
-        trigger={createTag}
-        setTrigger={setCreateTag}
-        type={'tag'}
-        setName={setTagName}
+        trigger={createCategory}
+        setTrigger={setCreateCategory}
+        type={'category'}
+        setName={setCategoryName}
         submit={handleSubmit}
-        messages={messages}
       />
       <Modal
-        trigger={updateTag}
-        setTrigger={setUpdateTag}
-        type={'tag'}
+        trigger={updateCategory}
+        setTrigger={setUpdateCategory}
+        type={'category'}
         isUpdate
-        setName={setTagName}
+        setName={setCategoryName}
         submit={handleSubmit}
-        messages={messages}
       />
       <Modal
-        trigger={deleteTag}
-        setTrigger={setDeleteTag}
-        type={'tag'}
+        trigger={deleteCategory}
+        setTrigger={setDeleteCategory}
+        type={'category'}
         isDelete
         submit={handleSubmit}
-        messages={messages}
       />
     </>
   )
 }
 
-export default Tags
+export default Categories
