@@ -1,6 +1,8 @@
 import { Alert, Form, Button } from 'react-bootstrap'
 import styled from 'styled-components'
 
+import { ErrorMessages } from '../../components'
+
 const { Group, Label, Control } = Form
 
 const Popup = styled.div`
@@ -22,6 +24,8 @@ const Wrapper = styled.div`
   background-color: #fff;
   box-shadow: 0px 10px 50px -15px rgba(0, 0, 0, 1);
   position: relative;
+  display: flex;
+  flex-direction: column;
 `
 
 const Cancel = styled(Button)`
@@ -54,8 +58,8 @@ const Modal = ({ messages, type, trigger, setTrigger, setName, submit, isUpdate,
             Are you sure want to delete {type}?
           </Alert>
         ) : (
-          <Form messages={messages}>
-            <Group className='d-flex'>
+          <Form>
+            <Group className='d-flex mb-3'>
               <Label className='w-50 m-0 align-self-center'>NAME</Label>
 
               <Control
@@ -68,7 +72,9 @@ const Modal = ({ messages, type, trigger, setTrigger, setName, submit, isUpdate,
             </Group>
           </Form>
         )}
-        <div className='mt-4 d-flex'>
+        <div className='align-self-center'>{messages.length > 0 ? <ErrorMessages errors={messages} /> : ''}</div>
+
+        <div className='mt-3 d-flex'>
           <Cancel onClick={() => setTrigger(false)}>CANCEL</Cancel>
 
           <Confirm
