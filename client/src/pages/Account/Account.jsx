@@ -20,7 +20,7 @@ const Account = () => {
     <Wrapper>
       <Heading title='ACCOUNT' />
 
-      <Container className='py-5'>
+      <Container className='py-md-5 py-4'>
         <div className='d-flex justify-content-between'>
           <div className='w-25'>
             <Navigator />
