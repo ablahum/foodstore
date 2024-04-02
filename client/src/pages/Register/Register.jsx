@@ -52,7 +52,7 @@ const Register = () => {
         setMessages([res.data.message])
         setShow(true)
       } catch (err) {
-        console.log(err)
+        console.error(err)
       }
     }
   }

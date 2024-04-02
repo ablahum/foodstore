@@ -25,6 +25,7 @@ export const Title = styled.h1`
   font-size: 6rem;
   font-family: var(--serif);
   letter-spacing: 2rem;
+  margin: 0;
 
   @media screen and (max-width: 767px) {
     font-size: 4rem;

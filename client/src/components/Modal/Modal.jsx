@@ -1,89 +1,75 @@
-import { Alert, Form, Button } from 'react-bootstrap'
-import styled from 'styled-components'
+import { Alert, Form } from 'react-bootstrap'
 
 import { ErrorMessages } from '../../components'
+import { Wrapper, Popup, Cancel, Confirm } from './style'
 
 const { Group, Label, Control } = Form
 
-const Popup = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
-`
-
-const Wrapper = styled.div`
-  width: 45em;
-  border-radius: 10px;
-  padding: 2em;
-  background-color: #fff;
-  box-shadow: 0px 10px 50px -15px rgba(0, 0, 0, 1);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-`
-
-const Cancel = styled(Button)`
-  width: 40%;
-  background-color: transparent;
-  font-weight: 600;
-  margin-right: 1em;
-`
-
-const Confirm = styled(Button)`
-  width: 60%;
-  color: #fff;
-  font-weight: 600;
-  border: none;
-`
-
-const Modal = ({ messages, type, trigger, setTrigger, setName, submit, isUpdate, isDelete }) => {
+const Modal = ({ title, messages, type, trigger, setTrigger, setName, submit, isUpdate, isDelete, notification, message, value, name }) => {
   return trigger ? (
     <Popup>
       <Wrapper>
-        <h2 className='fw-bold mb-4'>
-          {isUpdate ? 'UPDATE' : isDelete ? 'DELETE' : 'ADD NEW'}
-          <span className='text-uppercase'> {type}</span>
-        </h2>
-        {isDelete ? (
-          <Alert
-            variant='danger'
-            className='text-center fw-bold fs-5 mt-3 mb-0 py-2'
-          >
-            Are you sure want to delete {type}?
-          </Alert>
+        {notification ? (
+          <>
+            <h2 className='fw-bold fs-3 mb-4 align-self-center'>{title}!</h2>
+
+            {message ? <p className='m-0'>{message}</p> : ''}
+
+            <Confirm
+              onClick={() => setTrigger(false)}
+              className='m-0 w-100 text-uppercase'
+            >
+              ok
+            </Confirm>
+          </>
         ) : (
-          <Form>
-            <Group className='d-flex mb-3'>
-              <Label className='w-50 m-0 align-self-center'>NAME</Label>
+          <>
+            <h2 className='fw-bold mb-4 text-uppercase'>
+              {isUpdate ? 'update' : isDelete ? 'delete' : 'add new'}
+              <span> {type}</span>
+            </h2>
+            {isDelete ? (
+              <Alert
+                variant='danger'
+                className='text-center fw-bold fs-5 mt-3 mb-0 py-2'
+              >
+                <span className='text-capitalize'>are</span> you sure want to delete '{name}'?
+              </Alert>
+            ) : (
+              <Form>
+                <Group className='d-flex mb-3'>
+                  <Label className='w-50 m-0 align-self-center text-uppercase'>name</Label>
 
-              <Control
-                className='w-50 h-50 w-75'
-                type='text'
-                id='nama'
-                placeholder={`${type.charAt(0).toUpperCase() + type.slice(1)} name...`}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </Group>
-          </Form>
+                  <Control
+                    className='w-50 h-50 w-75'
+                    type='text'
+                    id='nama'
+                    placeholder={`${type.charAt(0).toUpperCase() + type.slice(1)} name...`}
+                    onChange={(e) => setName(e.target.value)}
+                    value={isUpdate ? value : undefined}
+                  />
+                </Group>
+              </Form>
+            )}
+            {isDelete ? '' : <div className='align-self-center'>{messages.length > 0 ? <ErrorMessages errors={messages} /> : ''}</div>}
+
+            <div className='mt-3 d-flex'>
+              <Cancel
+                onClick={() => setTrigger(false)}
+                className='text-uppercase'
+              >
+                cancel
+              </Cancel>
+
+              <Confirm
+                onClick={(e) => submit(e)}
+                className='m-0 text-uppercase'
+              >
+                confirm
+              </Confirm>
+            </div>
+          </>
         )}
-        <div className='align-self-center'>{messages.length > 0 ? <ErrorMessages errors={messages} /> : ''}</div>
-
-        <div className='mt-3 d-flex'>
-          <Cancel onClick={() => setTrigger(false)}>CANCEL</Cancel>
-
-          <Confirm
-            onClick={(e) => submit(e)}
-            className='m-0'
-          >
-            CONFIRM
-          </Confirm>
-        </div>
       </Wrapper>
     </Popup>
   ) : (
