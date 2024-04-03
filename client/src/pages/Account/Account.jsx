@@ -21,12 +21,12 @@ const Account = () => {
       <Heading title='ACCOUNT' />
 
       <Container className='py-md-5 py-4'>
-        <div className='d-flex justify-content-between'>
-          <div className='w-25'>
+        <div className='d-flex flex-column flex-md-row justify-content-between'>
+          <div className='me-md-4 mt-md-0 mb-md-0 mt-2 mb-4'>
             <Navigator />
           </div>
 
-          <div className='px-3 w-75'>
+          <div className='flex-grow-1'>
             <Outlet />
           </div>
         </div>
