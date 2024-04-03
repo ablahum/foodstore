@@ -106,7 +106,7 @@ const Product = () => {
                 lg={4}
                 md={6}
                 sm={12}
-                className='my-4'
+                className='my-3'
                 key={product._id}
               >
                 <Body>
