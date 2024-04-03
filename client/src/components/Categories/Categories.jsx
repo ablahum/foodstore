@@ -38,7 +38,6 @@ const Categories = () => {
     const name = categoryName
 
     let message = []
-
     if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name cannot be empty']
 
     if (message.length > 0) {
@@ -91,35 +90,32 @@ const Categories = () => {
       ) : (
         <>
           {categories.map((tag) => (
-            <div
-              key={tag._id}
-              className='d-flex justify-content-between p-3'
-            >
-              {/* <div className='d-flex justify-content-between p-3'> */}
-              <div>
-                <h5 className='mb-2 text-muted text-capitalize'>name:</h5>
+            <div key={tag._id}>
+              <div className='d-flex justify-content-between p-2'>
+                <div>
+                  <h5 className='mb-2 text-muted text-capitalize'>name:</h5>
 
-                <h3 className='m-0 fs-4 fw-bold'>{tag.name}</h3>
+                  <h3 className='m-0 fs-4 fw-bold'>{tag.name}</h3>
+                </div>
+
+                <div className='d-flex'>
+                  <Button
+                    onClick={() => triggerModal('update', tag._id, tag.name)}
+                    className='bg-transparent align-self-center me-2'
+                  >
+                    <FiEdit className='fs-5 text-dark' />
+                  </Button>
+
+                  <Button
+                    onClick={() => triggerModal('delete', tag._id, tag.name)}
+                    className='bg-transparent align-self-center'
+                  >
+                    <MdDeleteForever className='fs-5 text-dark' />
+                  </Button>
+                </div>
               </div>
 
-              <div className='d-flex'>
-                <Button
-                  onClick={() => triggerModal('update', tag._id, tag.name)}
-                  className='bg-transparent align-self-center me-2'
-                >
-                  <FiEdit className='fs-5 text-dark' />
-                </Button>
-
-                <Button
-                  onClick={() => triggerModal('delete', tag._id, tag.name)}
-                  className='bg-transparent align-self-center'
-                >
-                  <MdDeleteForever className='fs-5 text-dark' />
-                </Button>
-              </div>
-              {/* </div> */}
-
-              <hr className='mt-0 mb-3' />
+              <hr className='mt-2 mb-3' />
             </div>
           ))}
         </>

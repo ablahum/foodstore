@@ -92,7 +92,7 @@ const Tags = () => {
         <>
           {tags.map((tag) => (
             <div key={tag._id}>
-              <div className='d-flex justify-content-between p-3'>
+              <div className='d-flex justify-content-between p-2'>
                 <div>
                   <h5 className='mb-2 text-muted text-capitalize'>name:</h5>
 
@@ -116,7 +116,7 @@ const Tags = () => {
                 </div>
               </div>
 
-              <hr className='mt-0 mb-3' />
+              <hr className='mt-2 mb-3' />
             </div>
           ))}
         </>
