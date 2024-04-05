@@ -10,8 +10,8 @@ const Tags = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const [tags, setTags] = useState([])
-  const [tagName, setTagName] = useState('')
   const [tagId, setTagId] = useState('')
+  const [tagData, setTagData] = useState('')
 
   const [submitType, setSubmitType] = useState('')
   const [modalType, setModalType] = useState('')
@@ -30,12 +30,12 @@ const Tags = () => {
     setModalType(type)
     setSubmitType(type)
     setTagId(id)
-    setTagName(name)
+    setTagData(name)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const name = tagName
+    const name = tagData
 
     let message = []
 
@@ -58,7 +58,7 @@ const Tags = () => {
         setMessages([res.data.message])
         setModalType('')
         setSubmitType('')
-        setTagName('')
+        setTagData('')
         setTagId('')
         getTags()
       } catch (err) {
@@ -127,7 +127,7 @@ const Tags = () => {
           trigger={modalType === 'create'}
           setTrigger={setModalType}
           type={'tag'}
-          handleChanges={setTagName}
+          handleChanges={setTagData}
           submit={handleSubmit}
           messages={messages}
         />
@@ -137,8 +137,8 @@ const Tags = () => {
           setTrigger={setModalType}
           type={'tag'}
           isUpdate
-          name={tagName}
-          handleChanges={setTagName}
+          name={tagData}
+          handleChanges={setTagData}
           submit={handleSubmit}
           messages={messages}
         />
@@ -150,7 +150,7 @@ const Tags = () => {
           isDelete
           submit={handleSubmit}
           messages={messages}
-          modalFor={tagName}
+          modalFor={tagData}
         />
       )}
 

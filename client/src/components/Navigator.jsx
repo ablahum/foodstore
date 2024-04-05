@@ -16,28 +16,28 @@ const Navigator = () => {
         <Item as='li'>
           <Link
             to='profile'
-            className='text-decoration-none'
+            className='text-decoration-none text-uppercase'
           >
-            PROFILE SETTING
+            profile setting
           </Link>
         </Item>
 
         <Item as='li'>
-          {globalState.role === 'admin' ? (
+          {/* {globalState.role === 'admin' ? (
             <Link
               to='order'
-              className='text-decoration-none'
+              className='text-decoration-none text-uppercase'
             >
               ORDER HISTORY
             </Link>
-          ) : (
-            <Link
-              to='order'
-              className='text-decoration-none'
-            >
-              ORDER HISTORY
-            </Link>
-          )}
+          ) : ( */}
+          <Link
+            to='order'
+            className='text-decoration-none text-uppercase'
+          >
+            order history
+          </Link>
+          {/* )} */}
         </Item>
 
         {globalState.role === 'admin' ? (
@@ -45,27 +45,27 @@ const Navigator = () => {
             <Item as='li'>
               <Link
                 to='products'
-                className='text-decoration-none'
+                className='text-decoration-none text-uppercase'
               >
-                MANAGE PRODUCTS
+                manage products
               </Link>
             </Item>
 
             <Item as='li'>
               <Link
                 to='categories'
-                className='text-decoration-none'
+                className='text-decoration-none text-uppercase'
               >
-                MANAGE CATEGORIES
+                manage categories
               </Link>
             </Item>
 
             <Item as='li'>
               <Link
                 to='tags'
-                className='text-decoration-none'
+                className='text-decoration-none text-uppercase'
               >
-                MANAGE TAGS
+                manage tags
               </Link>
             </Item>
           </>
