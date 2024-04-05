@@ -127,7 +127,7 @@ const Tags = () => {
           trigger={modalType === 'create'}
           setTrigger={setModalType}
           type={'tag'}
-          setName={setTagName}
+          handleChanges={setTagName}
           submit={handleSubmit}
           messages={messages}
         />
@@ -137,8 +137,8 @@ const Tags = () => {
           setTrigger={setModalType}
           type={'tag'}
           isUpdate
-          value={tagName}
-          setName={setTagName}
+          name={tagName}
+          handleChanges={setTagName}
           submit={handleSubmit}
           messages={messages}
         />
@@ -150,7 +150,7 @@ const Tags = () => {
           isDelete
           submit={handleSubmit}
           messages={messages}
-          name={tagName}
+          modalFor={tagName}
         />
       )}
 

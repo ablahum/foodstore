@@ -126,7 +126,7 @@ const Categories = () => {
           trigger={modalType === 'create'}
           setTrigger={setModalType}
           type={'category'}
-          setName={setCategoryName}
+          handleChanges={setCategoryName}
           submit={handleSubmit}
           messages={messages}
         />
@@ -136,8 +136,8 @@ const Categories = () => {
           setTrigger={setModalType}
           type={'category'}
           isUpdate
-          value={categoryName}
-          setName={setCategoryName}
+          name={categoryName}
+          handleChanges={setCategoryName}
           submit={handleSubmit}
           messages={messages}
         />
@@ -149,7 +149,7 @@ const Categories = () => {
           isDelete
           submit={handleSubmit}
           messages={messages}
-          name={categoryName}
+          modalFor={categoryName}
         />
       )}
 
