@@ -5,7 +5,34 @@ import { Wrapper, Popup, Cancel, Confirm } from './style'
 
 const { Group, Label, Control } = Form
 
-const Modal = ({ title, messages, type, trigger, setTrigger, submit, isUpdate, isDelete, notification, message, name, kelurahan, kecamatan, kabupaten, provinsi, detail, modalFor, isAddress, handleChanges }) => {
+const Modal = ({
+  title,
+  messages,
+  type,
+  trigger,
+  setTrigger,
+  submit,
+  isUpdate,
+  isDelete,
+  notification,
+  message,
+  name,
+  kelurahan,
+  kecamatan,
+  kabupaten,
+  provinsi,
+  detail,
+  modalFor,
+  isAddress,
+  handleChanges,
+  isProduct,
+  setImage,
+  price,
+  description,
+  image,
+  category,
+  tags,
+}) => {
   return trigger ? (
     <Popup>
       <Wrapper>
@@ -44,7 +71,7 @@ const Modal = ({ title, messages, type, trigger, setTrigger, submit, isUpdate, i
                     className='w-50 h-50 w-75'
                     type='text'
                     id='nama'
-                    placeholder='Nama alamat'
+                    placeholder='Nama alamat...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? name : undefined}
                   />
@@ -57,7 +84,7 @@ const Modal = ({ title, messages, type, trigger, setTrigger, submit, isUpdate, i
                     className='w-50 h-50 w-75'
                     type='text'
                     id='kelurahan'
-                    placeholder='Kelurahan'
+                    placeholder='Kelurahan...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? kelurahan : undefined}
                   />
@@ -70,7 +97,7 @@ const Modal = ({ title, messages, type, trigger, setTrigger, submit, isUpdate, i
                     className='w-50 h-50 w-75'
                     type='text'
                     id='kecamatan'
-                    placeholder='Kecamatan'
+                    placeholder='Kecamatan...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? kecamatan : undefined}
                   />
@@ -83,7 +110,7 @@ const Modal = ({ title, messages, type, trigger, setTrigger, submit, isUpdate, i
                     className='w-50 h-50 w-75'
                     type='text'
                     id='kabupaten'
-                    placeholder='Kabupaten'
+                    placeholder='Kabupaten...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? kabupaten : undefined}
                   />
@@ -96,7 +123,7 @@ const Modal = ({ title, messages, type, trigger, setTrigger, submit, isUpdate, i
                     className='w-50 h-50 w-75'
                     type='text'
                     id='provinsi'
-                    placeholder='Provinsi'
+                    placeholder='Provinsi...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? provinsi : undefined}
                   />
@@ -111,9 +138,90 @@ const Modal = ({ title, messages, type, trigger, setTrigger, submit, isUpdate, i
                     className='w-75'
                     type='text'
                     id='detail'
-                    placeholder='Detail alamat'
+                    placeholder='Detail alamat...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? detail : undefined}
+                  />
+                </Group>
+              </Form>
+            ) : isProduct ? (
+              <Form>
+                <Group className='mb-2 d-flex'>
+                  <Label className='w-50 m-0 align-self-center text-uppercase'>name</Label>
+
+                  <Control
+                    className='h-50 w-75'
+                    type='text'
+                    id='name'
+                    placeholder={`${type.charAt(0).toUpperCase() + type.slice(1)} name...`}
+                    onChange={(e) => handleChanges(e)}
+                    value={isUpdate ? name : undefined}
+                  />
+                </Group>
+
+                <Group className='mb-2 d-flex'>
+                  <Label className='w-50 m-0 align-self-center text-uppercase'>price</Label>
+
+                  <Control
+                    className='h-50 w-75'
+                    type='text'
+                    id='price'
+                    placeholder={`${type.charAt(0).toUpperCase() + type.slice(1)} price...`}
+                    onChange={(e) => handleChanges(e)}
+                    value={isUpdate ? price : undefined}
+                  />
+                </Group>
+
+                <Group className='mb-2 d-flex'>
+                  <Label className='w-50 m-0 text-uppercase'>description</Label>
+
+                  <Control
+                    as='textarea'
+                    rows={3}
+                    className='h-50 w-75'
+                    type='text'
+                    id='description'
+                    placeholder={`${type.charAt(0).toUpperCase() + type.slice(1)} description...`}
+                    onChange={(e) => handleChanges(e)}
+                    value={isUpdate ? description : undefined}
+                  />
+                </Group>
+
+                <Group className='mb-2 d-flex'>
+                  <Label className='w-50 m-0 align-self-center text-uppercase'>image</Label>
+
+                  <Control
+                    type='file'
+                    id='image'
+                    className='h-50 w-75'
+                    onChange={(e) => setImage(e.target.files[0])}
+                    value={isUpdate ? image : undefined}
+                  />
+                </Group>
+
+                <Group className='mb-2 d-flex'>
+                  <Label className='w-50 m-0 align-self-center text-uppercase'>category</Label>
+
+                  <Control
+                    className='h-50 w-75'
+                    type='text'
+                    id='category'
+                    placeholder={`${type.charAt(0).toUpperCase() + type.slice(1)} category...`}
+                    onChange={(e) => handleChanges(e)}
+                    value={isUpdate ? category : undefined}
+                  />
+                </Group>
+
+                <Group className='mb-2 d-flex'>
+                  <Label className='w-50 m-0 align-self-center text-uppercase'>tags</Label>
+
+                  <Control
+                    className='h-50 w-75'
+                    type='text'
+                    id='tags'
+                    placeholder={`${type.charAt(0).toUpperCase() + type.slice(1)} tags...`}
+                    onChange={(e) => handleChanges(e)}
+                    value={isUpdate ? tags : undefined}
                   />
                 </Group>
               </Form>

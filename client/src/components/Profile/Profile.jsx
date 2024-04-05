@@ -12,10 +12,9 @@ const { Group, Label, Control } = Form
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true)
-  const [profileData, setProfileData] = useState({
-    name: '',
-    email: '',
-  })
+
+  const [address, setAddress] = useState([])
+  const [addressId, setAddressId] = useState('')
   const [addressData, setAddressData] = useState({
     nama: '',
     kelurahan: '',
@@ -24,10 +23,10 @@ const Profile = () => {
     provinsi: '',
     detail: '',
   })
-
-  const [address, setAddress] = useState([])
-  const [addressName, setAddressName] = useState('')
-  const [addressId, setAddressId] = useState('')
+  const [profileData, setProfileData] = useState({
+    name: '',
+    email: '',
+  })
 
   const [submitType, setSubmitType] = useState('')
   const [modalType, setModalType] = useState('')
@@ -66,13 +65,8 @@ const Profile = () => {
 
   const handleChanges = (e) => {
     let newData = { ...addressData }
-    newData[e.target.id] = e.target.value // newData["kecamatan"] = "pak camat"
+    newData[e.target.id] = e.target.value
     setAddressData(newData)
-
-    // console.log('id = ', e.target.id)
-    // console.log('value = ', e.target.value)
-    // console.log(newData['kecamatan'])
-    // console.log(newData)
   }
 
   const handleSubmit = async (e) => {
@@ -131,7 +125,6 @@ const Profile = () => {
           provinsi: '',
           detail: '',
         })
-        // setAddressName('')
         setAddressId('')
         getAddresses()
       } catch (err) {
@@ -290,7 +283,6 @@ const Profile = () => {
           trigger={modalType === 'create'}
           setTrigger={setModalType}
           type={'address'}
-          setName={setAddressName}
           submit={handleSubmit}
           messages={messages}
           handleChanges={handleChanges}
@@ -308,10 +300,10 @@ const Profile = () => {
           kabupaten={addressData.kabupaten}
           provinsi={addressData.provinsi}
           detail={addressData.detail}
-          setName={setAddressName}
           submit={handleSubmit}
           messages={messages}
           isAddress
+          handleChanges={handleChanges}
         />
       ) : (
         <Modal

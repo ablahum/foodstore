@@ -10,8 +10,8 @@ const Categories = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const [categories, setCategories] = useState([])
-  const [categoryName, setCategoryName] = useState('')
   const [categoryId, setCategoryId] = useState('')
+  const [categoryData, setCategoryData] = useState('')
 
   const [submitType, setSubmitType] = useState('')
   const [modalType, setModalType] = useState('')
@@ -30,12 +30,12 @@ const Categories = () => {
     setModalType(type)
     setSubmitType(type)
     setCategoryId(id)
-    setCategoryName(name)
+    setCategoryData(name)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const name = categoryName
+    const name = categoryData
 
     let message = []
     if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name cannot be empty']
@@ -57,7 +57,7 @@ const Categories = () => {
         setMessages([res.data.message])
         setModalType('')
         setSubmitType('')
-        setCategoryName('')
+        setCategoryData('')
         setCategoryId('')
         getCategories()
       } catch (err) {
@@ -126,7 +126,7 @@ const Categories = () => {
           trigger={modalType === 'create'}
           setTrigger={setModalType}
           type={'category'}
-          handleChanges={setCategoryName}
+          handleChanges={setCategoryData}
           submit={handleSubmit}
           messages={messages}
         />
@@ -136,8 +136,8 @@ const Categories = () => {
           setTrigger={setModalType}
           type={'category'}
           isUpdate
-          name={categoryName}
-          handleChanges={setCategoryName}
+          name={categoryData}
+          handleChanges={setCategoryData}
           submit={handleSubmit}
           messages={messages}
         />
@@ -149,7 +149,7 @@ const Categories = () => {
           isDelete
           submit={handleSubmit}
           messages={messages}
-          modalFor={categoryName}
+          modalFor={categoryData}
         />
       )}
 
