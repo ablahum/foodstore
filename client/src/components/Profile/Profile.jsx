@@ -6,6 +6,7 @@ import { getAll } from '../../apis/delivery-addresses'
 import { Update, Delete } from './style'
 import { Modal } from '../Modal'
 import { createOne, updateOne, deleteOne } from '../../apis/delivery-addresses'
+import Title from '../Title'
 
 const { Item, Header, Body } = Accordion
 const { Group, Label, Control } = Form
@@ -140,14 +141,17 @@ const Profile = () => {
 
   return (
     <div>
-      <h2 className='fw-bold fs-3 mb-3 text-uppercase'>your account</h2>
+      <Title
+        title={'your account'}
+        className='mb-3'
+      />
 
       {isLoading ? (
         <div className='text-center mt-5'>
           <Spinner animation='border' />
         </div>
       ) : (
-        <Form className='mb-4'>
+        <Form className='mb-md-4 mb-3'>
           <Group className='d-flex p-2'>
             <Label className='w-50 m-0 fs-5 align-self-center text-uppercase'>name</Label>
 
@@ -171,7 +175,10 @@ const Profile = () => {
       )}
 
       <div className='mb-3 d-flex justify-content-between'>
-        <h2 className='fw-bold fs-3 d-inline mb-0 text-uppercase'>your address</h2>
+        <Title
+          title={'your address'}
+          className='mb-0'
+        />
 
         <Button
           className='text-light py-0 px-3 text-uppercase'
@@ -287,6 +294,8 @@ const Profile = () => {
           messages={messages}
           handleChanges={handleChanges}
           isAddress
+          cancel='cancel'
+          confirm='confirm'
         />
       ) : modalType === 'update' ? (
         <Modal
@@ -304,6 +313,8 @@ const Profile = () => {
           messages={messages}
           isAddress
           handleChanges={handleChanges}
+          cancel='cancel'
+          confirm='confirm'
         />
       ) : (
         <Modal
@@ -314,6 +325,8 @@ const Profile = () => {
           submit={handleSubmit}
           messages={messages}
           modalFor={addressData.nama}
+          cancel='cancel'
+          confirm='confirm'
         />
       )}
 

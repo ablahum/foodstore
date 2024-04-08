@@ -3,9 +3,9 @@ import { Navigate, Link, useLocation, useNavigate } from 'react-router-dom'
 import { Container, Table, Spinner } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import rupiah from 'rupiah-format'
-import { Main, BackButton } from './style'
+import { Main, Back } from './style'
 
-import { Heading } from '../../components'
+import { Heading, Title } from '../../components'
 import { clearItem } from '../../app/cart/actions'
 import { getAll } from '../../apis/orders'
 import { getOne } from '../../apis/invoices'
@@ -61,50 +61,52 @@ const Invoice = () => {
 
   return (
     <Main>
-      <Heading title='INVOICE' />
+      <Heading title='invoice' />
       {loading ? (
         <div className='text-center mt-5'>
           <Spinner animation='border' />
         </div>
       ) : (
         <Container className='py-5'>
-          <h2 className='fw-bold fs-3 mb-3'>ORDER SUCCESSFULY PLACED</h2>
+          {/* <h2 className='fw-bold fs-3 mb-3'>ORDER SUCCESSFULLY PLACED</h2> */}
+          <Title title={'order successfully placed'} />
+
           <Table>
             <tbody>
               <tr>
-                <td className='fw-bold py-3 fs-5'>ORDER ID</td>
+                <td className='fw-bold py-3 fs-5 text-uppercase'>order id</td>
                 <td className='fw-bold py-3'>:</td>
                 <td className='py-3 fs-5'>{data.order._id}</td>
               </tr>
               <tr>
-                <td className='fw-bold py-3 fs-5'>STATUS</td>
+                <td className='fw-bold py-3 fs-5 text-uppercase'>status</td>
                 <td className='fw-bold py-3'>:</td>
                 <td className='py-3 fs-5'>{data.payment_status}</td>
               </tr>
               <tr>
-                <td className='fw-bold py-3 fs-5'>SUBTOTAL</td>
+                <td className='fw-bold py-3 fs-5 text-uppercase'>sub total</td>
                 <td className='fw-bold py-3'>:</td>
                 <td className='py-3 fs-5'>{rupiah.convert(data.sub_total)}</td>
               </tr>
               <tr>
-                <td className='fw-bold py-3 fs-5'>TOTAL AMOUNT</td>
+                <td className='fw-bold py-3 fs-5 text-uppercase'>grand total</td>
                 <td className='fw-bold py-3'>:</td>
                 <td className='py-3 fs-5'>{rupiah.convert(data.total)} (include delivery fee)</td>
               </tr>
               <tr>
-                <td className='fw-bold py-3 fs-5'>SHIPPING TO</td>
+                <td className='fw-bold py-3 fs-5 text-uppercase'>ship to</td>
                 <td className='fw-bold py-3'>:</td>
                 <td className='py-3 fs-5'>{data.delivery_address.detail}</td>
               </tr>
               <tr>
-                <td className='fw-bold py-3 fs-5'>PAYMENT METHOD</td>
+                <td className='fw-bold py-3 fs-5 text-uppercase'>payment method</td>
                 <td className='fw-bold py-3'>:</td>
                 <td className='py-3 fs-5'>{location.state.payment}</td>
               </tr>
             </tbody>
           </Table>
           {/* <Link to="/" className="text-decoration-none"> */}
-          <BackButton onClick={goHome}>BACK TO HOME</BackButton>
+          <Back onClick={goHome}>back to home</Back>
           {/* </Link> */}
         </Container>
       )}

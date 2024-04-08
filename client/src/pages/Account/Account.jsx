@@ -18,11 +18,11 @@ const Account = () => {
 
   return (
     <Wrapper>
-      <Heading title='ACCOUNT' />
+      <Heading title='account' />
 
       <Container className='py-md-5 py-4'>
         <div className='d-flex flex-column flex-md-row justify-content-between'>
-          <div className='me-md-4 mt-md-0 mb-md-0 mt-2 mb-4'>
+          <div className='me-md-4 mt-md-0 mb-md-0 mb-3'>
             <Navigator />
           </div>
 

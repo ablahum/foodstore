@@ -24,7 +24,7 @@ const Home = () => {
 
   return (
     <Wrapper>
-      <Heading title='OUR MENUS' />
+      <Heading title='our menus' />
 
       <Container className='py-md-5 py-4'>
         <Top>

@@ -7,6 +7,7 @@ import { config } from '../../config'
 import { createOne, updateOne, deleteOne, getSpecific } from '../../apis/products'
 import { Wrapper, Detail, Update, Delete } from './style'
 import { Modal } from '../Modal'
+import Title from '../Title'
 
 const Products = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -118,7 +119,10 @@ const Products = () => {
   return (
     <div>
       <div className='mb-3 d-flex justify-content-between'>
-        <h2 className='fw-bold fs-3 d-inline mb-0 text-uppercase'>list of products</h2>
+        <Title
+          title={'list of products'}
+          className='mb-0'
+        />
 
         <Button
           className='text-light py-0 px-3 text-uppercase'
@@ -184,6 +188,8 @@ const Products = () => {
           handleChanges={handleChanges}
           isProduct
           setImage={setImage}
+          cancel='cancel'
+          confirm='confirm'
         />
       ) : modalType === 'update' ? (
         <Modal
@@ -200,6 +206,8 @@ const Products = () => {
           messages={messages}
           isProduct
           handleChanges={handleChanges}
+          cancel='cancel'
+          confirm='confirm'
         />
       ) : (
         <Modal
@@ -210,6 +218,8 @@ const Products = () => {
           submit={handleSubmit}
           messages={messages}
           modalFor={productData.name}
+          cancel='cancel'
+          confirm='confirm'
         />
       )}
 

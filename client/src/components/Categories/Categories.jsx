@@ -5,6 +5,7 @@ import { MdDeleteForever } from 'react-icons/md'
 
 import { Modal } from '../Modal'
 import { getAll, createOne, updateOne, deleteOne } from '../../apis/categories'
+import Title from '../Title'
 
 const Categories = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -73,7 +74,10 @@ const Categories = () => {
   return (
     <>
       <div className='mb-3 d-flex justify-content-between'>
-        <h2 className='fw-bold fs-3 d-inline mb-0 text-uppercase'>list of categories</h2>
+        <Title
+          title={'list of categories'}
+          className='mb-0'
+        />
 
         <Button
           className='text-light py-0 px-3 text-uppercase'
@@ -129,6 +133,8 @@ const Categories = () => {
           handleChanges={setCategoryData}
           submit={handleSubmit}
           messages={messages}
+          cancel='cancel'
+          confirm='confirm'
         />
       ) : modalType === 'update' ? (
         <Modal
@@ -140,6 +146,8 @@ const Categories = () => {
           handleChanges={setCategoryData}
           submit={handleSubmit}
           messages={messages}
+          cancel='cancel'
+          confirm='confirm'
         />
       ) : (
         <Modal
@@ -150,6 +158,8 @@ const Categories = () => {
           submit={handleSubmit}
           messages={messages}
           modalFor={categoryData}
+          cancel='cancel'
+          confirm='confirm'
         />
       )}
 

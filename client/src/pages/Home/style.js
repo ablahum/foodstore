@@ -8,7 +8,6 @@ export const Top = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 1em;
-  margin: 0.5em 0;
 
   @media screen and (max-width: 991px) {
     padding: 0;
