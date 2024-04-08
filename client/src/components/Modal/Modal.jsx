@@ -1,7 +1,8 @@
-import { Alert, Form } from 'react-bootstrap'
+import { Alert, Table, Form } from 'react-bootstrap'
+import rupiah from 'rupiah-format'
 
 import { ErrorMessages } from '../../components'
-import { Wrapper, Popup, Cancel, Confirm } from './style'
+import { Wrapper, Popup, Cancel, Confirm, TableBox, Back, Next } from './style'
 
 const { Group, Label, Control } = Form
 
@@ -32,6 +33,15 @@ const Modal = ({
   image,
   category,
   tags,
+  isCheckout,
+  cartItems,
+  address,
+  payment,
+  fee,
+  total,
+  cancel,
+  confirm,
+  isOrder,
 }) => {
   return trigger ? (
     <Popup>
@@ -51,8 +61,8 @@ const Modal = ({
           </>
         ) : (
           <>
-            <h2 className='fw-bold mb-4 text-uppercase'>
-              {isUpdate ? 'update' : isDelete ? 'delete' : 'add new'}
+            <h2 className='fw-bold mb-3 text-uppercase'>
+              {isUpdate ? 'update' : isDelete ? 'delete' : isOrder ? 'order confirmation' : 'add new'}
               <span> {type}</span>
             </h2>
             {isDelete ? (
@@ -225,6 +235,82 @@ const Modal = ({
                   />
                 </Group>
               </Form>
+            ) : isCheckout ? (
+              <>
+                <TableBox>
+                  <Table
+                    hover
+                    bordered
+                    size='md'
+                    className='px-3 py-3'
+                  >
+                    <thead>
+                      <tr>
+                        <th></th>
+
+                        <th>Item Name</th>
+
+                        <th>Qty</th>
+
+                        <th className='text-end'>Sub Total</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {cartItems.map((item) => (
+                        <tr key={item._id}>
+                          <td className='text-center p-0'>
+                            <img
+                              src={`http://localhost:4000/public/${item.image}`}
+                              alt={item.image}
+                              style={{ width: '80px' }}
+                            />
+                          </td>
+
+                          <td>{item.name}</td>
+
+                          <td>{item.qty}</td>
+
+                          <td className='text-end'>{rupiah.convert(item.qty * item.price)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </TableBox>
+
+                <div className='mt-3'>
+                  <div className='d-flex justify-content-between mb-2'>
+                    <h5 className='fs-6 m-0 align-self-center text-uppercase'>ship to</h5>
+
+                    <h5 className='m-0'>{address}</h5>
+                  </div>
+
+                  <div className='d-flex justify-content-between mb-2'>
+                    <h5 className='fs-6 m-0 align-self-center text-uppercase'>payment method</h5>
+
+                    <h5 className='m-0'>{payment}</h5>
+                  </div>
+
+                  <div className='d-flex justify-content-between'>
+                    <h5 className='fs-6 m-0 align-self-center text-uppercase'>fee</h5>
+
+                    <h5 className='m-0'>{rupiah.convert(fee)}</h5>
+                  </div>
+                </div>
+
+                <div className='d-flex justify-content-between mt-3'>
+                  <h5 className='m-0 text-uppercase'>grand total</h5>
+
+                  <h4 className='fw-bold m-0'>{rupiah.convert(total(cartItems) + fee)}</h4>
+                </div>
+
+                <Alert
+                  variant='danger'
+                  className='text-center fw-bold fs-5 mt-3 mb-0 py-2'
+                >
+                  <span className='text-capitalize'>is</span> the information above correct?
+                </Alert>
+              </>
             ) : (
               <Form>
                 <Group className='d-flex mb-3'>
@@ -241,6 +327,7 @@ const Modal = ({
                 </Group>
               </Form>
             )}
+
             {isDelete ? '' : <div className='align-self-center'>{messages.length > 0 ? <ErrorMessages errors={messages} /> : ''}</div>}
 
             <div className='mt-3 d-flex'>
@@ -248,14 +335,14 @@ const Modal = ({
                 onClick={() => setTrigger(false)}
                 className='text-uppercase'
               >
-                cancel
+                {cancel}
               </Cancel>
 
               <Confirm
                 onClick={(e) => submit(e)}
                 className='m-0 text-uppercase'
               >
-                confirm
+                {confirm}
               </Confirm>
             </div>
           </>
