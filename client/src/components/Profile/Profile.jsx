@@ -293,7 +293,7 @@ const Profile = () => {
           submit={handleSubmit}
           messages={messages}
           handleChanges={handleChanges}
-          isAddress
+          isProfile
           cancel='cancel'
           confirm='confirm'
         />
@@ -311,7 +311,7 @@ const Profile = () => {
           detail={addressData.detail}
           submit={handleSubmit}
           messages={messages}
-          isAddress
+          isProfile
           handleChanges={handleChanges}
           cancel='cancel'
           confirm='confirm'
