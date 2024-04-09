@@ -17,6 +17,7 @@ const { Label, Select } = Form
 const Checkout = () => {
   const cartState = useSelector((state) => state.cart)
   const globalState = useSelector((state) => state.my)
+  const navigate = useNavigate()
 
   const [cartItems, setCartItems] = useState([])
   const [addresses, setAddresses] = useState([])
@@ -28,7 +29,6 @@ const Checkout = () => {
   const [messages, setMessages] = useState([])
   const [confirm, setConfirm] = useState(false)
 
-  const navigate = useNavigate()
   const fee = 20000
   const getOrderId = cartItems.map((item) => item._id)
   const relatedAddress = addresses.filter((address) => address.nama === data.address)
@@ -53,6 +53,7 @@ const Checkout = () => {
   }, [])
 
   if (cartState.length === 0) return navigate('/')
+  const nextPage = () => navigate('/invoice', { state: { payment: data.payment } })
 
   const handleChanges = (e) => {
     let newData = { ...data }
@@ -108,7 +109,6 @@ const Checkout = () => {
 
       setNotification(true)
       setConfirm(false)
-      // navigate('/invoice', { state: { payment: data.payment } })
     } catch (err) {
       console.error(err)
     }
@@ -208,7 +208,7 @@ const Checkout = () => {
           </Total>
 
           <Buttons>
-            <Back>back to home</Back>
+            <Back onClick={() => navigate('/')}>back to home</Back>
 
             <Next onClick={validation}>next</Next>
           </Buttons>
@@ -235,8 +235,10 @@ const Checkout = () => {
           // trigger={messages.join('').includes('successful') && modalType === ''}
           trigger={notification}
           notification
+          nextPage={nextPage}
+          isCheckout
         />
-        // )}
+        {/* // )} */}
       </Container>
     </Wrapper>
   )

@@ -42,8 +42,9 @@ const Modal = ({
   cancel,
   confirm,
   isOrder,
-}) => {
-  return trigger ? (
+  nextPage,
+}) =>
+  trigger ? (
     <Popup>
       <Wrapper>
         {notification ? (
@@ -53,7 +54,7 @@ const Modal = ({
             {message ? <p className='m-0'>{message}</p> : ''}
 
             <Confirm
-              onClick={() => setTrigger(false)}
+              onClick={isCheckout ? () => nextPage() : () => setTrigger(false)}
               className='m-0 w-100 text-uppercase'
             >
               ok
@@ -353,6 +354,5 @@ const Modal = ({
   ) : (
     ''
   )
-}
 
 export default Modal
