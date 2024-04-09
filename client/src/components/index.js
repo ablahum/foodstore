@@ -30,5 +30,4 @@ export { default as Search } from './Header/Search'
 export { default as NavBar } from './Header/NavBar'
 
 export { Modal } from './Modal'
-// export { default as Product } from './Modal/Product'
 export { default as Notification } from './Modal/Notification'

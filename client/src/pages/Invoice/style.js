@@ -9,7 +9,8 @@ export const Back = styled(Button)`
   color: #fff;
   width: 100%;
   display: block;
-  margin: 3em auto;
+  /* margin: 3em auto; */
+  margin-top: 1em;
   font-weight: 600;
   text-transform: uppercase;
 `

@@ -9,7 +9,7 @@ export const Summary = styled.div`
   padding: 0.5em;
   margin-right: 1.5em;
   width: 50%;
-  max-height: 52.5vh;
+  height: 52.5vh;
   overflow: auto;
 
   @media screen and (max-width: 767px) {
