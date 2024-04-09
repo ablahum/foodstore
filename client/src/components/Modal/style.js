@@ -14,7 +14,7 @@ export const Popup = styled.div`
 `
 
 export const Wrapper = styled.div`
-  width: 35em;
+  width: 40em;
   border-radius: 10px;
   padding: 2em;
   background-color: #fff;
@@ -41,18 +41,4 @@ export const Confirm = styled(Button)`
 export const TableBox = styled.div`
   max-height: 450px;
   overflow: auto;
-`
-
-export const Back = styled(Button)`
-  width: 50%;
-  background-color: transparent;
-  font-weight: 600;
-  margin-right: 1em;
-`
-
-export const Next = styled(Button)`
-  width: 50%;
-  color: #fff;
-  font-weight: 600;
-  border: none;
 `

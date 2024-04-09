@@ -1,16 +1,15 @@
 import { Button } from 'react-bootstrap'
 import styled from 'styled-components'
 
-export const Main = styled.div`
-  background-color: #fff;
-  height: 85vh;
+export const Wrapper = styled.div`
+  height: 100vh;
 `
 
 export const Summary = styled.div`
   padding: 0.5em;
   margin-right: 1.5em;
   width: 50%;
-  max-height: 450px;
+  max-height: 52.5vh;
   overflow: auto;
 
   @media screen and (max-width: 767px) {
@@ -55,7 +54,7 @@ export const Buttons = styled.div`
 export const Back = styled(Button)`
   width: 40%;
   background-color: transparent;
-  color: #000;
+  color: var(--black);
   font-weight: 600;
   margin-right: 1em;
   text-transform: uppercase;
@@ -67,7 +66,7 @@ export const Back = styled(Button)`
 
 export const Next = styled(Button)`
   width: 60%;
-  color: #fff;
+  color: var(--white);
   font-weight: 600;
   border: none;
   text-transform: uppercase;

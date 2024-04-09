@@ -4,9 +4,9 @@ import { Container, Table, Form } from 'react-bootstrap'
 import rupiah from 'rupiah-format'
 import { useSelector } from 'react-redux'
 
-import { Heading, ConfirmBox, ErrorMessages, Title } from '../../components'
+import { Heading, ErrorMessages, Title } from '../../components'
 import { total } from '../../utils'
-import { Main, Summary, Total, Back, Next, Data, Buttons } from './style'
+import { Wrapper, Summary, Total, Back, Next, Data, Buttons } from './style'
 import { getAll as getCart } from '../../apis/carts'
 import { getAll as getAddress } from '../../apis/delivery-addresses'
 import { Modal } from '../../components'
@@ -25,8 +25,6 @@ const Checkout = () => {
     payment: '',
   })
 
-  // const [addressError, setAddressError] = useState([])
-  // const [paymentError, setPaymentError] = useState([])
   const [messages, setMessages] = useState([])
   const [confirm, setConfirm] = useState(false)
 
@@ -35,6 +33,8 @@ const Checkout = () => {
   const getOrderId = cartItems.map((item) => item._id)
   const relatedAddress = addresses.filter((address) => address.nama === data.address)
   const payments = ['Bank BCA', 'Bank Mandiri', 'DANA', 'OVO']
+
+  const [notification, setNotification] = useState(false)
 
   const getData = async () => {
     try {
@@ -60,84 +60,75 @@ const Checkout = () => {
     setData(newData)
   }
 
-  // const handleSubmit = () => {
-  //   if (!data.address) {
-  // setAddressError(['Please select delivery address'])
-  //   }
-  //   if (!data.payment) {
-  // setPaymentError(['Please select payment method'])
-  //   }
-
-  //   if (data.address && data.payment) {
-  //     setConfirm(true)
-  // setAddressError([])
-  // setPaymentError([])
-  //   }
-  // }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
+  const validation = () => {
     let message = []
-    if (!data.address) message = [...message, 'Please select delivery address']
+    if (!data.address || data.address === 'Delivery address') message = [...message, 'Please select delivery address']
 
-    if (!data.payment) message = [...message, 'Please select payment method']
+    if (!data.payment || data.payment === 'Payment method') message = [...message, 'Please select payment method']
 
     if (message.length > 0) {
       setMessages(message)
     } else {
-      try {
-        let address
+      setMessages([])
+      setConfirm(true)
+    }
+  }
 
-        relatedAddress.forEach((a) => {
-          address = {
-            provinsi: a.provinsi,
-            kabupaten: a.kabupaten,
-            kecamatan: a.kecamatan,
-            kelurahan: a.kelurahan,
-            detail: a.detail,
-          }
-        })
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-        const payload = {
-          status: 'waiting_payment',
-          delivery_fee: fee,
-          delivery_address: {
-            provinsi: address.provinsi,
-            kabupaten: address.kabupaten,
-            kecamatan: address.kecamatan,
-            kelurahan: address.kelurahan,
-            detail: address.detail,
-          },
-          user: globalState.userId,
-          order_items: getOrderId,
+    try {
+      let address
+
+      relatedAddress.forEach((a) => {
+        address = {
+          provinsi: a.provinsi,
+          kabupaten: a.kabupaten,
+          kecamatan: a.kecamatan,
+          kelurahan: a.kelurahan,
+          detail: a.detail,
         }
+      })
 
-        const res = await createOne(payload)
-
-        alert('Place order succesful')
-        navigate('/invoice', { state: { payment: data.payment } })
-      } catch (err) {
-        console.error(err)
+      const payload = {
+        status: 'waiting_payment',
+        delivery_fee: fee,
+        delivery_address: {
+          provinsi: address.provinsi,
+          kabupaten: address.kabupaten,
+          kecamatan: address.kecamatan,
+          kelurahan: address.kelurahan,
+          detail: address.detail,
+        },
+        user: globalState.userId,
+        order_items: getOrderId,
       }
+
+      await createOne(payload)
+
+      setNotification(true)
+      setConfirm(false)
+      // navigate('/invoice', { state: { payment: data.payment } })
+    } catch (err) {
+      console.error(err)
     }
   }
 
   return (
-    <Main>
+    <Wrapper>
       <Heading title='checkout' />
 
-      <Container className='py-5'>
+      <Container className='py-5 d-flex flex-column justify-content-between'>
         <Title
           title={'order summary'}
           className='mb-3'
         />
-
         <div className='d-flex justify-content-between flex-column flex-md-row'>
           <Summary>
             <Table
               hover
               bordered
+              className='mb-0'
             >
               <thead>
                 <tr>
@@ -188,10 +179,10 @@ const Checkout = () => {
                 ))}
               </Select>
 
-              {/* {messages.length > 0 && <ErrorMessages errors={messages} />} */}
+              {messages.length > 0 && <ErrorMessages errors={messages.filter((message) => message.includes('address'))} />}
             </div>
 
-            <div>
+            <div className='mb-3'>
               <Label className='fs-5 fw-bold mb-3 text-uppercase'>select payment method</Label>
 
               <Select
@@ -205,12 +196,11 @@ const Checkout = () => {
                 ))}
               </Select>
 
-              {messages.length > 0 && <ErrorMessages errors={messages} />}
+              {messages.length > 0 && <ErrorMessages errors={messages.filter((message) => message.includes('payment'))} />}
             </div>
           </Data>
         </div>
-
-        <div className='d-flex flex-column flex-md-row justify-content-between mt-3'>
+        <div className='d-flex flex-column flex-md-row justify-content-between mt-md-3 mt-0'>
           <Total>
             <h3 className='m-0 text-uppercase'>sub total</h3>
 
@@ -220,10 +210,9 @@ const Checkout = () => {
           <Buttons>
             <Back>back to home</Back>
 
-            <Next onClick={() => setConfirm(true)}>next</Next>
+            <Next onClick={validation}>next</Next>
           </Buttons>
         </div>
-
         <Modal
           isCheckout
           trigger={confirm}
@@ -239,8 +228,17 @@ const Checkout = () => {
           confirm={'yes, proceed the order'}
           isOrder
         />
+        {/* {messages.join('').includes('successful') && modalType === '' && ( */}
+        <Modal
+          title={'Place order successful'}
+          setTrigger={setNotification}
+          // trigger={messages.join('').includes('successful') && modalType === ''}
+          trigger={notification}
+          notification
+        />
+        // )}
       </Container>
-    </Main>
+    </Wrapper>
   )
 }
 

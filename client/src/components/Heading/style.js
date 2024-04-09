@@ -3,7 +3,7 @@ import banner from '../../assets/banner.png'
 
 export const Wrapper = styled.div`
   color: var(--white);
-  height: 20em;
+  height: 30vh;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${banner});
   background-size: cover;
   background-position: bottom;
@@ -28,14 +28,18 @@ export const Title = styled.h1`
   margin: 0;
   text-transform: uppercase;
 
-  @media screen and (max-width: 767px) {
-    font-size: 4rem;
-    letter-spacing: 1.5rem;
+  @media screen and (max-width: 991px) {
+    text-align: center;
+    letter-spacing: 1rem;
   }
 
-  @media screen and (max-width: 425px) {
+  @media screen and (max-width: 767px) {
+    font-size: 4rem;
+    letter-spacing: 0.5rem;
+  }
+
+  @media screen and (max-width: 576px) {
     font-size: 3rem;
-    letter-spacing: 1rem;
-    text-align: center;
+    letter-spacing: 0.3rem;
   }
 `

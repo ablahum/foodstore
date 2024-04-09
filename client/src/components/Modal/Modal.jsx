@@ -2,7 +2,7 @@ import { Alert, Table, Form } from 'react-bootstrap'
 import rupiah from 'rupiah-format'
 
 import { ErrorMessages } from '../../components'
-import { Wrapper, Popup, Cancel, Confirm, TableBox, Back, Next } from './style'
+import { Wrapper, Popup, Cancel, Confirm, TableBox } from './style'
 
 const { Group, Label, Control } = Form
 
@@ -24,7 +24,7 @@ const Modal = ({
   provinsi,
   detail,
   modalFor,
-  isAddress,
+  isProfile,
   handleChanges,
   isProduct,
   setImage,
@@ -65,6 +65,7 @@ const Modal = ({
               {isUpdate ? 'update' : isDelete ? 'delete' : isOrder ? 'order confirmation' : 'add new'}
               <span> {type}</span>
             </h2>
+
             {isDelete ? (
               <Alert
                 variant='danger'
@@ -72,7 +73,7 @@ const Modal = ({
               >
                 <span className='text-capitalize'>are</span> you sure want to delete '{modalFor}'?
               </Alert>
-            ) : isAddress ? (
+            ) : isProfile ? (
               <Form>
                 <Group className='mb-2 d-flex'>
                   <Label className='w-50 m-0 align-self-center text-uppercase'>nama</Label>
@@ -282,26 +283,26 @@ const Modal = ({
                   <div className='d-flex justify-content-between mb-2'>
                     <h5 className='fs-6 m-0 align-self-center text-uppercase'>ship to</h5>
 
-                    <h5 className='m-0'>{address}</h5>
+                    <h5 className='fs-6 m-0 fw-bold'>{address}</h5>
                   </div>
 
                   <div className='d-flex justify-content-between mb-2'>
                     <h5 className='fs-6 m-0 align-self-center text-uppercase'>payment method</h5>
 
-                    <h5 className='m-0'>{payment}</h5>
+                    <h5 className='fs-6 m-0 fw-bold'>{payment}</h5>
                   </div>
 
                   <div className='d-flex justify-content-between'>
                     <h5 className='fs-6 m-0 align-self-center text-uppercase'>fee</h5>
 
-                    <h5 className='m-0'>{rupiah.convert(fee)}</h5>
+                    <h5 className='fs-6 m-0 fw-bold'>{rupiah.convert(fee)}</h5>
                   </div>
                 </div>
 
                 <div className='d-flex justify-content-between mt-3'>
                   <h5 className='m-0 text-uppercase'>grand total</h5>
 
-                  <h4 className='fw-bold m-0'>{rupiah.convert(total(cartItems) + fee)}</h4>
+                  <h5 className='fw-bold m-0'>{rupiah.convert(total(cartItems) + fee)}</h5>
                 </div>
 
                 <Alert

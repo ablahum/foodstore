@@ -6,13 +6,29 @@ import { store, persistor } from './app/store'
 import { Header, Footer, Profile, Order, Products, Categories, Tags } from './components'
 import { Register, Login, Home, Account, Cart, Checkout, Invoice } from './pages'
 
-const Layout = ({ items }) => (
-  <>
-    <Header />
-    {items}
-    <Footer />
-  </>
-)
+const Layout = ({ items }) => {
+  return (
+    //     {
+    //       items === <Account/> ? (
+    // <>
+    // {items}
+    // <Footer/>
+    // </>
+    //       ) : (
+    //         <>
+    //         <Header />
+    //         {items}
+    //         <Footer />
+    //       </>
+    //       )}
+
+    <>
+      <Header />
+      {items}
+      <Footer />
+    </>
+  )
+}
 
 function App() {
   return (
