@@ -1,12 +1,12 @@
-const Product = require('../models/Product')
-const CartItem = require('../models/CartItem')
-const Category = require('../models/Category')
-const DeliveryAddress = require('../models/DeliveryAddress')
-const User = require('../models/User')
-const Invoice = require('../models/Invoice')
-const Order = require('../models/Order')
-const OrderItem = require('../models/OrderItem')
-const Tag = require('../models/Tag')
+const Product = require('./Product')
+const CartItem = require('./CartItem')
+const Category = require('./Category')
+const DeliveryAddress = require('./DeliveryAddress')
+const User = require('./User')
+const Invoice = require('./Invoice')
+const Order = require('./Order')
+const OrderItem = require('./OrderItem')
+const Tag = require('./Tag')
 
 module.exports = {
   Product,

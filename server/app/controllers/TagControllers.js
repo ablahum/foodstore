@@ -17,40 +17,40 @@ const getAll = async (req, res, next) => {
   }
 }
 
-const getOneByCategory = async (req, res, next) => {
-  const { category } = req.params
+// const getOneByCategory = async (req, res, next) => {
+//   const { category } = req.params
 
-  try {
-    const category_id = await Category.findOne({
-      name: {
-        $regex: category,
-        $options: 'i',
-      },
-    })
-    const products = await Product.find({ category: category_id })
-    let tagIds = []
+//   try {
+//     const category_id = await Category.findOne({
+//       name: {
+//         $regex: category,
+//         $options: 'i',
+//       },
+//     })
+//     const products = await Product.find({ category: category_id })
+//     let tagIds = []
 
-    products.forEach((product) => {
-      product.tags.forEach((tag) => {
-        if (!tagIds.includes(tag)) {
-          tagIds.push(tag)
-        }
-      })
-    })
+//     products.forEach((product) => {
+//       product.tags.forEach((tag) => {
+//         if (!tagIds.includes(tag)) {
+//           tagIds.push(tag)
+//         }
+//       })
+//     })
 
-    const tags = await Tag.find({ _id: { $in: tagIds } })
-    res.status(200).json(tags)
-  } catch (err) {
-    if (err && err.name === 'ValidationError') {
-      return res.status(400).json({
-        message: err.message,
-        fields: err.errors,
-      })
-    }
+//     const tags = await Tag.find({ _id: { $in: tagIds } })
+//     res.status(200).json(tags)
+//   } catch (err) {
+//     if (err && err.name === 'ValidationError') {
+//       return res.status(400).json({
+//         message: err.message,
+//         fields: err.errors,
+//       })
+//     }
 
-    next(err)
-  }
-}
+//     next(err)
+//   }
+// }
 
 const createOne = async (req, res, next) => {
   const payload = req.body
@@ -128,5 +128,5 @@ module.exports = {
   updateOne,
   deleteOne,
   getAll,
-  getOneByCategory,
+  // getOneByCategory,
 }
