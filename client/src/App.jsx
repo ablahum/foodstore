@@ -4,24 +4,10 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import { store, persistor } from './app/store'
 import { Header, Footer, Profile, Order, Products, Categories, Tags } from './components'
-import { Register, Login, Home, Account, Cart, Checkout, Invoice } from './pages'
+import { Register, Login, Home, Account, Checkout, Invoice } from './pages'
 
 const Layout = ({ items }) => {
   return (
-    //     {
-    //       items === <Account/> ? (
-    // <>
-    // {items}
-    // <Footer/>
-    // </>
-    //       ) : (
-    //         <>
-    //         <Header />
-    //         {items}
-    //         <Footer />
-    //       </>
-    //       )}
-
     <>
       <Header />
       {items}
@@ -80,11 +66,6 @@ function App() {
                 element={<Tags />}
               />
             </Route>
-
-            <Route
-              path='cart'
-              element={<Layout items={<Cart />} />}
-            />
 
             <Route
               path='checkout'

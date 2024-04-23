@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 import { Heading, ErrorMessages, Title } from '../../components'
 import { total } from '../../utils'
-import { Wrapper, Summary, Total, Back, Next, Data, Buttons } from './style'
+import { Wrapper, Summary, Total, Back, Next, Data, Buttons, Content } from './style'
 import { getAll as getCart } from '../../apis/carts'
 import { getAll as getAddress } from '../../apis/delivery-addresses'
 import { Modal } from '../../components'
@@ -28,13 +28,29 @@ const Checkout = () => {
 
   const [messages, setMessages] = useState([])
   const [confirm, setConfirm] = useState(false)
+  const [notification, setNotification] = useState(false)
 
   const fee = 20000
   const getOrderId = cartItems.map((item) => item._id)
   const relatedAddress = addresses.filter((address) => address.nama === data.address)
-  const payments = ['Bank BCA', 'Bank Mandiri', 'DANA', 'OVO']
-
-  const [notification, setNotification] = useState(false)
+  const payments = [
+    {
+      id: 1,
+      name: 'Bank BCA',
+    },
+    {
+      id: 2,
+      name: 'Bank Mandiri',
+    },
+    {
+      id: 3,
+      name: 'DANA',
+    },
+    {
+      id: 4,
+      name: 'OVO',
+    },
+  ]
 
   const getData = async () => {
     try {
@@ -107,8 +123,8 @@ const Checkout = () => {
 
       await createOne(payload)
 
-      setNotification(true)
       setConfirm(false)
+      setNotification(true)
     } catch (err) {
       console.error(err)
     }
@@ -118,27 +134,29 @@ const Checkout = () => {
     <Wrapper>
       <Heading title='checkout' />
 
-      <Container className='py-5 d-flex flex-column justify-content-between'>
+      <Container className='py-md-5 py-4 d-flex flex-column justify-content-between'>
         <Title
           title={'order summary'}
           className='mb-3'
         />
-        <div className='d-flex justify-content-between flex-column flex-md-row'>
+
+        <Content>
           <Summary>
             <Table
               hover
-              bordered
+              responsive
               className='mb-0'
+              size='sm'
             >
               <thead>
                 <tr>
                   <th></th>
 
-                  <th>Item Name</th>
+                  <th className='text-uppercase'>item name</th>
 
-                  <th>Qty</th>
+                  <th className='text-uppercase text-center'>qty</th>
 
-                  <th className='text-end'>Sub Total</th>
+                  <th className='text-end text-uppercase'>sub total</th>
                 </tr>
               </thead>
 
@@ -149,13 +167,13 @@ const Checkout = () => {
                       <img
                         src={`http://localhost:4000/public/${item.image}`}
                         alt={item.image}
-                        style={{ width: '80px' }}
+                        style={{ width: '60px' }}
                       />
                     </td>
 
                     <td>{item.name}</td>
 
-                    <td>{item.qty}</td>
+                    <td className='text-center'>{item.qty}</td>
 
                     <td className='text-end'>{rupiah.convert(item.qty * item.price)}</td>
                   </tr>
@@ -169,42 +187,51 @@ const Checkout = () => {
               <Label className='fs-5 fw-bold mb-3 text-uppercase'>select address</Label>
 
               <Select
-                className='h-50'
                 id='address'
                 onChange={(e) => handleChanges(e)}
               >
                 <option>Delivery address</option>
                 {addresses.map((address) => (
-                  <option key={address._id}>{address.nama}</option>
+                  <option
+                    key={address._id}
+                    value={address.nama}
+                  >
+                    {address.nama}
+                  </option>
                 ))}
               </Select>
 
               {messages.length > 0 && <ErrorMessages errors={messages.filter((message) => message.includes('address'))} />}
             </div>
 
-            <div className='mb-3'>
+            <div className='mb-3 mb-md-0'>
               <Label className='fs-5 fw-bold mb-3 text-uppercase'>select payment method</Label>
 
               <Select
-                className='h-50'
                 id='payment'
                 onChange={(e) => handleChanges(e)}
               >
                 <option>Payment method</option>
-                {payments.map((payment, i) => (
-                  <option key={i}>{payment}</option>
+                {payments.map((payment) => (
+                  <option
+                    key={payment.id}
+                    value={payment.name}
+                  >
+                    {payment.name}
+                  </option>
                 ))}
               </Select>
 
               {messages.length > 0 && <ErrorMessages errors={messages.filter((message) => message.includes('payment'))} />}
             </div>
           </Data>
-        </div>
+        </Content>
+
         <div className='d-flex flex-column flex-md-row justify-content-between mt-md-3 mt-0'>
           <Total>
-            <h3 className='m-0 text-uppercase'>sub total</h3>
+            <p className='m-0 fs-5 text-uppercase'>sub total</p>
 
-            <h3 className='fw-bold m-0'>{rupiah.convert(total(cartItems))}</h3>
+            <p className='fw-bold fs-5 m-0'>{rupiah.convert(total(cartItems))}</p>
           </Total>
 
           <Buttons>
@@ -213,6 +240,7 @@ const Checkout = () => {
             <Next onClick={validation}>next</Next>
           </Buttons>
         </div>
+
         <Modal
           isCheckout
           trigger={confirm}

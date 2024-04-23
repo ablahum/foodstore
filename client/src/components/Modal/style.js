@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap'
 import styled from 'styled-components'
 
-export const Popup = styled.div`
+export const PopUp = styled.div`
   width: 100%;
   height: 100vh;
   position: fixed;
@@ -29,6 +29,7 @@ export const Cancel = styled(Button)`
   background-color: transparent;
   font-weight: 600;
   margin-right: 1em;
+  text-transform: uppercase;
 `
 
 export const Confirm = styled(Button)`
@@ -36,6 +37,8 @@ export const Confirm = styled(Button)`
   color: #fff;
   font-weight: 600;
   border: none;
+  margin: 0;
+  text-transform: uppercase;
 `
 
 export const TableBox = styled.div`
