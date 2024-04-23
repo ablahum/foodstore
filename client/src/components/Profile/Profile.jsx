@@ -140,7 +140,7 @@ const Profile = () => {
   }, [])
 
   return (
-    <div>
+    <>
       <Title
         title={'your account'}
         className='mb-3'
@@ -156,7 +156,7 @@ const Profile = () => {
             <Label className='w-50 m-0 align-self-center text-uppercase'>name</Label>
 
             <Control
-              className='w-50 h-50'
+              className='w-50'
               placeholder={profileData.name}
               disabled
             />
@@ -166,7 +166,7 @@ const Profile = () => {
             <Label className='w-50 m-0 align-self-center text-uppercase'>email address</Label>
 
             <Control
-              className='w-50 h-50'
+              className='w-50'
               placeholder={profileData.email}
               disabled
             />
@@ -204,59 +204,55 @@ const Profile = () => {
               </Header>
 
               <Body className='p-3'>
-                <Form className='d-flex justify-content-around'>
-                  <div className='d-flex flex-column'>
+                <Form className='d-flex flex-md-row flex-column justify-content-between'>
+                  <div className='d-flex flex-column me-md-3 me-0 mb-md-0 mb-3 w-100'>
                     <Group>
-                      <Label className='w-50 m-0 align-self-center text-uppercase'>kelurahan</Label>
+                      <Label className='m-0 align-self-center text-uppercase mb-2'>kelurahan</Label>
 
                       <Control
-                        className='h-50'
                         placeholder={a.kelurahan}
                         disabled
                       />
                     </Group>
 
-                    <Group className='mt-2'>
-                      <Label className='w-50 m-0 align-self-center text-uppercase'>kecamatan</Label>
+                    <Group className='mt-3'>
+                      <Label className='m-0 align-self-center text-uppercase mb-2'>kecamatan</Label>
 
                       <Control
-                        className='h-50'
                         placeholder={a.kecamatan}
                         disabled
                       />
                     </Group>
 
-                    <Group className='mt-2'>
-                      <Label className='w-50 m-0 align-self-center text-uppercase'>kabupaten</Label>
+                    <Group className='mt-3'>
+                      <Label className='m-0 align-self-center text-uppercase mb-2'>kota/kabupaten</Label>
 
                       <Control
-                        className='h-50'
                         placeholder={a.kabupaten}
                         disabled
                       />
                     </Group>
                   </div>
 
-                  <div className='d-flex flex-column justify-content-between'>
-                    <Group className='d-flex'>
-                      <Label className='w-50 m-0 align-self-center text-uppercase'>provinsi</Label>
+                  <div className='d-flex flex-column justify-content-between w-100'>
+                    <Group>
+                      <Label className='m-0 align-self-center text-uppercase mb-2'>provinsi</Label>
 
                       <Control
-                        className='h-100'
                         placeholder={a.provinsi}
                         disabled
                       />
                     </Group>
 
                     <Group
-                      className='d-flex'
+                      className='mt-md-0 mt-3'
                       controlId='exampleControlTextarea1'
                     >
-                      <Label className='w-50 m-0 text-uppercase'>detail alamat</Label>
+                      <Label className='m-0 text-uppercase mb-2'>detail</Label>
 
                       <Control
                         as='textarea'
-                        rows={5}
+                        rows={4}
                         placeholder={a.detail}
                         disabled
                       />
@@ -265,19 +261,9 @@ const Profile = () => {
                 </Form>
 
                 <div className='mt-3 d-flex justify-content-between'>
-                  <Update
-                    onClick={() => triggerModal('update', a._id, a)}
-                    className='text-uppercase'
-                  >
-                    update address
-                  </Update>
+                  <Update onClick={() => triggerModal('update', a._id, a)}>update address</Update>
 
-                  <Delete
-                    onClick={() => triggerModal('delete', a._id, a)}
-                    className='m-0 text-uppercase'
-                  >
-                    delete address
-                  </Delete>
+                  <Delete onClick={() => triggerModal('delete', a._id, a)}>delete address</Delete>
                 </div>
               </Body>
             </Item>
@@ -338,7 +324,7 @@ const Profile = () => {
           notification
         />
       )}
-    </div>
+    </>
   )
 }
 

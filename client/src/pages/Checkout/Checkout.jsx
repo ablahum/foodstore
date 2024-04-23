@@ -156,7 +156,7 @@ const Checkout = () => {
 
                   <th className='text-uppercase text-center'>qty</th>
 
-                  <th className='text-end text-uppercase'>sub total</th>
+                  <th className='text-end text-uppercase'>total</th>
                 </tr>
               </thead>
 
