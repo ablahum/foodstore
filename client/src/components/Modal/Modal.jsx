@@ -2,7 +2,7 @@ import { Alert, Table, Form } from 'react-bootstrap'
 import rupiah from 'rupiah-format'
 
 import { ErrorMessages } from '../../components'
-import { Wrapper, Popup, Cancel, Confirm, TableBox } from './style'
+import { Wrapper, PopUp, Cancel, Confirm, TableBox } from './style'
 
 const { Group, Label, Control } = Form
 
@@ -45,27 +45,27 @@ const Modal = ({
   nextPage,
 }) =>
   trigger ? (
-    <Popup>
+    <PopUp>
       <Wrapper>
         {notification ? (
           <>
-            <h2 className='fw-bold fs-3 mb-4 align-self-center'>{title}!</h2>
+            <h3 className='fw-bold fs-4 m-0 align-self-center'>{title}!</h3>
 
-            {message ? <p className='m-0'>{message}</p> : ''}
+            {message ? <p className='mt-3'>{message}</p> : ''}
 
             <Confirm
               onClick={isCheckout ? () => nextPage() : () => setTrigger(false)}
-              className='m-0 w-100 text-uppercase'
+              className='mt-3 w-100 text-uppercase'
             >
               ok
             </Confirm>
           </>
         ) : (
           <>
-            <h2 className='fw-bold mb-3 text-uppercase'>
+            <h3 className='fs-4 fw-bold mb-3 text-uppercase'>
               {isUpdate ? 'update' : isDelete ? 'delete' : isOrder ? 'order confirmation' : 'add new'}
               <span> {type}</span>
-            </h2>
+            </h3>
 
             {isDelete ? (
               <Alert
@@ -243,8 +243,7 @@ const Modal = ({
                   <Table
                     hover
                     bordered
-                    size='md'
-                    className='px-3 py-3'
+                    size='sm'
                   >
                     <thead>
                       <tr>
@@ -252,7 +251,7 @@ const Modal = ({
 
                         <th>Item Name</th>
 
-                        <th>Qty</th>
+                        <th className='text-center'>Qty</th>
 
                         <th className='text-end'>Sub Total</th>
                       </tr>
@@ -265,13 +264,13 @@ const Modal = ({
                             <img
                               src={`http://localhost:4000/public/${item.image}`}
                               alt={item.image}
-                              style={{ width: '80px' }}
+                              style={{ width: '50px' }}
                             />
                           </td>
 
                           <td>{item.name}</td>
 
-                          <td>{item.qty}</td>
+                          <td className='text-center'>{item.qty}</td>
 
                           <td className='text-end'>{rupiah.convert(item.qty * item.price)}</td>
                         </tr>
@@ -282,28 +281,28 @@ const Modal = ({
 
                 <div className='mt-3'>
                   <div className='d-flex justify-content-between mb-2'>
-                    <h5 className='fs-6 m-0 align-self-center text-uppercase'>ship to</h5>
+                    <p className='m-0 align-self-center text-uppercase'>ship to</p>
 
-                    <h5 className='fs-6 m-0 fw-bold'>{address}</h5>
+                    <p className='m-0 fw-bold'>{address}</p>
                   </div>
 
                   <div className='d-flex justify-content-between mb-2'>
-                    <h5 className='fs-6 m-0 align-self-center text-uppercase'>payment method</h5>
+                    <p className='m-0 align-self-center text-uppercase'>payment method</p>
 
-                    <h5 className='fs-6 m-0 fw-bold'>{payment}</h5>
+                    <p className='m-0 fw-bold'>{payment}</p>
                   </div>
 
                   <div className='d-flex justify-content-between'>
-                    <h5 className='fs-6 m-0 align-self-center text-uppercase'>fee</h5>
+                    <p className='m-0 align-self-center text-uppercase'>fee</p>
 
-                    <h5 className='fs-6 m-0 fw-bold'>{rupiah.convert(fee)}</h5>
+                    <p className='m-0 fw-bold'>{rupiah.convert(fee)}</p>
                   </div>
                 </div>
 
                 <div className='d-flex justify-content-between mt-3'>
-                  <h5 className='m-0 text-uppercase'>grand total</h5>
+                  <p className='fs-5 m-0 text-uppercase'>grand total</p>
 
-                  <h5 className='fw-bold m-0'>{rupiah.convert(total(cartItems) + fee)}</h5>
+                  <p className='fs-5 fw-bold m-0'>{rupiah.convert(total(cartItems) + fee)}</p>
                 </div>
 
                 <Alert
@@ -333,24 +332,14 @@ const Modal = ({
             {isDelete ? '' : <div className='align-self-center'>{messages.length > 0 ? <ErrorMessages errors={messages} /> : ''}</div>}
 
             <div className='mt-3 d-flex'>
-              <Cancel
-                onClick={() => setTrigger(false)}
-                className='text-uppercase'
-              >
-                {cancel}
-              </Cancel>
+              <Cancel onClick={() => setTrigger(false)}>{cancel}</Cancel>
 
-              <Confirm
-                onClick={(e) => submit(e)}
-                className='m-0 text-uppercase'
-              >
-                {confirm}
-              </Confirm>
+              <Confirm onClick={(e) => submit(e)}>{confirm}</Confirm>
             </div>
           </>
         )}
       </Wrapper>
-    </Popup>
+    </PopUp>
   ) : (
     ''
   )

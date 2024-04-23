@@ -66,7 +66,7 @@ const Invoice = () => {
           <Spinner animation='border' />
         </div>
       ) : (
-        <Container className='py-5'>
+        <Container className='py-md-5 py-4'>
           <Title
             title={'order successfully placed'}
             className='mb-3'
@@ -75,35 +75,33 @@ const Invoice = () => {
           <Table responsive>
             <tbody>
               <tr>
-                <td className='fw-bold py-3 fs-5 text-uppercase'>order id</td>
-                <td className='py-3 fs-5 text-end'>{data.order._id}</td>
+                <td className='py-3 text-uppercase'>order id</td>
+                <td className='fw-bold py-3 text-end'>{data.order._id}</td>
               </tr>
               <tr>
-                <td className='fw-bold py-3 fs-5 text-uppercase'>status</td>
-                <td className='py-3 fs-5 text-end'>{data.payment_status}</td>
+                <td className='py-3 text-uppercase'>status</td>
+                <td className='fw-bold py-3 text-end'>{data.payment_status}</td>
               </tr>
               <tr>
-                <td className='fw-bold py-3 fs-5 text-uppercase'>sub total</td>
-                <td className='py-3 fs-5 text-end'>{rupiah.convert(data.sub_total)}</td>
+                <td className='py-3 text-uppercase'>sub total</td>
+                <td className='fw-bold py-3 text-end'>{rupiah.convert(data.sub_total)}</td>
               </tr>
               <tr>
-                <td className='fw-bold py-3 fs-5 text-uppercase'>grand total</td>
-                <td className='py-3 fs-5 text-end'>{rupiah.convert(data.total)} (include delivery fee)</td>
+                <td className='py-3 text-uppercase'>grand total</td>
+                <td className='fw-bold py-3 text-end'>{rupiah.convert(data.total)} (include delivery fee)</td>
               </tr>
               <tr>
-                <td className='fw-bold py-3 fs-5 text-uppercase'>ship to</td>
-                <td className='py-3 fs-5 text-end'>{data.delivery_address.detail}</td>
+                <td className='py-3 text-uppercase'>ship to</td>
+                <td className='fw-bold py-3 text-end'>{data.delivery_address.detail}</td>
               </tr>
               <tr>
-                <td className='fw-bold py-3 fs-5 text-uppercase'>payment method</td>
-                <td className='py-3 fs-5 text-end'>{location.state.payment}</td>
+                <td className='py-3 text-uppercase'>payment method</td>
+                <td className='fw-bold py-3 text-end'>{location.state.payment}</td>
               </tr>
             </tbody>
           </Table>
 
-          {/* <Link to="/" className="text-decoration-none"> */}
           <Back onClick={goHome}>back to home</Back>
-          {/* </Link> */}
         </Container>
       )}
     </Main>

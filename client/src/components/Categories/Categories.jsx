@@ -96,10 +96,10 @@ const Categories = () => {
           {categories.map((tag) => (
             <div key={tag._id}>
               <div className='d-flex justify-content-between p-2'>
-                <div>
-                  <h5 className='mb-2 text-muted text-capitalize'>name:</h5>
+                <div className='d-flex flex-column'>
+                  <p className='m-0 text-muted text-capitalize'>name:</p>
 
-                  <h3 className='m-0 fs-4 fw-bold'>{tag.name}</h3>
+                  <p className='m-0 fs-5 fw-bold'>{tag.name}</p>
                 </div>
 
                 <div className='d-flex'>
@@ -119,7 +119,7 @@ const Categories = () => {
                 </div>
               </div>
 
-              <hr className='mt-2 mb-3' />
+              <hr className='mb-md-3 mt-0 mb-2' />
             </div>
           ))}
         </>

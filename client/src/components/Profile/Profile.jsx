@@ -153,7 +153,7 @@ const Profile = () => {
       ) : (
         <Form className='mb-md-4 mb-3'>
           <Group className='d-flex p-2'>
-            <Label className='w-50 m-0 fs-5 align-self-center text-uppercase'>name</Label>
+            <Label className='w-50 m-0 align-self-center text-uppercase'>name</Label>
 
             <Control
               className='w-50 h-50'
@@ -163,7 +163,7 @@ const Profile = () => {
           </Group>
 
           <Group className='d-flex p-2'>
-            <Label className='w-50 m-0 fs-5 align-self-center text-uppercase'>email address</Label>
+            <Label className='w-50 m-0 align-self-center text-uppercase'>email address</Label>
 
             <Control
               className='w-50 h-50'
@@ -200,7 +200,7 @@ const Profile = () => {
               key={i}
             >
               <Header>
-                <h3 className='fs-5 m-0'>{a.nama}</h3>
+                <p className='fs-5 m-0'>{a.nama}</p>
               </Header>
 
               <Body className='p-3'>
