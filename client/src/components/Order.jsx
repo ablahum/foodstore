@@ -1,87 +1,133 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Accordion, Form, Spinner } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from 'react'
+import { Accordion, Spinner, Table } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import rupiah from 'rupiah-format'
+
+import { getAll } from '../apis/orders'
+import { Title } from '../components'
+
+const { Item, Header, Body } = Accordion
 
 const Order = () => {
-  let globalState = useSelector((state) => state.my);
+  let globalState = useSelector((state) => state.my)
 
-  const [datas, setDatas] = useState([]);
-  const [count, setCount] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState([])
+  const [count, setCount] = useState(0)
+  const [loading, setLoading] = useState(true)
+
+  const getOrders = async () => {
+    const res = await getAll()
+
+    setCount(res.data.count)
+    setOrders(res.data.data)
+    setLoading(false)
+    console.log(res.data.data)
+  }
 
   useEffect(() => {
-    const fetch = async () => {
-      const res = await axios.get("http://localhost:4000/api/orders", {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-
-      setCount(res.data.count);
-      setDatas(res.data.data);
-      setLoading(false);
-    };
-
-    fetch();
-  }, []);
+    getOrders()
+  }, [])
 
   return (
     <>
+      <div className='mb-3 d-flex justify-content-between align-items-center'>
+        <Title
+          title={'list of your orders'}
+          className='mb-0'
+        />
+
+        <p className='m-0 text-uppercase'>total items ordered: {count}</p>
+      </div>
+
       {loading ? (
-        <div className="text-center mt-5">
-          <Spinner animation="border" />
+        <div className='text-center mt-5'>
+          <Spinner animation='border' />
         </div>
       ) : (
-        <>
-          <h2 className="fw-bold fs-3 mb-3">YOUR ORDER HISTORY</h2>
-          <h3>order count: {count}</h3>
-          <Accordion>
-            {datas.map((data, idx) => (
-              <Accordion.Item eventKey={idx} key={idx}>
-                <Accordion.Header>
-                  <h3 className="fs-5 m-0">order {idx + 1}</h3>
-                </Accordion.Header>
-                <Accordion.Body className="p-3">
-                  <Form className="d-flex justify-content-around">
-                    <div className="d-flex flex-column">
-                      <Form.Group>
-                        <Form.Label className="w-50 m-0 align-self-center">STATUS</Form.Label>
-                        <h4>{data.status}</h4>
-                      </Form.Group>
-                      <Form.Group className="mt-2">
-                        <Form.Label className="w-50 m-0 align-self-center">JUMLAH ITEMS</Form.Label>
-                        <h4>{data.items_count}</h4>
-                      </Form.Group>
-                      <Form.Group className="mt-2">
-                        <Form.Label className="w-50 m-0 align-self-center">DELIVERY FEE</Form.Label>
-                        <h4>{data.delivery_fee}</h4>
-                      </Form.Group>
-                      <Form.Group className="mt-2">
-                        <Form.Label className="w-50 m-0 align-self-center">ORDER NUMBERS</Form.Label>
-                        <h4>{data.order_number}</h4>
-                      </Form.Group>
+        <Accordion>
+          {orders.map((data, i) => (
+            <Item
+              eventKey={data.id}
+              key={data.id}
+            >
+              <Header>
+                <p className='d-md-none d-block text-capitalize m-0'>
+                  order <span className='fw-bold'>{i + 1}</span>
+                </p>
+
+                <div className='d-md-flex d-none flex-column'>
+                  <p className='fs-5 m-0 text-capitalize'>
+                    order <span className='text-uppercase'>id: </span>
+                  </p>
+
+                  <p className='fs-5 m-0 fw-bold'>{data.id}</p>
+                </div>
+              </Header>
+
+              <Body className='p-3'>
+                <div className='d-flex flex-column flex-md-row'>
+                  <div className='d-flex flex-column w-100'>
+                    <div className='mb-2'>
+                      <p className='m-0 text-uppercase'>order number:</p>
+
+                      <p className='fw-bold m-0'>{data.order_number}</p>
                     </div>
-                    <div className="d-flex flex-column justify-content-between">
-                      <Form.Group className="mt-2">
-                        <Form.Label className="w-50 m-0 align-self-center">ORDER ITEMS</Form.Label>
-                        {data.order_items.map((d, i) => (
-                          <div key={i}>
-                            <h4>name: {d.name}</h4>
-                            <h5>qty: {d.qty}</h5>
-                          </div>
+
+                    <div className='mb-2'>
+                      <p className='m-0 text-uppercase'>status:</p>
+
+                      <p className='fw-bold m-0'>{data.status}</p>
+                    </div>
+
+                    <div className='mb-2'>
+                      <p className='m-0 text-uppercase'>delivery fee:</p>
+
+                      <p className='fw-bold m-0'>{rupiah.convert(data.delivery_fee)}</p>
+                    </div>
+
+                    <div className='mb-2 mb-md-0'>
+                      <p className='m-0 text-uppercase'>amount of items:</p>
+
+                      <p className='fw-bold m-0'>{data.items_count}</p>
+                    </div>
+                  </div>
+
+                  <div className='d-flex flex-column w-100'>
+                    <p className='m-0 text-uppercase'>order items:</p>
+
+                    <Table
+                      hover
+                      responsive
+                      className='mb-0'
+                      size='sm'
+                    >
+                      <thead>
+                        <tr>
+                          <th className='text-uppercase fw-normal'>name</th>
+
+                          <th className='text-uppercase text-end fw-normal'>quantity</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {data.order_items.map((item) => (
+                          <tr key={item._id}>
+                            <td className='fw-bold'>{item.name}</td>
+
+                            <td className='text-end fw-bold'>{item.qty}</td>
+                          </tr>
                         ))}
-                      </Form.Group>
-                    </div>
-                  </Form>
-                </Accordion.Body>
-              </Accordion.Item>
-            ))}
-          </Accordion>
-        </>
+                      </tbody>
+                    </Table>
+                  </div>
+                </div>
+              </Body>
+            </Item>
+          ))}
+        </Accordion>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Order;
+export default Order

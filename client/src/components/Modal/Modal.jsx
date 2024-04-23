@@ -83,7 +83,7 @@ const Modal = ({
                     className='w-50 h-50 w-75'
                     type='text'
                     id='nama'
-                    placeholder='Nama alamat...'
+                    placeholder='Address name...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? name : undefined}
                   />
@@ -96,7 +96,7 @@ const Modal = ({
                     className='w-50 h-50 w-75'
                     type='text'
                     id='kelurahan'
-                    placeholder='Kelurahan...'
+                    placeholder='Kelurahan name...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? kelurahan : undefined}
                   />
@@ -109,20 +109,20 @@ const Modal = ({
                     className='w-50 h-50 w-75'
                     type='text'
                     id='kecamatan'
-                    placeholder='Kecamatan...'
+                    placeholder='Kecamatan name...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? kecamatan : undefined}
                   />
                 </Group>
 
                 <Group className='mb-2 d-flex'>
-                  <Label className='w-50 m-0 align-self-center text-uppercase'>kabupaten</Label>
+                  <Label className='w-50 m-0 align-self-center text-uppercase'>kota/kabupaten</Label>
 
                   <Control
                     className='w-50 h-50 w-75'
                     type='text'
                     id='kabupaten'
-                    placeholder='Kabupaten...'
+                    placeholder='Kabupaten name...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? kabupaten : undefined}
                   />
@@ -135,7 +135,7 @@ const Modal = ({
                     className='w-50 h-50 w-75'
                     type='text'
                     id='provinsi'
-                    placeholder='Provinsi...'
+                    placeholder='Provinsi name...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? provinsi : undefined}
                   />
@@ -150,7 +150,7 @@ const Modal = ({
                     className='w-75'
                     type='text'
                     id='detail'
-                    placeholder='Detail alamat...'
+                    placeholder='Address detail...'
                     onChange={(e) => handleChanges(e)}
                     value={isUpdate ? detail : undefined}
                   />
