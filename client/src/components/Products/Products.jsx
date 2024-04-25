@@ -117,7 +117,7 @@ const Products = () => {
   }, [])
 
   return (
-    <div>
+    <>
       <div className='mb-3 d-flex justify-content-between'>
         <Title
           title={'list of products'}
@@ -231,7 +231,7 @@ const Products = () => {
           notification
         />
       )}
-    </div>
+    </>
   )
 }
 
