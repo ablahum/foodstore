@@ -9,6 +9,26 @@ import { getAll } from '../../apis/categories'
 import { logout } from '../../apis/auth'
 import { Wrapper, Brand1, Brand2 } from './style'
 
+// export const Brand1 = styled(Brand)`
+//   font-family: var(--serif);
+//   font-size: 1.8rem;
+//   font-weight: 800;
+//   letter-spacing: -0.13rem;
+//   margin-right: 1rem;
+//   padding: 0;
+//   cursor: pointer;
+
+//   @media screen and (max-width: 767px) {
+//     display: none;
+//   }
+// `
+
+// export const Brand2 = styled.span`
+//   font-family: inherit;
+//   font-weight: 500;
+//   font-style: italic;
+// `
+
 const Header = () => {
   let cartState = useSelector((state) => state.cart)
 

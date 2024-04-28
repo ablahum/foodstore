@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import ReactPaginate from 'react-paginate'
+
 import { pageChanges } from '../../app/myReducer/action'
-import { Title } from './style'
 
 const Pagination = () => {
   let globalState = useSelector((state) => state.my)
@@ -11,7 +11,7 @@ const Pagination = () => {
   const handleClick = (data) => dispatch(pageChanges(data.selected + 1))
 
   return (
-    <div className='d-flex align-items-center'>
+    <div className='d-flex align-items-center justify-content-center justify-content-sm-start mt-2'>
       <ReactPaginate
         pageCount={3}
         onPageChange={handleClick}
@@ -24,7 +24,8 @@ const Pagination = () => {
         nextLinkClassName={'page-link'}
         activeClassName={'active'}
       />
-      <Title>Page {globalState.page} of 3</Title>
+
+      <p className='text-muted m-0 ms-2 d-none d-sm-inline'>Page {globalState.page} of 3</p>
     </div>
   )
 }

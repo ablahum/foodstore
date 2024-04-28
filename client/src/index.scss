@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+// colors
 $primary: #fd7e14;
 $primary-light: #fd9843;
 $secondary: #b85502;
@@ -8,14 +9,18 @@ $black: #000000;
 $dark: #1c1f23;
 $muted: #6c757d;
 
+// fonts
+
 :root {
   --primary: #{$primary};
   --primary-light: #{$primary-light};
   --secondary: #{$secondary};
+
   --muted: #{$muted};
   --white: #{$white};
   --black: #{$black};
   --dark: #{$dark};
+
   --sans-serif: 'Inter', sans-serif;
   --serif: 'Noe Display', serif;
 }

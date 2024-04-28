@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Spinner, Row, Col, Card } from 'react-bootstrap'
+import { Spinner, Row, Col, Card, Button } from 'react-bootstrap'
 import rupiah from 'rupiah-format'
 
 import { addItem } from '../../app/cart/actions'
 import { getAll, getSpecific } from '../../apis/products'
 import { config } from '../../config'
-import { Body, CardImg, TagLabel, CartButton } from './style'
+
+const { Body, Img, Title, Text } = Card
 
 const Product = () => {
   let globalState = useSelector((state) => state.my)
@@ -87,7 +88,7 @@ const Product = () => {
   }
 
   const setCart = async (product) => {
-    alert('Item sucessfully added to your cart')
+    alert('Item successfully added to your cart')
     await dispatch(addItem(product))
   }
 
@@ -104,37 +105,47 @@ const Product = () => {
               <Col
                 xl={3}
                 lg={4}
-                md={6}
-                sm={12}
-                className='my-3'
+                md={4}
+                sm={6}
+                xs={6}
+                className='p-2'
                 key={product._id}
               >
-                <Body>
-                  <Card.Body className='d-flex flex-column justify-content-between pb-0'>
-                    <CardImg
+                <Card className='rounded-4 p-3 shadow'>
+                  <Body className='p-0 d-flex flex-column justify-content-between'>
+                    <Img
                       variant='top'
-                      className='pb-3'
+                      className='mb-2'
                       src={`${config.apiHost}/public/${product.image}`}
                       alt={product.name}
                     />
-                    <Card.Title className='card-title mb-3 fw-bold'>{product.name}</Card.Title>
-                    <Card.Text className='card-desc text-muted '>{product.description}</Card.Text>
-                    <h5 className='mb-2'>{rupiah.convert(product.price)}</h5>
-                    <div className='card-subtitle text-muted my-2'>
+                    <Title className='fw-bold'>{product.name}</Title>
+
+                    <Text className='mb-2'>{product.description}</Text>
+
+                    <p className='fs-5 fw-semibold'>{rupiah.convert(product.price)}</p>
+
+                    <div className='text-muted mb-3'>
                       {product.tags.map((tag) => (
-                        <TagLabel key={tag._id}>{tag.name}</TagLabel>
+                        <p
+                          key={tag._id}
+                          className='border border-primary d-inline p-1 rounded-3 me-2'
+                        >
+                          {tag.name}
+                        </p>
                       ))}
                     </div>
-                  </Card.Body>
-                  <CartButton
-                    className='align-self-start mx-3 mb-3'
+                  </Body>
+
+                  <Button
+                    className='align-self-start text-white'
                     onClick={() => {
                       localStorage.getItem('token') ? setCart(product) : loginAlert()
                     }}
                   >
                     + Add to Cart
-                  </CartButton>
-                </Body>
+                  </Button>
+                </Card>
               </Col>
             ))}
         </Row>

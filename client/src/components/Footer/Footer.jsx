@@ -1,9 +1,7 @@
-import { Wrapper } from './style'
-
 const Footer = () => (
-  <Wrapper>
-    Made with 🧡 by <span className='fw-bold'>ablahum</span> in 2022
-  </Wrapper>
+  <div className='shadow-lg text-center p-4'>
+    Made with 🧡 by <span className='fw-bold'>ablahum</span> in 2024
+  </div>
 )
 
 export default Footer
