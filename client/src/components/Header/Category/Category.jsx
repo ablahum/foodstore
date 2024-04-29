@@ -3,27 +3,27 @@ import { Dropdown } from 'react-bootstrap'
 import { GiHamburgerMenu } from 'react-icons/gi'
 
 import { categoryChanges } from '../../../app/myReducer/action'
-import { Btn, BtnSm, Item } from './style'
 
-const { Menu } = Dropdown
+const { Toggle, Menu, Item } = Dropdown
 
 const Category = ({ categories }) => {
   const dispatch = useDispatch()
 
   return (
     <Dropdown>
-      <Btn variant='primary'>CATEGORY</Btn>
+      <Toggle className='text-white text-uppercase d-none d-sm-inline'>category</Toggle>
 
-      <BtnSm variant='primary'>
-        <GiHamburgerMenu />
-      </BtnSm>
+      <Toggle className='d-inline d-sm-none text-white'>
+        <GiHamburgerMenu className='me-1' />
+      </Toggle>
 
       <Menu>
         <Item
           value=''
           onClick={() => dispatch(categoryChanges(''))}
+          className='text-capitalize'
         >
-          All Products...
+          all products...
         </Item>
 
         {categories.map((category, i) => (

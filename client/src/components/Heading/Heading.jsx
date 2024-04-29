@@ -1,37 +1,31 @@
 import { Container } from 'react-bootstrap'
 
-import { Wrapper, Title } from './style'
-
-// export const Title = styled.h1`
-//   font-size: 6rem;
-//   font-family: var(--serif);
-//   letter-spacing: 2rem;
-//   margin: 0;
-//   text-transform: uppercase;
-
-//   @media screen and (max-width: 991px) {
-//     text-align: center;
-//     letter-spacing: 1rem;
-//   }
-
-//   @media screen and (max-width: 767px) {
-//     font-size: 4rem;
-//     letter-spacing: 0.5rem;
-//   }
-
-//   @media screen and (max-width: 576px) {
-//     font-size: 3rem;
-//     letter-spacing: 0.3rem;
-//   }
-// `
+import banner from '../../assets/banner.png'
 
 const Heading = ({ title }) => {
   return (
-    <Wrapper>
+    <div
+      className='text-white shadow-lg d-flex align-items-center'
+      style={{
+        height: '30vh',
+        background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${banner})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'bottom',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <Container>
-        <Title>{title}</Title>
+        <h1
+          className='m-0 text-uppercase text-md-start text-center display-1 fw-normal'
+          style={{
+            fontFamily: 'var(--serif)',
+            letterSpacing: '2rem',
+          }}
+        >
+          {title}
+        </h1>
       </Container>
-    </Wrapper>
+    </div>
   )
 }
 

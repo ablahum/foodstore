@@ -24,7 +24,7 @@ const Tag = ({ tags }) => {
               key={tag._id}
               value={tag.name}
               variant='outline-primary'
-              className='fw-bold'
+              className='fw-bold py-1 px-2 py-sm-2 px-sm-3'
             >
               {tag.name}
             </ToggleButton>
