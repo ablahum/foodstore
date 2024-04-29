@@ -108,7 +108,7 @@ const Product = () => {
                 md={4}
                 sm={6}
                 xs={6}
-                className='p-2'
+                className='p-1 p-md-2'
                 key={product._id}
               >
                 <Card className='rounded-4 p-3 shadow'>
@@ -123,13 +123,16 @@ const Product = () => {
 
                     <Text className='mb-2'>{product.description}</Text>
 
-                    <p className='fs-5 fw-semibold'>{rupiah.convert(product.price)}</p>
+                    <p className='fs-5 fw-semibold mb-2'>{rupiah.convert(product.price)}</p>
 
-                    <div className='text-muted mb-3'>
+                    <div className='text-muted mb-2'>
                       {product.tags.map((tag) => (
                         <p
                           key={tag._id}
-                          className='border border-primary d-inline p-1 rounded-3 me-2'
+                          className='border d-inline p-1 rounded-3 me-2 fw-semibold'
+                          style={{
+                            fontSize: '0.7rem',
+                          }}
                         >
                           {tag.name}
                         </p>
@@ -138,12 +141,15 @@ const Product = () => {
                   </Body>
 
                   <Button
-                    className='align-self-start text-white'
+                    className='align-self-start text-white fw-semibold'
+                    style={{
+                      fontSize: '0.7rem',
+                    }}
                     onClick={() => {
                       localStorage.getItem('token') ? setCart(product) : loginAlert()
                     }}
                   >
-                    + Add to Cart
+                    {/* <span className='d-none d-md-inline'>+ </span> */}+ Add to Cart
                   </Button>
                 </Card>
               </Col>

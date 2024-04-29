@@ -1,33 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { Navbar } from 'react-bootstrap'
 
 import { roleChanges, userIdChanges } from '../../app/myReducer/action'
 import { Category, Search, NavBar, Notification, Carts } from '../../components'
 import { getAll } from '../../apis/categories'
 import { logout } from '../../apis/auth'
-import { Wrapper, Brand1, Brand2 } from './style'
 
-// export const Brand1 = styled(Brand)`
-//   font-family: var(--serif);
-//   font-size: 1.8rem;
-//   font-weight: 800;
-//   letter-spacing: -0.13rem;
-//   margin-right: 1rem;
-//   padding: 0;
-//   cursor: pointer;
-
-//   @media screen and (max-width: 767px) {
-//     display: none;
-//   }
-// `
-
-// export const Brand2 = styled.span`
-//   font-family: inherit;
-//   font-weight: 500;
-//   font-style: italic;
-// `
+const { Brand } = Navbar
 
 const Header = () => {
   let cartState = useSelector((state) => state.cart)
@@ -42,6 +24,7 @@ const Header = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const getCategories = async () => {
     try {
@@ -83,18 +66,38 @@ const Header = () => {
     getCategories()
   }, [])
 
+  const isHome = location.pathname === '/'
+
   return (
-    <Wrapper>
+    <Navbar className='shadow position-sticky top-0 z-1 bg-white'>
       <Container>
-        <div onClick={() => navigate('/')}>
-          <Brand1>
-            FOOD<Brand2>STORE</Brand2>
-          </Brand1>
-        </div>
+        <Brand
+          onClick={() => navigate('/')}
+          className='d-none d-sm-inline fw-bold fs-3 text-uppercase'
+          style={{
+            fontFamily: 'var(--serif)',
+            letterSpacing: '-2px',
+            cursor: 'pointer',
+          }}
+        >
+          food
+          <span
+            className='fst-italic fw-normal'
+            style={{
+              fontFamily: 'var(--serif)',
+            }}
+          >
+            store
+          </span>
+        </Brand>
 
-        <Category categories={categories} />
+        {isHome && (
+          <>
+            <Category categories={categories} />
 
-        <Search />
+            <Search />
+          </>
+        )}
 
         <NavBar
           cartState={cartState}
@@ -115,7 +118,7 @@ const Header = () => {
         title={notification.title}
         message={notification.message}
       />
-    </Wrapper>
+    </Navbar>
   )
 }
 
