@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 
 import { register } from '../../apis/auth'
-import { Form, Notification } from '../../components'
-import { Wrapper, FormWrapper } from './style'
+import { Form, Modal } from '../../components'
 import { validateEmail } from '../../utils'
+import bg from '../../assets/bg.png'
 
 const Register = () => {
   const [data, setData] = useState({
@@ -14,7 +14,7 @@ const Register = () => {
     role: 'user',
   })
   const [messages, setMessages] = useState([])
-  const [show, setShow] = useState(false)
+  const [isNotification, setIsNotification] = useState(false)
 
   const navigate = useNavigate()
 
@@ -50,7 +50,7 @@ const Register = () => {
         })
 
         setMessages([res.data.message])
-        setShow(true)
+        setIsNotification(true)
       } catch (err) {
         console.error(err)
       }
@@ -71,22 +71,37 @@ const Register = () => {
     }
   }
 
-  const handleClose = () => {
-    setShow(false)
+  const closeNotification = () => {
+    setIsNotification(false)
     setMessages([])
     navigate('/login')
   }
 
   return (
-    <Wrapper>
-      <FormWrapper>
-        <h2 className='text-center fw-bold mb-4'>SIGN UP</h2>
+    <div
+      className='d-flex justify-content-center align-items-center'
+      style={{
+        background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '100vh',
+      }}
+    >
+      <div
+        className='text-white rounded-4 shadow'
+        style={{
+          padding: '2em',
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          width: '30em',
+        }}
+      >
+        <h2 className='text-center fw-bold mb-3 text-uppercase'>sign up</h2>
 
         <Form
           register
           data={data}
           messages={messages}
-          role={data.role}
+          roles={data.role}
           handleChanges={handleChanges}
           handleSubmit={handleSubmit}
         />
@@ -95,15 +110,15 @@ const Register = () => {
           Already have an account?
           <Link
             to='/login'
-            className='text-decoration-none'
+            className='text-decoration-none text-capitalize'
           >
             {' '}
-            Sign In{' '}
+            sign in{' '}
           </Link>
           instead
         </p>
 
-        <p className='text-center'>
+        <p className='text-center mb-0'>
           <Link
             to='/'
             className='text-decoration-none'
@@ -111,15 +126,16 @@ const Register = () => {
             ← Back to home
           </Link>
         </p>
-      </FormWrapper>
+      </div>
 
-      <Notification
-        show={show}
-        handleClose={handleClose}
+      <Modal
+        notification
+        trigger={isNotification}
+        setTrigger={closeNotification}
         title={messages}
         message='Please login to continue'
       />
-    </Wrapper>
+    </div>
   )
 }
 

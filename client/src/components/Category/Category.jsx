@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { Dropdown } from 'react-bootstrap'
 import { GiHamburgerMenu } from 'react-icons/gi'
 
-import { categoryChanges } from '../../../app/myReducer/action'
+import { categoryChanges } from '../../app/myReducer/action'
 
 const { Toggle, Menu, Item } = Dropdown
 

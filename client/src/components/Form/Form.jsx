@@ -1,19 +1,18 @@
-import { Form as Wrapper } from 'react-bootstrap'
+import { Button, Form as Wrapper } from 'react-bootstrap'
 
 import { ErrorMessages } from '../../components'
-import { Submit } from './style'
-import Role from '../Roles'
+import { Roles } from '../../components'
 
 const { Group, Label, Control } = Wrapper
 
-const Form = ({ register, messages, data, role, handleChanges, handleSubmit }) => (
+const Form = ({ register, messages, data, roles, handleChanges, handleSubmit }) => (
   <Wrapper
     action='/login'
     method='post'
   >
     {register && (
-      <Group className='mb-3'>
-        <Label>NAME:</Label>
+      <Group className='mb-3 text-uppercase'>
+        <Label>name:</Label>
 
         <Control
           type='text'
@@ -26,8 +25,8 @@ const Form = ({ register, messages, data, role, handleChanges, handleSubmit }) =
       </Group>
     )}
 
-    <Group className='mb-3'>
-      <Label>EMAIL:</Label>
+    <Group className='mb-3 text-uppercase'>
+      <Label>email:</Label>
 
       <Control
         type='email'
@@ -39,8 +38,8 @@ const Form = ({ register, messages, data, role, handleChanges, handleSubmit }) =
       />
     </Group>
 
-    <Group className='mb-3'>
-      <Label>PASSWORD:</Label>
+    <Group className='mb-3 text-uppercase'>
+      <Label>password:</Label>
 
       <Control
         type='password'
@@ -53,11 +52,11 @@ const Form = ({ register, messages, data, role, handleChanges, handleSubmit }) =
     </Group>
 
     {register && (
-      <Group className='mb-3'>
-        <Label className='me-4 mb-0 align-self-center'>ROLE:</Label>
+      <Group className='mb-3 text-uppercase'>
+        <Label className='me-3 mb-0 align-self-center'>role:</Label>
 
-        <Role
-          role={role}
+        <Roles
+          role={roles}
           handleChanges={handleChanges}
         />
       </Group>
@@ -65,13 +64,13 @@ const Form = ({ register, messages, data, role, handleChanges, handleSubmit }) =
 
     {messages.length > 0 && <ErrorMessages errors={messages} />}
 
-    <Submit
+    <Button
       href='#'
-      className='mt-3'
+      className=' mt-2 text-uppercase text-white w-100 fw-semibold border-0'
       onClick={(e) => handleSubmit(e)}
     >
-      {register ? 'SIGN UP' : 'SIGN IN'}
-    </Submit>
+      {register ? 'sign up' : 'sign in'}
+    </Button>
   </Wrapper>
 )
 

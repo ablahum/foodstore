@@ -4,7 +4,7 @@ import { Accordion, Form, Button, Spinner } from 'react-bootstrap'
 import { getMe } from '../../apis/auth'
 import { getAll } from '../../apis/delivery-addresses'
 import { Update, Delete } from './style'
-import { Modal } from '../Modal'
+import { Modal } from '../../components'
 import { createOne, updateOne, deleteOne } from '../../apis/delivery-addresses'
 import Title from '../Title'
 
