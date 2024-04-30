@@ -6,7 +6,7 @@ import { MdDeleteForever } from 'react-icons/md'
 import { config } from '../../config'
 import { createOne, updateOne, deleteOne, getSpecific } from '../../apis/products'
 import { Wrapper, Detail, Update, Delete } from './style'
-import { Modal } from '../Modal'
+import { Modal } from '../../components'
 import Title from '../Title'
 
 const Products = () => {

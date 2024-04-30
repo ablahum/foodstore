@@ -28,7 +28,7 @@ const Checkout = () => {
 
   const [messages, setMessages] = useState([])
   const [confirm, setConfirm] = useState(false)
-  const [notification, setNotification] = useState(false)
+  const [isNotification, setIsNotification] = useState(false)
 
   const fee = 20000
   const getOrderId = cartItems.map((item) => item._id)
@@ -124,7 +124,7 @@ const Checkout = () => {
       await createOne(payload)
 
       setConfirm(false)
-      setNotification(true)
+      setIsNotification(true)
     } catch (err) {
       console.error(err)
     }
@@ -259,9 +259,9 @@ const Checkout = () => {
         {/* {messages.join('').includes('successful') && modalType === '' && ( */}
         <Modal
           title={'Place order successful'}
-          setTrigger={setNotification}
+          setTrigger={setIsNotification}
           // trigger={messages.join('').includes('successful') && modalType === ''}
-          trigger={notification}
+          trigger={isNotification}
           notification
           nextPage={nextPage}
           isCheckout

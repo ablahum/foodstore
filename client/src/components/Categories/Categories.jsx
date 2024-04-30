@@ -3,7 +3,7 @@ import { Spinner, Button } from 'react-bootstrap'
 import { FiEdit } from 'react-icons/fi'
 import { MdDeleteForever } from 'react-icons/md'
 
-import { Modal } from '../Modal'
+import { Modal } from '../../components'
 import { getAll, createOne, updateOne, deleteOne } from '../../apis/categories'
 import Title from '../Title'
 

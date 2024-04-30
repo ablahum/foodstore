@@ -3,8 +3,8 @@ import { Accordion, Spinner, Table } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import rupiah from 'rupiah-format'
 
-import { getAll } from '../apis/orders'
-import { Title } from '../components'
+import { getAll } from '../../apis/orders'
+import { Title } from '../../components'
 
 const { Item, Header, Body } = Accordion
 
@@ -21,7 +21,6 @@ const Order = () => {
     setCount(res.data.count)
     setOrders(res.data.data)
     setLoading(false)
-    console.log(res.data.data)
   }
 
   useEffect(() => {

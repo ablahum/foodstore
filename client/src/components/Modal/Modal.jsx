@@ -51,7 +51,7 @@ const Modal = ({
           <>
             <h3 className='fw-bold fs-4 m-0 align-self-center'>{title}!</h3>
 
-            {message ? <p className='mt-3'>{message}</p> : ''}
+            {message ? <p className='mt-3 mb-0'>{message}</p> : ''}
 
             <Confirm
               onClick={isCheckout ? () => nextPage() : () => setTrigger(false)}

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { FormControl, InputGroup } from 'react-bootstrap'
 
-import { searchChanges } from '../../../app/myReducer/action'
+import { searchChanges } from '../../app/myReducer/action'
 
 const Search = () => {
   const dispatch = useDispatch()

@@ -2,8 +2,8 @@
 
 // colors
 $primary: #fd7e14;
-$primary-light: #fd9843;
-$secondary: #b85502;
+// $secondary-light: #fd9843;
+// $secondary-dark: #b85502;
 $white: #ffffff;
 $black: #000000;
 $dark: #1c1f23;
@@ -11,8 +11,8 @@ $muted: #6c757d;
 
 :root {
   --primary: #{$primary};
-  --primary-light: #{$primary-light};
-  --secondary: #{$secondary};
+  // --secondary-light: #{$secondary-light};
+  // --secondary-dark: #{$secondary-dark};
 
   --muted: #{$muted};
   --white: #{$white};

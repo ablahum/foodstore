@@ -22,7 +22,7 @@ const Home = () => {
   }, [])
 
   return (
-    <>
+    <div style={{ minHeight: '100vh' }}>
       <Heading title='our menus' />
 
       <Container className='py-md-5 py-4'>
@@ -32,7 +32,7 @@ const Home = () => {
 
         <Pagination />
       </Container>
-    </>
+    </div>
   )
 }
 

@@ -149,7 +149,7 @@ const Product = () => {
                       localStorage.getItem('token') ? setCart(product) : loginAlert()
                     }}
                   >
-                    {/* <span className='d-none d-md-inline'>+ </span> */}+ Add to Cart
+                    + Add to Cart
                   </Button>
                 </Card>
               </Col>

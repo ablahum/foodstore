@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Navbar } from 'react-bootstrap'
 
 import { roleChanges, userIdChanges } from '../../app/myReducer/action'
-import { Category, Search, NavBar, Notification, Carts } from '../../components'
+import { Category, Search, NavBar, Carts, Modal } from '../../components'
 import { getAll } from '../../apis/categories'
 import { logout } from '../../apis/auth'
 
@@ -16,7 +16,7 @@ const Header = () => {
 
   const [categories, setCategories] = useState([])
   const [cartTrigger, setCartTrigger] = useState(false)
-  const [show, setShow] = useState(false)
+  const [isNotification, setIsNotification] = useState(false)
   const [notification, setNotification] = useState({
     title: '',
     message: '',
@@ -40,7 +40,7 @@ const Header = () => {
     try {
       const res = await logout()
 
-      setShow(true)
+      setIsNotification(true)
       setNotification({
         title: res.data.message,
         message: 'Thank you! We will gonna miss you',
@@ -57,8 +57,8 @@ const Header = () => {
     }
   }
 
-  const handleClose = () => {
-    setShow(false)
+  const closeNotification = () => {
+    setIsNotification(false)
     setNotification({ title: '', message: '' })
   }
 
@@ -112,9 +112,10 @@ const Header = () => {
         setTrigger={setCartTrigger}
       />
 
-      <Notification
-        show={show}
-        handleClose={handleClose}
+      <Modal
+        notification
+        setTrigger={closeNotification}
+        trigger={isNotification}
         title={notification.title}
         message={notification.message}
       />

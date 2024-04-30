@@ -10,24 +10,24 @@ export { default as Tag } from './Tag'
 export { default as Product } from './Product'
 
 export { default as Navigator } from './Navigator'
-export { default as Profile } from './Profile/Profile'
+export { default as Profile } from './Profile'
 
-export { default as Products } from './Products/Products'
+export { default as Products } from './Products'
 export { default as Categories } from './Categories'
 export { default as Tags } from './Tags'
 
 export { default as Order } from './Order'
 export { default as Carts } from './Carts'
 
-export { default as Cart } from './Carts/Cart'
-export { default as EmptyCart } from './Carts/EmptyCart'
 export { default as Form } from './Form'
 export { default as Roles } from './Roles'
+
+export { default as Modal } from './Modal'
 export { default as ErrorMessages } from './ErrorMessages'
 
-export { default as Category } from './Header/Category'
-export { default as Search } from './Header/Search'
-export { default as NavBar } from './Header/NavBar'
+export { default as Category } from './Category'
+export { default as Search } from './Search'
+export { default as NavBar } from './NavBar'
 
-export { Modal } from './Modal'
-export { default as Notification } from './Modal/Notification'
+export { default as Cart } from './Carts/Cart'
+export { default as EmptyCart } from './Carts/EmptyCart'

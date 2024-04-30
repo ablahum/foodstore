@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux'
 
 import { roleChanges, userIdChanges } from '../../app/myReducer/action'
 import { login } from '../../apis/auth'
-import { Form, Notification } from '../../components'
-import { Wrapper, FormWrapper } from './style'
+import { Form, Modal } from '../../components'
 import { validateEmail } from '../../utils'
+import bg from '../../assets/bg.png'
 
 const Login = () => {
   const [data, setData] = useState({
@@ -14,11 +14,11 @@ const Login = () => {
     password: '',
   })
   const [messages, setMessages] = useState([])
-  const [show, setShow] = useState(false)
+  const [isNotification, setIsNotification] = useState(false)
 
   const dispatch = useDispatch()
 
-  if (localStorage.getItem('token') && show === false) return <Navigate to='/' />
+  if (localStorage.getItem('token') && isNotification === false) return <Navigate to='/' />
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -38,7 +38,7 @@ const Login = () => {
         const res = await login({ email, password })
 
         setMessages([res.data.message])
-        setShow(true)
+        setIsNotification(true)
 
         localStorage.setItem('token', res.data.token)
         dispatch(roleChanges(res.data.user.role))
@@ -56,15 +56,30 @@ const Login = () => {
       [e.target.id]: e.target.value,
     }))
 
-  const handleClose = () => {
-    setShow(false)
+  const closeNotification = () => {
+    setIsNotification(false)
     setMessages([])
   }
 
   return (
-    <Wrapper>
-      <FormWrapper>
-        <h2 className='text-center fw-bold mb-4'>SIGN IN</h2>
+    <div
+      className='d-flex justify-content-center align-items-center'
+      style={{
+        background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '100vh',
+      }}
+    >
+      <div
+        className='text-white rounded-4 shadow'
+        style={{
+          padding: '2em',
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          width: '30em',
+        }}
+      >
+        <h2 className='text-center fw-bold mb-3 text-uppercase'>sign in</h2>
 
         <Form
           data={data}
@@ -77,15 +92,15 @@ const Login = () => {
           Don't have an account?
           <Link
             to='/register'
-            className='text-decoration-none'
+            className='text-decoration-none text-capitalize'
           >
             {' '}
-            Sign Up{' '}
+            sign up{' '}
           </Link>
           now
         </p>
 
-        <p className='text-center'>
+        <p className='text-center mb-0'>
           <Link
             to='/'
             className='text-decoration-none'
@@ -93,15 +108,16 @@ const Login = () => {
             ← Back to home
           </Link>
         </p>
-      </FormWrapper>
+      </div>
 
-      <Notification
-        show={show}
-        handleClose={handleClose}
+      <Modal
+        notification
+        trigger={isNotification}
+        setTrigger={closeNotification}
         title={messages}
         message='Happy shopping!'
       />
-    </Wrapper>
+    </div>
   )
 }
 
