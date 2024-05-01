@@ -3,20 +3,15 @@ import { AiOutlineShoppingCart, AiOutlinePoweroff } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
 import { Nav } from 'react-bootstrap'
 
-const Icons = {
-  color: '#000',
-  fontSize: '1.5rem',
-}
-
 const { Toggle, Menu, Item } = Dropdown
 
 const NavBar = ({ cartState, navigate, setTrigger, handleLogout }) => (
   <Nav>
     <Button
-      className='bg-transparent border-0 position-relative p-2'
+      className='bg-transparent border-0 position-relative p-2 me-2'
       onClick={() => (localStorage.getItem('token') ? setTrigger(true) : navigate('/login'))}
     >
-      <AiOutlineShoppingCart className='fs-5' />
+      <AiOutlineShoppingCart className='fs-4' />
 
       {localStorage.getItem('token') && (
         <p
@@ -31,7 +26,7 @@ const NavBar = ({ cartState, navigate, setTrigger, handleLogout }) => (
     {localStorage.getItem('token') ? (
       <Dropdown className='p-2'>
         <Toggle className='bg-transparent border-0 p-0'>
-          <FiUser className='fs-5' />
+          <FiUser className='fs-4' />
         </Toggle>
 
         <Menu className='py-0 dropdown-menu-end'>

@@ -242,7 +242,7 @@ const Modal = ({
                 <TableBox>
                   <Table
                     hover
-                    bordered
+                    responsive
                     size='sm'
                   >
                     <thead>

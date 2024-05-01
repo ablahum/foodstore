@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux'
 import { AiOutlineClose } from 'react-icons/ai'
 
 import emptyCart from '../../assets/empty-cart.png'
-import { Cart, EmptyCart } from '../../components'
-import { Active, Disable, Wrapper, CloseBtn } from './style'
+import { Cart, EmptyCart, Title } from '../../components'
 import { putAll } from '../../apis/carts'
+import { Button } from 'react-bootstrap'
 
 const Carts = ({ trigger, setTrigger }) => {
   const cartState = useSelector((state) => state.cart)
@@ -30,13 +30,25 @@ const Carts = ({ trigger, setTrigger }) => {
   }
 
   return (
-    <Wrapper style={trigger ? Active : Disable}>
-      <div className='m-4 d-flex align-items-center justify-content-between'>
-        <h2 className='m-0 fw-bold'>YOUR CART</h2>
+    <div
+      className='d-flex flex-column  justify-content-between position-fixed top-0 shadow bg-white'
+      style={{
+        transition: '350ms',
+        zIndex: '999',
+        height: '100vh',
+        minWidth: '30%',
+        ...(trigger ? { right: '0' } : { right: '-200%' }),
+      }}
+    >
+      <div className='m-3 d-flex align-items-center justify-content-between'>
+        <Title
+          title={'your cart'}
+          className='mb-0'
+        />
 
-        <CloseBtn>
+        <Button className='bg-transparent border-0 m-0 fs-4'>
           <AiOutlineClose onClick={() => setTrigger(false)} />
-        </CloseBtn>
+        </Button>
       </div>
 
       {localStorage.getItem('token') && cartItems.length > 0 ? (
@@ -47,7 +59,7 @@ const Carts = ({ trigger, setTrigger }) => {
       ) : (
         <EmptyCart emptyCart={emptyCart} />
       )}
-    </Wrapper>
+    </div>
   )
 }
 
