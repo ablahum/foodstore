@@ -66,7 +66,7 @@ const Form = ({ register, messages, data, roles, handleChanges, handleSubmit }) 
 
     <Button
       href='#'
-      className=' mt-2 text-uppercase text-white w-100 fw-semibold border-0'
+      className='mt-2 text-uppercase text-white w-100 fw-semibold'
       onClick={(e) => handleSubmit(e)}
     >
       {register ? 'sign up' : 'sign in'}
