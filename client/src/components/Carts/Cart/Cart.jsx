@@ -14,9 +14,10 @@ const Cart = ({ cartItems, handleSubmit }) => {
   return (
     <div className='h-100 d-flex flex-column justify-content-between'>
       <div
-        className='mx-3 table-responsive'
-        // style={{ maxHeight: '400px' }}
-        style={{ maxHeight: '65vh' }}
+        className='mx-3 table-responsive flex-grow-1'
+        style={{
+          height: '0',
+        }}
       >
         <Table
           hover
