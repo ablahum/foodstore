@@ -31,12 +31,13 @@ const Carts = ({ trigger, setTrigger }) => {
 
   return (
     <div
-      className='d-flex flex-column  justify-content-between position-fixed top-0 shadow bg-white'
+      className='d-flex flex-column justify-content-between position-fixed top-0 shadow bg-white'
       style={{
         transition: '350ms',
-        zIndex: '999',
+        // zIndex: '99',
         height: '100vh',
         minWidth: '30%',
+        maxWidth: '100%',
         ...(trigger ? { right: '0' } : { right: '-200%' }),
       }}
     >

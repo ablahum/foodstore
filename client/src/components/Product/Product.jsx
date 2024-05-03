@@ -7,6 +7,7 @@ import rupiah from 'rupiah-format'
 import { addItem } from '../../app/cart/actions'
 import { getAll, getSpecific } from '../../apis/products'
 import { config } from '../../config'
+import { Modal } from '../../components'
 
 const { Body, Img, Title, Text } = Card
 
@@ -15,6 +16,7 @@ const Product = () => {
 
   const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState([])
+  const [isNotification, setIsNotification] = useState(false)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -88,7 +90,7 @@ const Product = () => {
   }
 
   const setCart = async (product) => {
-    alert('Item successfully added to your cart')
+    setIsNotification(true)
     await dispatch(addItem(product))
   }
 
@@ -156,6 +158,13 @@ const Product = () => {
             ))}
         </Row>
       )}
+
+      <Modal
+        notification
+        setTrigger={setIsNotification}
+        trigger={isNotification}
+        title={'Item successfully added to your cart'}
+      />
     </>
   )
 }
