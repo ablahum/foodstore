@@ -1,98 +1,98 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { Spinner, Row, Col, Card, Button } from 'react-bootstrap'
-import rupiah from 'rupiah-format'
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Spinner, Row, Col, Card, Button } from 'react-bootstrap';
+import rupiah from 'rupiah-format';
 
-import { addItem } from '../../app/cart/actions'
-import { getAll, getSpecific } from '../../apis/products'
-import { config } from '../../config'
-import { Modal } from '../../components'
+import { addItem } from '../../app/cart/actions';
+import { getAll, getSpecific } from '../../apis/products';
+import { config } from '../../config';
+import { Modal } from '../../components';
 
-const { Body, Img, Title, Text } = Card
+const { Body, Img, Title, Text } = Card;
 
 const Product = () => {
-  let globalState = useSelector((state) => state.my)
+  let globalState = useSelector((state) => state.my);
 
-  const [loading, setLoading] = useState(true)
-  const [products, setProducts] = useState([])
-  const [isNotification, setIsNotification] = useState(false)
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
+  const [isNotification, setIsNotification] = useState(false);
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getProducts = async () => {
     try {
-      setLoading(true)
-      const res = await getAll()
+      setLoading(true);
+      const res = await getAll();
 
-      setProducts(res.data.products)
-      setLoading(false)
+      setProducts(res.data.products);
+      setLoading(false);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const getProductByParams = async (params) => {
     try {
-      setLoading(true)
-      const res = await getSpecific(params)
+      setLoading(true);
+      const res = await getSpecific(params);
 
-      setProducts(res.data.products)
-      setLoading(false)
+      setProducts(res.data.products);
+      setLoading(false);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
-    getProducts()
-  }, [])
+    getProducts();
+  }, []);
 
   // search product by category
   useEffect(() => {
-    getProductByParams(`?category=${globalState.categoryKey}`)
-  }, [globalState.categoryKey])
+    getProductByParams(`?category=${globalState.categoryKey}`);
+  }, [globalState.categoryKey]);
 
   // search product by search
   useEffect(() => {
-    getProductByParams(`?q=${globalState.searchKey}`)
-  }, [globalState.searchKey])
+    getProductByParams(`?q=${globalState.searchKey}`);
+  }, [globalState.searchKey]);
 
   // pagination
   useEffect(() => {
-    getProductByParams(`?page=${globalState.page}`)
-  }, [globalState.page])
+    getProductByParams(`?page=${globalState.page}`);
+  }, [globalState.page]);
 
   // search product by tags
   useEffect(() => {
-    let params = ''
+    let params = '';
 
     if (globalState.tags.length === 2) {
-      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}`
+      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}`;
     } else if (globalState.tags.length === 3) {
-      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}`
+      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}`;
     } else if (globalState.tags.length === 4) {
-      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}&tags[]=${globalState.tags[3]}`
+      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}&tags[]=${globalState.tags[3]}`;
     } else if (globalState.tags.length === 5) {
-      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}&tags[]=${globalState.tags[3]}&tags[]=${globalState.tags[4]}`
+      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}&tags[]=${globalState.tags[3]}&tags[]=${globalState.tags[4]}`;
     } else {
-      params = `?tags[]=${globalState.tags}`
+      params = `?tags[]=${globalState.tags}`;
     }
 
-    getProductByParams(params)
-  }, [globalState.tags])
+    getProductByParams(params);
+  }, [globalState.tags]);
 
   // login validation
   const loginAlert = () => {
-    alert('Please login first')
-    navigate('/login')
-  }
+    alert('Please login first');
+    navigate('/login');
+  };
 
   const setCart = async (product) => {
-    setIsNotification(true)
-    await dispatch(addItem(product))
-  }
+    setIsNotification(true);
+    await dispatch(addItem(product));
+  };
 
   return (
     <>
@@ -148,7 +148,7 @@ const Product = () => {
                       fontSize: '0.7rem',
                     }}
                     onClick={() => {
-                      localStorage.getItem('token') ? setCart(product) : loginAlert()
+                      localStorage.getItem('token') ? setCart(product) : loginAlert();
                     }}
                   >
                     + Add to Cart
@@ -166,7 +166,7 @@ const Product = () => {
         title={'Item successfully added to your cart'}
       />
     </>
-  )
-}
+  );
+};
 
-export default Product
+export default Product;

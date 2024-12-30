@@ -1,10 +1,10 @@
-import { Alert, Table, Form } from 'react-bootstrap'
-import rupiah from 'rupiah-format'
+import { Alert, Table, Form } from 'react-bootstrap';
+import rupiah from 'rupiah-format';
 
-import { ErrorMessages } from '../../components'
-import { Wrapper, PopUp, Cancel, Confirm, TableBox } from './style'
+import { ErrorMessages } from '../../components';
+import { Wrapper, PopUp, Cancel, Confirm, TableBox } from './style';
 
-const { Group, Label, Control } = Form
+const { Group, Label, Control } = Form;
 
 const Modal = ({
   title,
@@ -342,6 +342,6 @@ const Modal = ({
     </PopUp>
   ) : (
     ''
-  )
+  );
 
-export default Modal
+export default Modal;
