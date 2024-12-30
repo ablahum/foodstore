@@ -1,21 +1,21 @@
-const { Tag, Category, Product } = require('../models')
+const { Tag, Category, Product } = require('../models');
 
 const getAll = async (req, res, next) => {
   try {
-    let tags = await Tag.find()
+    let tags = await Tag.find();
 
-    return res.status(200).json(tags)
+    return res.status(200).json(tags);
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.status(400).json({
         message: err.message,
         fields: err.errors,
-      })
+      });
     }
 
-    next(err)
+    next(err);
   }
-}
+};
 
 // const getOneByCategory = async (req, res, next) => {
 //   const { category } = req.params
@@ -53,75 +53,75 @@ const getAll = async (req, res, next) => {
 // }
 
 const createOne = async (req, res, next) => {
-  const payload = req.body
+  const payload = req.body;
 
   try {
-    const tag = new Tag(payload)
-    await tag.save()
+    const tag = new Tag(payload);
+    await tag.save();
 
     return res.status(201).json({
       message: 'Create tag successful',
       tag,
-    })
+    });
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.status(400).json({
         message: err.message,
         fields: err.errors,
-      })
+      });
     }
 
-    next(err)
+    next(err);
   }
-}
+};
 
 const updateOne = async (req, res, next) => {
-  const payload = req.body
-  const { id } = req.params
+  const payload = req.body;
+  const { id } = req.params;
 
   try {
     const tag = await Tag.findByIdAndUpdate(id, payload, {
       new: true,
       runValidators: true,
-    })
+    });
 
     return res.status(200).json({
       message: 'Update tag successful',
       tag,
-    })
+    });
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.status(400).json({
         message: err.message,
         fields: err.errors,
-      })
+      });
     }
 
-    next(err)
+    next(err);
   }
-}
+};
 
 const deleteOne = async (req, res, next) => {
-  const { id } = req.params
+  const { id } = req.params;
 
   try {
-    const tag = await Tag.findByIdAndDelete(id)
+    const tag = await Tag.findByIdAndDelete(id);
 
     return res.status(200).json({
       message: 'Delete tag successful',
       tag,
-    })
+    });
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.status(400).json({
         message: err.message,
         fields: err.errors,
-      })
+      });
     }
 
-    next(err)
+    next(err);
   }
-}
+};
 
 module.exports = {
   createOne,
@@ -129,4 +129,4 @@ module.exports = {
   deleteOne,
   getAll,
   // getOneByCategory,
-}
+};

@@ -1,14 +1,14 @@
-const authentications = require('./authentications')
-const products = require('./products')
-const categories = require('./categories')
-const tags = require('./tags')
-const deliveryAddresses = require('./deliveryAddresses')
-const carts = require('./carts')
-const orders = require('./orders')
-const invoices = require('./invoices')
+const authentication = require('./authentication');
+const products = require('./products');
+const categories = require('./categories');
+const tags = require('./tags');
+const deliveryAddresses = require('./deliveryAddresses');
+const carts = require('./carts');
+const orders = require('./orders');
+const invoices = require('./invoices');
 
 module.exports = {
-  authentications,
+  authentication,
   products,
   categories,
   tags,
@@ -16,4 +16,4 @@ module.exports = {
   carts,
   orders,
   invoices,
-}
+};
