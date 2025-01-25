@@ -1,14 +1,14 @@
-import { Alert, Table, Form } from 'react-bootstrap'
-import rupiah from 'rupiah-format'
+import { Alert, Table, Form } from 'react-bootstrap';
+import rupiah from 'rupiah-format';
 
-import { ErrorMessages } from '../../components'
-import { Wrapper, PopUp, Cancel, Confirm, TableBox } from './style'
+import { ErrorMessages } from '../../components';
+import { Wrapper, PopUp, Cancel, Confirm, TableBox } from './style';
 
-const { Group, Label, Control } = Form
+const { Group, Label, Control } = Form;
 
 const Modal = ({
   title,
-  messages,
+  errorMessages,
   type,
   trigger,
   setTrigger,
@@ -329,7 +329,7 @@ const Modal = ({
               </Form>
             )}
 
-            {isDelete ? '' : <div className='align-self-center'>{messages.length > 0 ? <ErrorMessages errors={messages} /> : ''}</div>}
+            {isDelete ? '' : <div className='align-self-center'>{errorMessages.length > 0 ? <ErrorMessages messages={errorMessages} /> : ''}</div>}
 
             <div className='mt-3 d-flex'>
               <Cancel onClick={() => setTrigger(false)}>{cancel}</Cancel>
@@ -342,6 +342,6 @@ const Modal = ({
     </PopUp>
   ) : (
     ''
-  )
+  );
 
-export default Modal
+export default Modal;

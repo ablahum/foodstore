@@ -1,78 +1,78 @@
-import { useState, useEffect } from 'react'
-import { Spinner, Button } from 'react-bootstrap'
-import { FiEdit } from 'react-icons/fi'
-import { MdDeleteForever } from 'react-icons/md'
+import { useState, useEffect } from 'react';
+import { Spinner, Button } from 'react-bootstrap';
+import { FiEdit } from 'react-icons/fi';
+import { MdDeleteForever } from 'react-icons/md';
 
-import { config } from '../../config'
-import { createOne, updateOne, deleteOne, getSpecific } from '../../apis/products'
-import { Wrapper, Detail, Update, Delete } from './style'
-import { Modal } from '../../components'
-import Title from '../Title'
+import { config } from '../../config';
+import { createOne, updateOne, deleteOne, getSpecific } from '../../apis/products';
+import { Wrapper, Detail, Update, Delete } from './style';
+import { Modal } from '../../components';
+import Title from '../Title';
 
 const Products = () => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [products, setProducts] = useState([])
-  const [productId, setProductId] = useState('')
-  const [image, setImage] = useState(null)
+  const [products, setProducts] = useState([]);
+  const [productId, setProductId] = useState('');
+  const [image, setImage] = useState(null);
   const [productData, setProductData] = useState({
     name: '',
     price: 0,
     description: '',
     category: '',
     tags: [],
-  })
+  });
 
-  const [submitType, setSubmitType] = useState('')
-  const [modalType, setModalType] = useState('')
-  const [messages, setMessages] = useState([])
+  const [submitType, setSubmitType] = useState('');
+  const [modalType, setModalType] = useState('');
+  const [messages, setMessages] = useState([]);
 
   const getProducts = async () => {
     try {
-      const res = await getSpecific('?perPage=100')
+      const res = await getSpecific('?perPage=100');
 
-      setProducts(res.data.products)
-      setIsLoading(false)
+      setProducts(res.data.products);
+      setIsLoading(false);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   const triggerModal = (type, id = '', product = {}) => {
-    setMessages([])
+    setMessages([]);
 
-    setModalType(type)
-    setSubmitType(type)
-    setProductId(id)
-    setProductData(product)
-  }
+    setModalType(type);
+    setSubmitType(type);
+    setProductId(id);
+    setProductData(product);
+  };
 
   const handleChanges = (e) => {
-    let newData = { ...productData }
-    newData[e.target.id] = e.target.value
-    setProductData(newData)
-  }
+    let newData = { ...productData };
+    newData[e.target.id] = e.target.value;
+    setProductData(newData);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const { name, price, description, category, tags } = productData
+    e.preventDefault();
+    const { name, price, description, category, tags } = productData;
 
-    let message = []
-    if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name must be filled']
+    let message = [];
+    if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name must be filled'];
 
-    if (price.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Price cannot be empty']
+    if (price.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Price cannot be empty'];
 
-    if (description.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Deskripsi cannot be empty']
+    if (description.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Deskripsi cannot be empty'];
 
-    if (category.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Category cannot be empty']
+    if (category.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Category cannot be empty'];
 
-    if (tags.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Tags cannot be empty']
+    if (tags.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Tags cannot be empty'];
 
     if (message.length > 0) {
-      setMessages(message)
+      setMessages(message);
     } else {
       try {
-        let res = {}
+        let res = {};
 
         if (submitType === 'create') {
           res = await createOne({
@@ -81,7 +81,7 @@ const Products = () => {
             description,
             category,
             tags,
-          })
+          });
         } else if (submitType === 'update') {
           res = await updateOne(productId, {
             name,
@@ -89,32 +89,32 @@ const Products = () => {
             description,
             category,
             tags,
-          })
+          });
         } else if (submitType === 'delete') {
-          res = await deleteOne(productId)
+          res = await deleteOne(productId);
         }
 
-        setMessages([res.data.message])
-        setModalType('')
-        setSubmitType('')
+        setMessages([res.data.message]);
+        setModalType('');
+        setSubmitType('');
         setProductData({
           name: '',
           price: 0,
           description: '',
           category: '',
           tags: [],
-        })
-        setProductId('')
-        getProducts()
+        });
+        setProductId('');
+        getProducts();
       } catch (err) {
-        console.error(err)
+        console.error(err);
       }
     }
-  }
+  };
 
   useEffect(() => {
-    getProducts()
-  }, [])
+    getProducts();
+  }, []);
 
   return (
     <>
@@ -128,7 +128,7 @@ const Products = () => {
           className='text-light py-0 px-3 text-uppercase'
           onClick={() => triggerModal('create')}
         >
-          add new products
+          add new product
         </Button>
       </div>
 
@@ -232,7 +232,7 @@ const Products = () => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;

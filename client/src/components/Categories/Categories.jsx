@@ -1,75 +1,75 @@
-import { useState, useEffect } from 'react'
-import { Spinner, Button } from 'react-bootstrap'
-import { FiEdit } from 'react-icons/fi'
-import { MdDeleteForever } from 'react-icons/md'
+import { useState, useEffect } from 'react';
+import { Spinner, Button } from 'react-bootstrap';
+import { FiEdit } from 'react-icons/fi';
+import { MdDeleteForever } from 'react-icons/md';
 
-import { Modal } from '../../components'
-import { getAll, createOne, updateOne, deleteOne } from '../../apis/categories'
-import Title from '../Title'
+import { Modal } from '../../components';
+import { getAll, createOne, updateOne, deleteOne } from '../../apis/categories';
+import Title from '../Title';
 
 const Categories = () => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [categories, setCategories] = useState([])
-  const [categoryId, setCategoryId] = useState('')
-  const [categoryData, setCategoryData] = useState('')
+  const [categories, setCategories] = useState([]);
+  const [categoryId, setCategoryId] = useState('');
+  const [categoryData, setCategoryData] = useState('');
 
-  const [submitType, setSubmitType] = useState('')
-  const [modalType, setModalType] = useState('')
-  const [messages, setMessages] = useState([])
+  const [submitType, setSubmitType] = useState('');
+  const [modalType, setModalType] = useState('');
+  const [messages, setMessages] = useState([]);
 
   const getCategories = async () => {
-    const res = await getAll()
+    const res = await getAll();
 
-    setCategories(res.data)
-    setIsLoading(false)
-  }
+    setCategories(res.data);
+    setIsLoading(false);
+  };
 
   const triggerModal = (type, id = '', name = '') => {
-    setMessages([])
+    setMessages([]);
 
-    setModalType(type)
-    setSubmitType(type)
-    setCategoryId(id)
-    setCategoryData(name)
-  }
+    setModalType(type);
+    setSubmitType(type);
+    setCategoryId(id);
+    setCategoryData(name);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const name = categoryData
+    e.preventDefault();
+    const name = categoryData;
 
-    let message = []
-    if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name cannot be empty']
+    let message = [];
+    if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name cannot be empty'];
 
     if (message.length > 0) {
-      setMessages(message)
+      setMessages(message);
     } else {
       try {
-        let res = {}
+        let res = {};
 
         if (submitType === 'create') {
-          res = await createOne({ name })
+          res = await createOne({ name });
         } else if (submitType === 'update') {
-          res = await updateOne(categoryId, { name })
+          res = await updateOne(categoryId, { name });
         } else if (submitType === 'delete') {
-          res = await deleteOne(categoryId)
+          res = await deleteOne(categoryId);
         }
 
-        setMessages([res.data.message])
-        setModalType('')
-        setSubmitType('')
-        setCategoryData('')
-        setCategoryId('')
-        getCategories()
+        setMessages([res.data.message]);
+        setModalType('');
+        setSubmitType('');
+        setCategoryData('');
+        setCategoryId('');
+        getCategories();
       } catch (err) {
-        console.error(err)
+        console.error(err);
       }
     }
-  }
+  };
 
   useEffect(() => {
-    getCategories()
-  }, [])
+    getCategories();
+  }, []);
 
   return (
     <>
@@ -83,7 +83,7 @@ const Categories = () => {
           className='text-light py-0 px-3 text-uppercase'
           onClick={() => triggerModal('create')}
         >
-          add new categories
+          add new category
         </Button>
       </div>
 
@@ -172,7 +172,7 @@ const Categories = () => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Categories
+export default Categories;

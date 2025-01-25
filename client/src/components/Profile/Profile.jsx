@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react'
-import { Accordion, Form, Button, Spinner } from 'react-bootstrap'
+import { useState, useEffect } from 'react';
+import { Accordion, Form, Button, Spinner } from 'react-bootstrap';
 
-import { getMe } from '../../apis/auth'
-import { getAll } from '../../apis/delivery-addresses'
-import { Update, Delete } from './style'
-import { Modal } from '../../components'
-import { createOne, updateOne, deleteOne } from '../../apis/delivery-addresses'
-import Title from '../Title'
+import { getMe } from '../../apis/auth';
+import { getAll } from '../../apis/delivery-addresses';
+import { Update, Delete } from './style';
+import { Modal } from '../../components';
+import { createOne, updateOne, deleteOne } from '../../apis/delivery-addresses';
+import Title from '../Title';
 
-const { Item, Header, Body } = Accordion
-const { Group, Label, Control } = Form
+const { Item, Header, Body } = Accordion;
+const { Group, Label, Control } = Form;
 
 const Profile = () => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [address, setAddress] = useState([])
-  const [addressId, setAddressId] = useState('')
+  const [address, setAddress] = useState([]);
+  const [addressId, setAddressId] = useState('');
   const [addressData, setAddressData] = useState({
     nama: '',
     kelurahan: '',
@@ -23,75 +23,75 @@ const Profile = () => {
     kabupaten: '',
     provinsi: '',
     detail: '',
-  })
+  });
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
-  })
+  });
 
-  const [submitType, setSubmitType] = useState('')
-  const [modalType, setModalType] = useState('')
-  const [messages, setMessages] = useState([])
+  const [submitType, setSubmitType] = useState('');
+  const [modalType, setModalType] = useState('');
+  const [messages, setMessages] = useState([]);
 
   const getData = async () => {
     try {
-      const res = await getMe()
+      const res = await getMe();
 
-      setProfileData(res.data)
-      setIsLoading(false)
+      setProfileData(res.data);
+      setIsLoading(false);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   const getAddresses = async () => {
     try {
-      const res = await getAll()
+      const res = await getAll();
 
-      setAddress(res.data.addresses)
-      setIsLoading(false)
+      setAddress(res.data.addresses);
+      setIsLoading(false);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   const triggerModal = (type, id = '', address = {}) => {
-    setMessages([])
+    setMessages([]);
 
-    setModalType(type)
-    setSubmitType(type)
-    setAddressId(id)
-    setAddressData(address)
-  }
+    setModalType(type);
+    setSubmitType(type);
+    setAddressId(id);
+    setAddressData(address);
+  };
 
   const handleChanges = (e) => {
-    let newData = { ...addressData }
-    newData[e.target.id] = e.target.value
-    setAddressData(newData)
-  }
+    let newData = { ...addressData };
+    newData[e.target.id] = e.target.value;
+    setAddressData(newData);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const { nama, kelurahan, kecamatan, kabupaten, provinsi, detail } = addressData
+    e.preventDefault();
+    const { nama, kelurahan, kecamatan, kabupaten, provinsi, detail } = addressData;
 
-    let message = []
-    if (nama.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name must be filled']
+    let message = [];
+    if (nama.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name must be filled'];
 
-    if (kelurahan.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Kelurahan cannot be empty']
+    if (kelurahan.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Kelurahan cannot be empty'];
 
-    if (kecamatan.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Kecamatan cannot be empty']
+    if (kecamatan.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Kecamatan cannot be empty'];
 
-    if (kabupaten.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Kabupaten cannot be empty']
+    if (kabupaten.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Kabupaten cannot be empty'];
 
-    if (provinsi.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Provinsi cannot be empty']
+    if (provinsi.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Provinsi cannot be empty'];
 
-    if (detail.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Detail address cannot be empty']
+    if (detail.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Detail address cannot be empty'];
 
     if (message.length > 0) {
-      setMessages(message)
+      setMessages(message);
     } else {
       try {
-        let res = {}
+        let res = {};
 
         if (submitType === 'create') {
           res = await createOne({
@@ -101,7 +101,7 @@ const Profile = () => {
             kabupaten,
             provinsi,
             detail,
-          })
+          });
         } else if (submitType === 'update') {
           res = await updateOne(addressId, {
             nama,
@@ -110,14 +110,14 @@ const Profile = () => {
             kabupaten,
             provinsi,
             detail,
-          })
+          });
         } else if (submitType === 'delete') {
-          res = await deleteOne(addressId)
+          res = await deleteOne(addressId);
         }
 
-        setMessages([res.data.message])
-        setModalType('')
-        setSubmitType('')
+        setMessages([res.data.message]);
+        setModalType('');
+        setSubmitType('');
         setAddressData({
           nama: '',
           kelurahan: '',
@@ -125,19 +125,19 @@ const Profile = () => {
           kabupaten: '',
           provinsi: '',
           detail: '',
-        })
-        setAddressId('')
-        getAddresses()
+        });
+        setAddressId('');
+        getAddresses();
       } catch (err) {
-        console.error(err)
+        console.error(err);
       }
     }
-  }
+  };
 
   useEffect(() => {
-    getData()
-    getAddresses()
-  }, [])
+    getData();
+    getAddresses();
+  }, []);
 
   return (
     <>
@@ -325,7 +325,7 @@ const Profile = () => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

@@ -1,76 +1,76 @@
-import { useState, useEffect } from 'react'
-import { Spinner, Button } from 'react-bootstrap'
-import { FiEdit } from 'react-icons/fi'
-import { MdDeleteForever } from 'react-icons/md'
+import { useState, useEffect } from 'react';
+import { Spinner, Button } from 'react-bootstrap';
+import { FiEdit } from 'react-icons/fi';
+import { MdDeleteForever } from 'react-icons/md';
 
-import { Modal } from '../../components'
-import { getAll, createOne, updateOne, deleteOne } from '../../apis/tags'
-import Title from '../Title'
+import { Modal } from '../../components';
+import { getAll, createOne, updateOne, deleteOne } from '../../apis/tags';
+import Title from '../Title';
 
 const Tags = () => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [tags, setTags] = useState([])
-  const [tagId, setTagId] = useState('')
-  const [tagData, setTagData] = useState('')
+  const [tags, setTags] = useState([]);
+  const [tagId, setTagId] = useState('');
+  const [tagData, setTagData] = useState('');
 
-  const [submitType, setSubmitType] = useState('')
-  const [modalType, setModalType] = useState('')
-  const [messages, setMessages] = useState([])
+  const [submitType, setSubmitType] = useState('');
+  const [modalType, setModalType] = useState('');
+  const [messages, setMessages] = useState([]);
 
   const getTags = async () => {
-    const res = await getAll()
+    const res = await getAll();
 
-    setTags(res.data)
-    setIsLoading(false)
-  }
+    setTags(res.data);
+    setIsLoading(false);
+  };
 
   const triggerModal = (type, id = '', name = '') => {
-    setMessages([])
+    setMessages([]);
 
-    setModalType(type)
-    setSubmitType(type)
-    setTagId(id)
-    setTagData(name)
-  }
+    setModalType(type);
+    setSubmitType(type);
+    setTagId(id);
+    setTagData(name);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const name = tagData
+    e.preventDefault();
+    const name = tagData;
 
-    let message = []
+    let message = [];
 
-    if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name cannot be empty']
+    if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name cannot be empty'];
 
     if (message.length > 0) {
-      setMessages(message)
+      setMessages(message);
     } else {
       try {
-        let res = {}
+        let res = {};
 
         if (submitType === 'create') {
-          res = await createOne({ name })
+          res = await createOne({ name });
         } else if (submitType === 'update') {
-          res = await updateOne(tagId, { name })
+          res = await updateOne(tagId, { name });
         } else if (submitType === 'delete') {
-          res = await deleteOne(tagId)
+          res = await deleteOne(tagId);
         }
 
-        setMessages([res.data.message])
-        setModalType('')
-        setSubmitType('')
-        setTagData('')
-        setTagId('')
-        getTags()
+        setMessages([res.data.message]);
+        setModalType('');
+        setSubmitType('');
+        setTagData('');
+        setTagId('');
+        getTags();
       } catch (err) {
-        console.error(err)
+        console.error(err);
       }
     }
-  }
+  };
 
   useEffect(() => {
-    getTags()
-  }, [])
+    getTags();
+  }, []);
 
   return (
     <>
@@ -84,7 +84,7 @@ const Tags = () => {
           className='text-light py-0 px-3 text-uppercase'
           onClick={() => triggerModal('create')}
         >
-          add new tags
+          add new tag
         </Button>
       </div>
 
@@ -173,7 +173,7 @@ const Tags = () => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Tags
+export default Tags;

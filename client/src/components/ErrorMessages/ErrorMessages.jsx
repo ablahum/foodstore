@@ -1,13 +1,11 @@
-import { List } from './style'
+import { List } from './style';
 
-const ErrorMessages = ({ errors }) => {
-  return (
-    <>
-      {errors.map((error, i) => (
-        <List key={i}>{error}</List>
-      ))}
-    </>
-  )
-}
+const ErrorMessages = ({ messages }) => (
+  <>
+    {messages.map((error, i) => (
+      <List key={i}>{error}</List>
+    ))}
+  </>
+);
 
-export default ErrorMessages
+export default ErrorMessages;
