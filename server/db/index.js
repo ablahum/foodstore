@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const { dbHost, dbPass, dbName } = require('../config');
+const mongoose = require('mongoose')
+const { dbHost, dbUser, dbPass, dbName } = require('../config')
 
-mongoose.connect(`mongodb+srv://ablahum:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority`);
+mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority&appName=${dbName}`)
 
-const db = mongoose.connection;
+const db = mongoose.connection
 
-module.exports = db;
+module.exports = db
