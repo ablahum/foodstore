@@ -1,19 +1,19 @@
-const path = require('path');
-const fs = require('fs');
+const path = require('path')
+const fs = require('fs')
 
-const { Product, Category, Tag } = require('../models');
+const { Product, Category, Tag } = require('../models')
 
 const getAll = async (req, res, next) => {
-  const { page = 1, perPage = 8, tags = [], category = '', q = '' } = req.query;
+  const { page = 1, perPage = 8, tags = [], category = '', q = '' } = req.query
 
   try {
-    let criteria = {};
+    let criteria = {}
 
     if (q.length) {
       criteria = {
         ...criteria,
-        name: { $regex: `${q}`, $options: 'i' },
-      };
+        name: { $regex: `${q}`, $options: 'i' }
+      }
     }
 
     // change category name to category id
@@ -21,16 +21,16 @@ const getAll = async (req, res, next) => {
       const categoryResult = await Category.findOne({
         // POPULATE
         name: {
-          $regex: `${category}`,
+          $regex: `${category}`
         },
-        $options: 'i',
-      });
+        $options: 'i'
+      })
 
       if (categoryResult) {
         criteria = {
           ...criteria,
-          category: categoryResult._id,
-        };
+          category: categoryResult._id
+        }
       }
     }
 
@@ -38,40 +38,40 @@ const getAll = async (req, res, next) => {
     if (tags.length) {
       const tagsResult = await Tag.find({
         name: {
-          $in: tags,
-        },
-      });
+          $in: tags
+        }
+      })
 
       if (tagsResult.length > 0) {
         criteria = {
           ...criteria,
           tags: {
-            $in: tagsResult.map((tag) => tag._id),
-          },
-        };
+            $in: tagsResult.map((tag) => tag._id)
+          }
+        }
       }
     }
 
-    const total = await Product.find().countDocuments();
+    const total = await Product.find().countDocuments()
 
     const product = await Product.find(criteria)
       .skip((parseInt(page) - 1) * parseInt(perPage))
       .limit(parseInt(perPage))
       .populate('category')
-      .populate('tags');
+      .populate('tags')
 
     return res.status(200).json({
       products: product,
-      total,
-    });
+      total
+    })
   } catch (err) {
-    next(err);
+    next(err)
   }
-};
+}
 
 const createOne = async (req, res, next) => {
-  let payload = req.body;
-  const image = req.file;
+  let payload = req.body
+  const image = req.file
 
   try {
     // change category name to category id
@@ -80,110 +80,110 @@ const createOne = async (req, res, next) => {
         // populate
         name: {
           $regex: payload.category,
-          $options: 'i',
-        },
-      });
+          $options: 'i'
+        }
+      })
 
       if (category) {
         payload = {
           ...payload,
-          category: category._id,
-        };
+          category: category._id
+        }
       } else {
-        delete payload.category;
+        delete payload.category
       }
     }
 
     // change tags name to tags id
     if (payload.tags && payload.tags.length > 0) {
-      const tagsArr = [];
+      const tagsArr = []
 
       payload.tags.forEach((tag) => {
-        let separated = tag.split(', ');
+        let separated = tag.split(', ')
 
-        separated.forEach((str) => tagsArr.push(str));
-      });
+        separated.forEach((str) => tagsArr.push(str))
+      })
 
       const tags = await Tag.find({
         name: {
-          $in: tagsArr,
-        },
-      });
+          $in: tagsArr
+        }
+      })
 
       if (tags.length) {
         payload = {
           ...payload,
-          tags: tags.map((tag) => tag._id),
-        };
+          tags: tags.map((tag) => tag._id)
+        }
       } else {
-        delete payload.tags;
+        delete payload.tags
       }
     }
 
     if (image) {
       // get image extension
-      const originalExt = image.originalname.split('.')[image.originalname.split('.').length - 1];
+      const originalExt = image.originalname.split('.')[image.originalname.split('.').length - 1]
 
-      const fileName = `${image.filename}.${originalExt}`;
-      const _path = image.path;
+      const fileName = `${image.filename}.${originalExt}`
+      const _path = image.path
 
-      const targetPath = path.resolve(`public/${fileName}`);
+      const targetPath = path.resolve(`public/${fileName}`)
 
-      const src = fs.createReadStream(_path);
-      const dest = fs.createWriteStream(targetPath);
+      const src = fs.createReadStream(_path)
+      const dest = fs.createWriteStream(targetPath)
 
-      src.pipe(dest);
+      src.pipe(dest)
       src.on('end', async () => {
         try {
           const product = new Product({
             ...payload,
-            image: fileName,
-          });
+            image: fileName
+          })
 
-          await product.save();
+          await product.save()
 
           return res.status(201).json({
             message: 'Add product successful',
-            product,
-          });
+            product
+          })
         } catch (err) {
-          fs.unlinkSync(targetPath);
+          fs.unlinkSync(targetPath)
 
           if (err.name === 'ValidationError') {
             return res.status(400).json({
               message: err.message,
-              details: err.errors,
-            });
+              details: err.errors
+            })
           }
 
-          next(err);
+          next(err)
         }
-      });
+      })
     } else {
-      const product = new Product(payload);
-      await product.save();
+      const product = new Product(payload)
+      await product.save()
 
       return res.status(201).json({
         message: 'Add product successful',
-        product,
-      });
+        product
+      })
     }
   } catch (err) {
     if (err.name === 'ValidationError') {
       return res.status(400).json({
         message: err.message,
-        details: err.errors,
-      });
+        details: err.errors
+      })
     }
 
-    next(err);
+    next(err)
   }
-};
+}
 
 const updateOne = async (req, res, next) => {
-  let { id } = req.params;
-  let payload = req.body;
-  const image = req.file;
+  let { id } = req.params
+  let payload = req.body
+  const image = req.file
 
   try {
     // change category name to category id
@@ -192,140 +192,140 @@ const updateOne = async (req, res, next) => {
         // populate
         name: {
           $regex: payload.category,
-          $options: 'i',
-        },
-      });
+          $options: 'i'
+        }
+      })
 
       if (category) {
         payload = {
           ...payload,
-          category: category._id,
-        };
+          category: category._id
+        }
       } else {
-        delete payload.category;
+        delete payload.category
       }
     }
 
     // change tags name to tags id
     if (payload.tags && payload.tags.length > 0) {
-      const tagsArr = [];
+      const tagsArr = []
 
       payload.tags.forEach((tag) => {
-        let separated = tag.split(', ');
+        let separated = tag.split(', ')
 
-        separated.forEach((str) => tagsArr.push(str));
-      });
+        separated.forEach((str) => tagsArr.push(str))
+      })
 
       const tags = await Tag.find({
         name: {
-          $in: tagsArr,
-        },
-      });
+          $in: tagsArr
+        }
+      })
 
       if (tags.length) {
         payload = {
           ...payload,
-          tags: tags.map((tag) => tag._id),
-        };
+          tags: tags.map((tag) => tag._id)
+        }
       } else {
-        delete payload.tags;
+        delete payload.tags
       }
     }
 
     if (image) {
       // get image extension
-      const originalExt = image.originalname.split('.')[image.originalname.split('.').length - 1];
+      const originalExt = image.originalname.split('.')[image.originalname.split('.').length - 1]
 
-      const fileName = `${image.filename}.${originalExt}`;
-      const _path = image.path;
+      const fileName = `${image.filename}.${originalExt}`
+      const _path = image.path
 
-      const targetPath = path.resolve(`public/${fileName}`);
+      const targetPath = path.resolve(`public/${fileName}`)
 
-      const src = fs.createReadStream(_path);
-      const dest = fs.createWriteStream(targetPath);
+      const src = fs.createReadStream(_path)
+      const dest = fs.createWriteStream(targetPath)
 
-      src.pipe(dest);
+      src.pipe(dest)
       src.on('end', async () => {
         try {
-          const product = await Product.findById(id);
-          const currentImage = `public/${product.image}`;
+          const product = await Product.findById(id)
+          const currentImage = `public/${product.image}`
 
           if (fs.existsSync(currentImage)) {
-            fs.unlinkSync(currentImage);
+            fs.unlinkSync(currentImage)
           }
 
           let result = await Product.findByIdAndUpdate(
             id,
             {
               ...payload,
-              image: fileName,
+              image: fileName
             },
             { new: true }
-          );
+          )
 
           return res.status(200).json({
             message: 'Update product successful',
-            product: result,
-          });
+            product: result
+          })
         } catch (err) {
-          fs.unlinkSync(targetPath);
+          fs.unlinkSync(targetPath)
           if (err && err.name === 'ValidationError') {
             return res.status(400).json({
               error: 1,
               message: err.message,
-              details: err.errors,
-            });
+              details: err.errors
+            })
           }
 
-          next(err);
+          next(err)
         }
-      });
+      })
     } else {
       const product = await Product.findByIdAndUpdate(id, payload, {
         new: true,
-        runValidators: true,
-      });
+        runValidators: true
+      })
 
       return res.status(200).json({
         message: 'Update product successful',
-        product,
-      });
+        product
+      })
     }
   } catch (err) {
     if (err.name === 'ValidationError') {
       return res.status(400).json({
         message: err.message,
-        details: err.errors,
-      });
+        details: err.errors
+      })
     }
 
-    next(err);
+    next(err)
   }
-};
+}
 
 const deleteOne = async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.params
 
   try {
-    let product = await Product.findByIdAndDelete(id);
-    let currentImage = `public/${product.image}`;
+    let product = await Product.findByIdAndDelete(id)
+    let currentImage = `public/${product.image}`
 
     if (fs.existsSync(currentImage)) {
-      fs.unlinkSync(currentImage);
+      fs.unlinkSync(currentImage)
     }
 
     return res.status(200).json({
       message: 'Delete product successful',
-      product,
-    });
+      product
+    })
   } catch (err) {
-    next(err);
+    next(err)
   }
-};
+}
 
 module.exports = {
   getAll,
   createOne,
   updateOne,
-  deleteOne,
-};
+  deleteOne
+}

@@ -5,24 +5,24 @@ const productSchema = Schema(
   {
     name: {
       type: String,
-      required: [true, 'Product name must be fulfilled'],
+      required: [true, 'Product name must be fulfilled']
     },
     price: {
       type: Number,
-      required: [true, 'Product price cannot be empty'],
+      required: [true, 'Product price cannot be empty']
     },
     description: String,
     image: String,
     category: {
       type: Schema.Types.ObjectId,
-      ref: 'Category',
+      ref: 'Category'
     },
     tags: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Tag',
-      },
-    ],
+        ref: 'Tag'
+      }
+    ]
   },
   { timestamps: true }
 )
