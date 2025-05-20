@@ -1,5 +1,6 @@
 const path = require('path')
-const fs = require('fs')
+const fs = require('fs/promises')
+const { createReadStream, createWriteStream } = require('fs')
 
 const { Product, Category, Tag } = require('../models')
 
@@ -96,18 +97,13 @@ const createOne = async (req, res, next) => {
 
     // change tags name to tags id
     if (payload.tags && payload.tags.length > 0) {
-      const tagsArr = []
-
-      payload.tags.forEach((tag) => {
-        let separated = tag.split(', ')
-
-        separated.forEach((str) => tagsArr.push(str))
-      })
+      const tagsArr = payload.tags
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0)
 
       const tags = await Tag.find({
-        name: {
-          $in: tagsArr
-        }
+        name: { $in: tagsArr }
       })
 
       if (tags.length) {
@@ -121,44 +117,28 @@ const createOne = async (req, res, next) => {
     }
 
     if (image) {
-      // get image extension
-      const originalExt = image.originalname.split('.')[image.originalname.split('.').length - 1]
-
-      const fileName = `${image.filename}.${originalExt}`
-      const _path = image.path
-
+      const ext = path.extname(image.originalname)
+      const fileName = `${image.filename}${ext}`
       const targetPath = path.resolve(`public/${fileName}`)
 
-      const src = fs.createReadStream(_path)
-      const dest = fs.createWriteStream(targetPath)
+      try {
+        await fs.rename(image.path, targetPath)
 
-      src.pipe(dest)
-      src.on('end', async () => {
-        try {
-          const product = new Product({
-            ...payload,
-            image: fileName
-          })
+        const product = new Product({
+          ...payload,
+          image: fileName
+        })
 
-          await product.save()
+        await product.save()
 
-          return res.status(201).json({
-            message: 'Add product successful',
-            product
-          })
-        } catch (err) {
-          fs.unlinkSync(targetPath)
-
-          if (err.name === 'ValidationError') {
-            return res.status(400).json({
-              message: err.message,
-              details: err.errors
-            })
-          }
-
-          next(err)
-        }
-      })
+        return res.status(201).json({
+          message: 'Add product successful',
+          product
+        })
+      } catch (err) {
+        await fs.unlink(image.path).catch(() => {})
+        next(err)
+      }
     } else {
       const product = new Product(payload)
       await product.save()
@@ -186,114 +166,90 @@ const updateOne = async (req, res, next) => {
   const image = req.file
 
   try {
-    // change category name to category id
     if (payload.category) {
       const category = await Category.findOne({
-        // populate
-        name: {
-          $regex: payload.category,
-          $options: 'i'
-        }
+        name: { $regex: payload.category, $options: 'i' }
       })
 
       if (category) {
-        payload = {
-          ...payload,
-          category: category._id
-        }
+        payload.category = category._id
       } else {
         delete payload.category
       }
     }
 
-    // change tags name to tags id
-    if (payload.tags && payload.tags.length > 0) {
-      const tagsArr = []
-
-      payload.tags.forEach((tag) => {
-        let separated = tag.split(', ')
-
-        separated.forEach((str) => tagsArr.push(str))
-      })
+    if (payload.tags && typeof payload.tags === 'string') {
+      const tagsArr = payload.tags
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0)
 
       const tags = await Tag.find({
-        name: {
-          $in: tagsArr
-        }
+        name: { $in: tagsArr }
       })
 
       if (tags.length) {
-        payload = {
-          ...payload,
-          tags: tags.map((tag) => tag._id)
-        }
+        payload.tags = tags.map((tag) => tag._id)
       } else {
         delete payload.tags
       }
     }
 
     if (image) {
-      // get image extension
-      const originalExt = image.originalname.split('.')[image.originalname.split('.').length - 1]
-
+      const originalExt = image.originalname.split('.').pop()
       const fileName = `${image.filename}.${originalExt}`
-      const _path = image.path
+      const tempPath = image.path
+      const targetPath = path.resolve(process.cwd(), 'public', fileName)
 
-      const targetPath = path.resolve(`public/${fileName}`)
-
-      const src = fs.createReadStream(_path)
-      const dest = fs.createWriteStream(targetPath)
-
-      src.pipe(dest)
-      src.on('end', async () => {
-        try {
-          const product = await Product.findById(id)
-          const currentImage = `public/${product.image}`
-
-          if (fs.existsSync(currentImage)) {
-            fs.unlinkSync(currentImage)
-          }
-
-          let result = await Product.findByIdAndUpdate(
-            id,
-            {
-              ...payload,
-              image: fileName
-            },
-            { new: true }
-          )
-
-          return res.status(200).json({
-            message: 'Update product successful',
-            product: result
-          })
-        } catch (err) {
-          fs.unlinkSync(targetPath)
-          if (err && err.name === 'ValidationError') {
-            return res.status(400).json({
-              error: 1,
-              message: err.message,
-              details: err.errors
-            })
-          }
-
-          next(err)
-        }
+      await new Promise((resolve, reject) => {
+        const src = createReadStream(tempPath)
+        const dest = createWriteStream(targetPath)
+        src.pipe(dest)
+        src.on('end', resolve)
+        src.on('error', reject)
       })
-    } else {
-      const product = await Product.findByIdAndUpdate(id, payload, {
+
+      const product = await Product.findById(id)
+      const currentImagePath = path.resolve(process.cwd(), 'public', product.image)
+
+      await fs
+        .access(currentImagePath)
+        .then(() => fs.unlink(currentImagePath))
+        .catch(() => {})
+
+      payload.image = fileName
+
+      const updatedProduct = await Product.findByIdAndUpdate(id, payload, {
         new: true,
         runValidators: true
       })
 
       return res.status(200).json({
         message: 'Update product successful',
-        product
+        product: updatedProduct
+      })
+    } else {
+      delete payload.image
+
+      const updatedProduct = await Product.findByIdAndUpdate(id, payload, {
+        new: true,
+        runValidators: true
+      })
+
+      return res.status(200).json({
+        message: 'Update product successful',
+        product: updatedProduct
       })
     }
   } catch (err) {
+    if (image) {
+      const tempPath = image.path
+      await fs.unlink(tempPath).catch(() => {})
+    }
+
     if (err.name === 'ValidationError') {
       return res.status(400).json({
+        error: 1,
         message: err.message,
         details: err.errors
       })
@@ -307,11 +263,17 @@ const deleteOne = async (req, res, next) => {
   const { id } = req.params
 
   try {
-    let product = await Product.findByIdAndDelete(id)
-    let currentImage = `public/${product.image}`
+    const product = await Product.findByIdAndDelete(id)
 
-    if (fs.existsSync(currentImage)) {
-      fs.unlinkSync(currentImage)
+    if (!product) return res.status(404).json({ message: 'Product not found' })
+
+    const currentImage = path.resolve(__dirname, `../../public/${product.image}`)
+
+    try {
+      await fs.access(currentImage)
+      await fs.unlink(currentImage)
+    } catch (err) {
+      console.error(err)
     }
 
     return res.status(200).json({

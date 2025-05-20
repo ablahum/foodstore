@@ -1,10 +1,10 @@
-import { Alert, Table, Form } from 'react-bootstrap';
-import rupiah from 'rupiah-format';
+import { Alert, Table, Form } from 'react-bootstrap'
+import rupiah from 'rupiah-format'
 
-import { ErrorMessages } from '../../components';
-import { Wrapper, PopUp, Cancel, Confirm, TableBox } from './style';
+import { ErrorMessages, Tag } from '../../components'
+import { Wrapper, PopUp, Cancel, Confirm, TableBox } from './style'
 
-const { Group, Label, Control } = Form;
+const { Group, Label, Control } = Form
 
 const Modal = ({
   title,
@@ -43,6 +43,8 @@ const Modal = ({
   confirm,
   isOrder,
   nextPage,
+  tagsData,
+  handleSelect
 }) =>
   trigger ? (
     <PopUp>
@@ -176,7 +178,7 @@ const Modal = ({
 
                   <Control
                     className='h-50 w-75'
-                    type='text'
+                    type='number'
                     id='price'
                     placeholder={`${type.charAt(0).toUpperCase() + type.slice(1)} price...`}
                     onChange={(e) => handleChanges(e)}
@@ -205,6 +207,7 @@ const Modal = ({
                   <Control
                     type='file'
                     id='image'
+                    accept='image/*'
                     className='h-50 w-75'
                     onChange={(e) => setImage(e.target.files[0])}
                     value={isUpdate ? image : undefined}
@@ -226,6 +229,13 @@ const Modal = ({
 
                 <Group className='mb-2 d-flex'>
                   <Label className='w-50 m-0 align-self-center text-uppercase'>tags</Label>
+
+                  {/* <div className='w-75 h-50'>
+                    <Tag
+                      tags={tagsData}
+                      handleSelect={handleSelect}
+                    />
+                  </div> */}
 
                   <Control
                     className='h-50 w-75'
@@ -342,6 +352,6 @@ const Modal = ({
     </PopUp>
   ) : (
     ''
-  );
+  )
 
-export default Modal;
+export default Modal

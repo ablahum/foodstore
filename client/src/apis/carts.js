@@ -4,8 +4,8 @@ import { config } from '../config'
 export const getAll = async () => {
   return await axios.get(`${config.apiHost}/api/carts`, {
     headers: {
-      Authorization: localStorage.getItem('token'),
-    },
+      Authorization: localStorage.getItem('token')
+    }
   })
 }
 
@@ -15,8 +15,8 @@ export const putAll = async (payload) => {
     { items: payload },
     {
       headers: {
-        Authorization: localStorage.getItem('token'),
-      },
+        Authorization: localStorage.getItem('token')
+      }
     }
   )
 }
@@ -24,7 +24,7 @@ export const putAll = async (payload) => {
 export const deleteOne = async (id) => {
   return await axios.delete(`${config.apiHost}/api/carts/${id}`, {
     headers: {
-      Authorization: localStorage.getItem('token'),
-    },
+      Authorization: localStorage.getItem('token')
+    }
   })
 }

@@ -26,7 +26,10 @@ const Home = () => {
       <Heading title='our menus' />
 
       <Container className='py-md-5 py-4'>
-        <Tag tags={tags} />
+        <Tag
+          tags={tags}
+          isHome
+        />
 
         <Product />
 
