@@ -16,19 +16,20 @@ const { Label, Select } = Form
 
 const Checkout = () => {
   const cartState = useSelector((state) => state.cart)
-  const globalState = useSelector((state) => state.my)
-  const navigate = useNavigate()
+  const userState = useSelector((state) => state.user)
 
   const [cartItems, setCartItems] = useState([])
   const [addresses, setAddresses] = useState([])
   const [data, setData] = useState({
     address: '',
-    payment: '',
+    payment: ''
   })
-
   const [messages, setMessages] = useState([])
   const [confirm, setConfirm] = useState(false)
   const [isNotification, setIsNotification] = useState(false)
+
+  const navigate = useNavigate()
+  const { userId } = userState
 
   const fee = 20000
   const getOrderId = cartItems.map((item) => item._id)
@@ -36,20 +37,20 @@ const Checkout = () => {
   const payments = [
     {
       id: 1,
-      name: 'Bank BCA',
+      name: 'Bank BCA'
     },
     {
       id: 2,
-      name: 'Bank Mandiri',
+      name: 'Bank Mandiri'
     },
     {
       id: 3,
-      name: 'DANA',
+      name: 'DANA'
     },
     {
       id: 4,
-      name: 'OVO',
-    },
+      name: 'OVO'
+    }
   ]
 
   const getData = async () => {
@@ -103,7 +104,7 @@ const Checkout = () => {
           kabupaten: a.kabupaten,
           kecamatan: a.kecamatan,
           kelurahan: a.kelurahan,
-          detail: a.detail,
+          detail: a.detail
         }
       })
 
@@ -115,10 +116,10 @@ const Checkout = () => {
           kabupaten: address.kabupaten,
           kecamatan: address.kecamatan,
           kelurahan: address.kelurahan,
-          detail: address.detail,
+          detail: address.detail
         },
-        user: globalState.userId,
-        order_items: getOrderId,
+        user: userId,
+        order_items: getOrderId
       }
 
       await createOne(payload)

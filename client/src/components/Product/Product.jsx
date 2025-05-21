@@ -1,98 +1,90 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Spinner, Row, Col, Card, Button } from 'react-bootstrap';
-import rupiah from 'rupiah-format';
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Spinner, Row, Col, Card, Button } from 'react-bootstrap'
+import rupiah from 'rupiah-format'
+import { changeTotalItems } from '../../app/pagination/action'
+import { addItem } from '../../app/cart/actions'
+import { getAll, getSpecific } from '../../apis/products'
+import { config } from '../../config'
+import { Modal } from '../../components'
 
-import { addItem } from '../../app/cart/actions';
-import { getAll, getSpecific } from '../../apis/products';
-import { config } from '../../config';
-import { Modal } from '../../components';
-
-const { Body, Img, Title, Text } = Card;
+const { Body, Img, Title, Text } = Card
 
 const Product = () => {
-  let globalState = useSelector((state) => state.my);
+  let globalState = useSelector((state) => state.my)
+  let paginationState = useSelector((state) => state.pagination)
 
-  const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState([]);
-  const [isNotification, setIsNotification] = useState(false);
+  const [loading, setLoading] = useState(true)
+  const [products, setProducts] = useState([])
+  const [isNotification, setIsNotification] = useState(false)
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { page, perPage } = paginationState
 
   const getProducts = async () => {
     try {
-      setLoading(true);
-      const res = await getAll();
+      const res = await getAll()
 
-      setProducts(res.data.products);
-      setLoading(false);
+      setProducts(res.data.products)
+      dispatch(changeTotalItems(res.data.total))
+      setLoading(false)
     } catch (err) {
-      console.log(err);
+      console.error(err)
     }
-  };
-
-  const getProductByParams = async (params) => {
-    try {
-      setLoading(true);
-      const res = await getSpecific(params);
-
-      setProducts(res.data.products);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  // search product by category
-  useEffect(() => {
-    getProductByParams(`?category=${globalState.categoryKey}`);
-  }, [globalState.categoryKey]);
-
-  // search product by search
-  useEffect(() => {
-    getProductByParams(`?q=${globalState.searchKey}`);
-  }, [globalState.searchKey]);
-
-  // pagination
-  useEffect(() => {
-    getProductByParams(`?page=${globalState.page}`);
-  }, [globalState.page]);
-
-  // search product by tags
-  useEffect(() => {
-    let params = '';
-
-    if (globalState.tags.length === 2) {
-      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}`;
-    } else if (globalState.tags.length === 3) {
-      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}`;
-    } else if (globalState.tags.length === 4) {
-      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}&tags[]=${globalState.tags[3]}`;
-    } else if (globalState.tags.length === 5) {
-      params = `?tags[]=${globalState.tags[0]}&tags[]=${globalState.tags[1]}&tags[]=${globalState.tags[2]}&tags[]=${globalState.tags[3]}&tags[]=${globalState.tags[4]}`;
-    } else {
-      params = `?tags[]=${globalState.tags}`;
-    }
-
-    getProductByParams(params);
-  }, [globalState.tags]);
+  }
 
   // login validation
   const loginAlert = () => {
-    alert('Please login first');
-    navigate('/login');
-  };
+    alert('Please login first')
+    navigate('/login')
+  }
 
   const setCart = async (product) => {
-    setIsNotification(true);
-    await dispatch(addItem(product));
-  };
+    setIsNotification(true)
+    await dispatch(addItem(product))
+  }
+
+  const getProductByParams = async (params) => {
+    try {
+      const res = await getSpecific(params)
+
+      setProducts(res.data.products)
+      setLoading(false)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const buildParams = () => {
+    const params = new URLSearchParams()
+    params.append('page', page)
+    params.append('perPage', perPage)
+
+    // search with category
+    if (globalState.categoryKey) {
+      params.append('category', globalState.categoryKey)
+    }
+
+    // search by searchKey
+    if (globalState.searchKey) {
+      params.append('q', globalState.searchKey)
+    }
+
+    // search by tags
+    globalState.tags.forEach((tag) => params.append('tags[]', tag))
+
+    return params.toString()
+  }
+
+  useEffect(() => {
+    getProducts()
+  }, [])
+
+  useEffect(() => {
+    getProductByParams(`?${buildParams()}`)
+  }, [page, globalState.categoryKey, globalState.searchKey, globalState.tags])
 
   return (
     <>
@@ -133,7 +125,7 @@ const Product = () => {
                           key={tag._id}
                           className='border d-inline p-1 rounded-3 me-2 fw-semibold'
                           style={{
-                            fontSize: '0.7rem',
+                            fontSize: '0.7rem'
                           }}
                         >
                           {tag.name}
@@ -145,10 +137,10 @@ const Product = () => {
                   <Button
                     className='align-self-start text-white fw-semibold'
                     style={{
-                      fontSize: '0.7rem',
+                      fontSize: '0.7rem'
                     }}
                     onClick={() => {
-                      localStorage.getItem('token') ? setCart(product) : loginAlert();
+                      localStorage.getItem('token') ? setCart(product) : loginAlert()
                     }}
                   >
                     + Add to Cart
@@ -166,7 +158,7 @@ const Product = () => {
         title={'Item successfully added to your cart'}
       />
     </>
-  );
-};
+  )
+}
 
-export default Product;
+export default Product

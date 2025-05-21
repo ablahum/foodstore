@@ -1,19 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux'
 import ReactPaginate from 'react-paginate'
 
-import { pageChanges } from '../../app/myReducer/action'
+import { changePage } from '../../app/pagination/action'
 
 const Pagination = () => {
-  let globalState = useSelector((state) => state.my)
+  let paginationState = useSelector((state) => state.pagination)
+  const { page, perPage, totalItems } = paginationState
 
   const dispatch = useDispatch()
 
-  const handleClick = (data) => dispatch(pageChanges(data.selected + 1))
+  const shown = page * perPage > totalItems ? totalItems - (page - 1) * perPage : perPage
+  const pageCount = Math.ceil(totalItems / perPage)
+
+  const handleClick = (data) => dispatch(changePage(data.selected + 1))
 
   return (
-    <div className='d-flex align-items-center justify-content-center justify-content-sm-start mt-2'>
+    <div className='d-flex align-items-center justify-content-center justify-content mt-2 gap-2'>
+      <p className='text-muted m-0 d-none d-sm-inline'>
+        Page {page} of {pageCount}
+      </p>
+
       <ReactPaginate
-        pageCount={3}
+        pageCount={pageCount}
         onPageChange={handleClick}
         containerClassName={'pagination m-0'}
         pageClassName={'page-item'}
@@ -25,7 +33,9 @@ const Pagination = () => {
         activeClassName={'active'}
       />
 
-      <p className='text-muted m-0 ms-2 d-none d-sm-inline'>Page {globalState.page} of 3</p>
+      <p className='text-muted m-0 d-none d-sm-inline'>
+        Showing {shown} of {totalItems}
+      </p>
     </div>
   )
 }

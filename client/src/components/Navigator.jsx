@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux'
 const { Item } = ListGroup
 
 const Navigator = () => {
-  let globalState = useSelector((state) => state.my)
+  let userState = useSelector((state) => state.user)
+  const {role} = userState
 
   return (
     <div>
@@ -40,7 +41,7 @@ const Navigator = () => {
           {/* )} */}
         </Item>
 
-        {globalState.role === 'admin' ? (
+        {role === 'admin' ? (
           <>
             <Item as='li'>
               <Link

@@ -1,72 +1,72 @@
-import { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navbar } from 'react-bootstrap';
+import { useEffect, useState } from 'react'
+import { Container } from 'react-bootstrap'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Navbar } from 'react-bootstrap'
 
-import { roleChanges, userIdChanges } from '../../app/myReducer/action';
-import { Category, Search, NavBar, Carts, Modal } from '../../components';
-import { getAll } from '../../apis/categories';
-import { logout } from '../../apis/auth';
+import { changeRole, changeUserId } from '../../app/user/action'
+import { Category, Search, NavBar, Carts, Modal } from '../../components'
+import { getAll } from '../../apis/categories'
+import { logout } from '../../apis/auth'
 
-const { Brand } = Navbar;
+const { Brand } = Navbar
 
 const Header = () => {
-  let cartState = useSelector((state) => state.cart);
+  let cartState = useSelector((state) => state.cart)
 
-  const [categories, setCategories] = useState([]);
-  const [cartTrigger, setCartTrigger] = useState(false);
-  const [isNotification, setIsNotification] = useState(false);
+  const [categories, setCategories] = useState([])
+  const [cartTrigger, setCartTrigger] = useState(false)
+  const [isNotification, setIsNotification] = useState(false)
   const [notification, setNotification] = useState({
     title: '',
-    message: '',
-  });
+    message: ''
+  })
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const getCategories = async () => {
     try {
-      const res = await getAll();
+      const res = await getAll()
 
-      setCategories(res.data);
+      setCategories(res.data)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   const handleLogout = async () => {
     try {
-      const res = await logout();
+      const res = await logout()
 
-      setIsNotification(true);
+      setIsNotification(true)
       setNotification({
         title: res.data.message,
-        message: 'Thank you! We will gonna miss you',
-      });
+        message: 'Thank you! We will gonna miss you'
+      })
 
-      localStorage.removeItem('token');
+      localStorage.removeItem('token')
 
-      dispatch(roleChanges(''));
-      dispatch(userIdChanges(''));
+      dispatch(changeRole(''))
+      dispatch(changeUserId(''))
 
-      navigate('/');
+      navigate('/')
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   const closeNotification = () => {
-    setIsNotification(false);
-    setNotification({ title: '', message: '' });
-  };
+    setIsNotification(false)
+    setNotification({ title: '', message: '' })
+  }
 
   useEffect(() => {
-    getCategories();
-  }, []);
+    getCategories()
+  }, [])
 
-  const isHome = location.pathname === '/';
+  const isHome = location.pathname === '/'
 
   return (
     <Navbar className='shadow position-sticky top-0 z-1 bg-white'>
@@ -77,14 +77,14 @@ const Header = () => {
           style={{
             fontFamily: 'var(--serif)',
             letterSpacing: '-2px',
-            cursor: 'pointer',
+            cursor: 'pointer'
           }}
         >
           food
           <span
             className='fst-italic fw-normal'
             style={{
-              fontFamily: 'var(--serif)',
+              fontFamily: 'var(--serif)'
             }}
           >
             store
@@ -120,7 +120,7 @@ const Header = () => {
         message={notification.message}
       />
     </Navbar>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

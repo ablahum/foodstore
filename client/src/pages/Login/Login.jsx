@@ -1,65 +1,65 @@
-import { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react'
+import { Link, Navigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-import { roleChanges, userIdChanges } from '../../app/myReducer/action';
-import { login } from '../../apis/auth';
-import { Form, Modal } from '../../components';
-import { validateEmail } from '../../utils';
-import bg from '../../assets/bg.png';
+import { changeRole, changeUserId } from '../../app/user/action'
+import { login } from '../../apis/auth'
+import { Form, Modal } from '../../components'
+import { validateEmail } from '../../utils'
+import bg from '../../assets/bg.png'
 
 const Login = () => {
   const [data, setData] = useState({
     email: '',
-    password: '',
-  });
-  const [messages, setMessages] = useState([]);
-  const [isNotification, setIsNotification] = useState(false);
+    password: ''
+  })
+  const [messages, setMessages] = useState([])
+  const [isNotification, setIsNotification] = useState(false)
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  if (localStorage.getItem('token') && isNotification === false) return <Navigate to='/' />;
+  if (localStorage.getItem('token') && isNotification === false) return <Navigate to='/' />
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { email, password } = data;
+    e.preventDefault()
+    const { email, password } = data
 
     // validation
-    let message = [];
+    let message = []
 
-    if (email.length === 0 || password.length === 0) message = [...message, 'Email or password cannot be empty'];
+    if (email.length === 0 || password.length === 0) message = [...message, 'Email or password cannot be empty']
 
-    if (email.length > 0 && validateEmail(email) === false) message = [...message, 'Invalid email address'];
+    if (email.length > 0 && validateEmail(email) === false) message = [...message, 'Invalid email address']
 
     if (message.length > 0) {
-      setMessages(message);
+      setMessages(message)
     } else {
       try {
-        const res = await login({ email, password });
+        const res = await login({ email, password })
 
-        setMessages([res.data.message]);
-        setIsNotification(true);
+        setMessages([res.data.message])
+        setIsNotification(true)
 
-        localStorage.setItem('token', res.data.token);
-        dispatch(roleChanges(res.data.user.role));
-        dispatch(userIdChanges(res.data.user._id));
+        localStorage.setItem('token', res.data.token)
+        dispatch(changeRole(res.data.user.role))
+        dispatch(changeUserId(res.data.user._id))
       } catch (err) {
-        message = [...message, err.response.data.message];
-        setMessages(message);
+        message = [...message, err.response.data.message]
+        setMessages(message)
       }
     }
-  };
+  }
 
   const handleChanges = (e) =>
     setData(() => ({
       ...data,
-      [e.target.id]: e.target.value,
-    }));
+      [e.target.id]: e.target.value
+    }))
 
   const closeNotification = () => {
-    setIsNotification(false);
-    setMessages([]);
-  };
+    setIsNotification(false)
+    setMessages([])
+  }
 
   return (
     <div
@@ -68,7 +68,7 @@ const Login = () => {
         background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        height: '100vh',
+        height: '100vh'
       }}
     >
       <div
@@ -76,7 +76,7 @@ const Login = () => {
         style={{
           padding: '2em',
           backgroundColor: 'rgba(0, 0, 0, 0.6)',
-          width: '30em',
+          width: '30em'
         }}
       >
         <h2 className='text-center fw-bold mb-3 text-uppercase'>sign in</h2>
@@ -118,7 +118,7 @@ const Login = () => {
         message='Happy shopping!'
       />
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
