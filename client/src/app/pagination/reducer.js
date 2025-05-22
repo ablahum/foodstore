@@ -6,16 +6,18 @@ const initialState = {
 
 const paginationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'CHANGE_TOTAL':
+    case 'CHANGE_ALL':
       return {
         ...state,
-        totalItems: action.value
+        ...action.payload
       }
+
     case 'CHANGE_PAGE':
       return {
         ...state,
         page: action.value
       }
+
     default:
       return state
   }

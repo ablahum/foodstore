@@ -10,6 +10,7 @@ const getAll = async (req, res, next) => {
   try {
     let criteria = {}
 
+    // search by search key
     if (q.length) {
       criteria = {
         ...criteria,
@@ -17,14 +18,14 @@ const getAll = async (req, res, next) => {
       }
     }
 
-    // change category name to category id
+    // searh by category
     if (category.length) {
       const categoryResult = await Category.findOne({
         // POPULATE
         name: {
-          $regex: `${category}`
-        },
-        $options: 'i'
+          $regex: `${category}`,
+          $options: 'i'
+        }
       })
 
       if (categoryResult) {
@@ -35,7 +36,7 @@ const getAll = async (req, res, next) => {
       }
     }
 
-    // change tags name to tags id
+    // search by tags
     if (tags.length) {
       const tagsResult = await Tag.find({
         name: {
@@ -53,17 +54,21 @@ const getAll = async (req, res, next) => {
       }
     }
 
-    const total = await Product.find().countDocuments()
+    const total = await Product.countDocuments(criteria)
 
-    const product = await Product.find(criteria)
+    const products = await Product.find(criteria)
       .skip((parseInt(page) - 1) * parseInt(perPage))
       .limit(parseInt(perPage))
       .populate('category')
       .populate('tags')
 
     return res.status(200).json({
-      products: product,
-      total
+      products: products,
+      total,
+      pagination: {
+        page,
+        perPage
+      }
     })
   } catch (err) {
     next(err)

@@ -1,6 +1,4 @@
 const initialState = {
-  userId: '',
-  role: '',
   categoryKey: '',
   searchKey: '',
   tags: []

@@ -1,11 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
 import ReactPaginate from 'react-paginate'
-
 import { changePage } from '../../app/pagination/action'
 
 const Pagination = () => {
-  let paginationState = useSelector((state) => state.pagination)
-  const { page, perPage, totalItems } = paginationState
+  const { page, perPage, totalItems } = useSelector((state) => state.pagination)
 
   const dispatch = useDispatch()
 
@@ -16,7 +14,10 @@ const Pagination = () => {
 
   return (
     <div className='d-flex align-items-center justify-content-center justify-content mt-2 gap-2'>
-      <p className='text-muted m-0 d-none d-sm-inline'>
+      <p
+        className='text-muted m-0 d-none d-sm-inline'
+        onClick={() => console.log({ page, perPage, totalItems })}
+      >
         Page {page} of {pageCount}
       </p>
 

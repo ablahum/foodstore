@@ -1,9 +1,7 @@
-export const changeTotalItems = (value) => {
-  return {
-    type: 'CHANGE_TOTAL',
-    value
-  }
-}
+export const changeAll = (payload) => ({
+  type: 'CHANGE_ALL',
+  payload
+})
 
 export const changePage = (value) => {
   return {
