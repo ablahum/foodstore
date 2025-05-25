@@ -1,9 +1,9 @@
-import { Button, Form as Wrapper } from 'react-bootstrap';
+import { Button, Form as Wrapper } from 'react-bootstrap'
 
-import { ErrorMessages } from '../../components';
-import { Roles } from '../../components';
+import { ErrorMessages } from '../../components'
+import { Roles } from '../../components'
 
-const { Group, Label, Control } = Wrapper;
+const { Group, Label, Control } = Wrapper
 
 const Form = ({ register, messages, data, roles, handleChanges, handleSubmit }) => (
   <Wrapper
@@ -72,6 +72,6 @@ const Form = ({ register, messages, data, roles, handleChanges, handleSubmit }) 
       {register ? 'sign up' : 'sign in'}
     </Button>
   </Wrapper>
-);
+)
 
-export default Form;
+export default Form

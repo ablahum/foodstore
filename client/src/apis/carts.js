@@ -20,11 +20,3 @@ export const putAll = async (payload) => {
     }
   )
 }
-
-export const deleteOne = async (id) => {
-  return await axios.delete(`${config.apiHost}/api/carts/${id}`, {
-    headers: {
-      Authorization: localStorage.getItem('token')
-    }
-  })
-}

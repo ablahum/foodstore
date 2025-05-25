@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { Container, Table, Form } from 'react-bootstrap'
 import rupiah from 'rupiah-format'
 import { useSelector } from 'react-redux'
-
 import { Heading, ErrorMessages, Title } from '../../components'
 import { total } from '../../utils'
 import { Wrapper, Summary, Total, Back, Next, Data, Buttons, Content } from './style'
@@ -11,12 +10,33 @@ import { getAll as getCart } from '../../apis/carts'
 import { getAll as getAddress } from '../../apis/delivery-addresses'
 import { Modal } from '../../components'
 import { createOne } from '../../apis/orders'
+import { config } from '../../config'
 
 const { Label, Select } = Form
 
+const DELIVERY_FEE = 20000
+const payments = [
+  {
+    id: 1,
+    name: 'Bank BCA'
+  },
+  {
+    id: 2,
+    name: 'Bank Mandiri'
+  },
+  {
+    id: 3,
+    name: 'DANA'
+  },
+  {
+    id: 4,
+    name: 'OVO'
+  }
+]
+
 const Checkout = () => {
-  const cartState = useSelector((state) => state.cart)
-  const userState = useSelector((state) => state.user)
+  const { userCarts } = useSelector((state) => state.cart)
+  const { userId } = useSelector((state) => state.user)
 
   const [cartItems, setCartItems] = useState([])
   const [addresses, setAddresses] = useState([])
@@ -29,65 +49,39 @@ const Checkout = () => {
   const [isNotification, setIsNotification] = useState(false)
 
   const navigate = useNavigate()
-  const { userId } = userState
 
-  const fee = 20000
-  const getOrderId = cartItems.map((item) => item._id)
-  const relatedAddress = addresses.filter((address) => address.nama === data.address)
-  const payments = [
-    {
-      id: 1,
-      name: 'Bank BCA'
-    },
-    {
-      id: 2,
-      name: 'Bank Mandiri'
-    },
-    {
-      id: 3,
-      name: 'DANA'
-    },
-    {
-      id: 4,
-      name: 'OVO'
-    }
-  ]
-
-  const getData = async () => {
-    try {
-      const cart = await getCart()
-      const address = await getAddress()
-
-      setCartItems(cart.data)
-      setAddresses(address.data.addresses)
-    } catch (err) {
-      console.error(err)
-    }
-  }
+  const getProductId = cartItems.map((item) => item._id)
+  const selectedAddress = addresses.filter((address) => address.nama === data.address)
 
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const cart = await getCart()
+        const address = await getAddress()
+
+        setCartItems(cart.data)
+        setAddresses(address.data.addresses)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
     getData()
   }, [])
 
-  if (cartState.length === 0) return navigate('/')
-  const nextPage = () => navigate('/invoice', { state: { payment: data.payment } })
+  useEffect(() => {
+    if (userCarts.length === 0) navigate('/')
+  }, [userCarts, navigate])
 
-  const handleChanges = (e) => {
-    let newData = { ...data }
-    newData[e.target.id] = e.target.value
-    setData(newData)
-  }
+  const handleChanges = ({ target: { name, value } }) => setData((prev) => ({ ...prev, [name]: value }))
 
   const validation = () => {
-    let message = []
-    if (!data.address || data.address === 'Delivery address') message = [...message, 'Please select delivery address']
+    const errs = []
+    if (!data.address || data.address === 'Delivery address') errs.push('Please select delivery address')
+    if (!data.payment || data.payment === 'Payment method') errs.push('Please select payment method')
+    setMessages(errs)
 
-    if (!data.payment || data.payment === 'Payment method') message = [...message, 'Please select payment method']
-
-    if (message.length > 0) {
-      setMessages(message)
-    } else {
-      setMessages([])
+    if (errs.length === 0) {
       setConfirm(true)
     }
   }
@@ -95,33 +89,26 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if (!selectedAddress) {
+      setMessages(['Selected address not found'])
+      return
+    }
+
+    const payload = {
+      status: 'waiting_payment',
+      delivery_fee: DELIVERY_FEE,
+      delivery_address: {
+        provinsi: selectedAddress[0].provinsi,
+        kabupaten: selectedAddress[0].kabupaten,
+        kecamatan: selectedAddress[0].kecamatan,
+        kelurahan: selectedAddress[0].kelurahan,
+        detail: selectedAddress[0].detail
+      },
+      user: userId,
+      order_items: getProductId
+    }
+
     try {
-      let address
-
-      relatedAddress.forEach((a) => {
-        address = {
-          provinsi: a.provinsi,
-          kabupaten: a.kabupaten,
-          kecamatan: a.kecamatan,
-          kelurahan: a.kelurahan,
-          detail: a.detail
-        }
-      })
-
-      const payload = {
-        status: 'waiting_payment',
-        delivery_fee: fee,
-        delivery_address: {
-          provinsi: address.provinsi,
-          kabupaten: address.kabupaten,
-          kecamatan: address.kecamatan,
-          kelurahan: address.kelurahan,
-          detail: address.detail
-        },
-        user: userId,
-        order_items: getOrderId
-      }
-
       await createOne(payload)
 
       setConfirm(false)
@@ -130,6 +117,8 @@ const Checkout = () => {
       console.error(err)
     }
   }
+
+  const nextPage = () => navigate('/invoice', { state: { payment: data.payment } })
 
   return (
     <Wrapper>
@@ -166,7 +155,7 @@ const Checkout = () => {
                   <tr key={item._id}>
                     <td className='text-center p-0'>
                       <img
-                        src={`http://localhost:4000/public/${item.image}`}
+                        src={`${config.apiHost}/public/${item.image}`}
                         alt={item.image}
                         style={{ width: '60px' }}
                       />
@@ -188,7 +177,7 @@ const Checkout = () => {
               <Label className='fs-5 fw-bold mb-3 text-uppercase'>select address</Label>
 
               <Select
-                id='address'
+                name='address'
                 onChange={(e) => handleChanges(e)}
               >
                 <option>Delivery address</option>
@@ -209,7 +198,7 @@ const Checkout = () => {
               <Label className='fs-5 fw-bold mb-3 text-uppercase'>select payment method</Label>
 
               <Select
-                id='payment'
+                name='payment'
                 onChange={(e) => handleChanges(e)}
               >
                 <option>Payment method</option>
@@ -249,7 +238,7 @@ const Checkout = () => {
           cartItems={cartItems}
           address={data.address}
           payment={data.payment}
-          fee={fee}
+          fee={DELIVERY_FEE}
           total={total}
           submit={handleSubmit}
           messages={messages}
@@ -257,17 +246,14 @@ const Checkout = () => {
           confirm={'yes, proceed the order'}
           isOrder
         />
-        {/* {messages.join('').includes('successful') && modalType === '' && ( */}
         <Modal
           title={'Place order successful'}
           setTrigger={setIsNotification}
-          // trigger={messages.join('').includes('successful') && modalType === ''}
           trigger={isNotification}
           notification
           nextPage={nextPage}
           isCheckout
         />
-        {/* // )} */}
       </Container>
     </Wrapper>
   )

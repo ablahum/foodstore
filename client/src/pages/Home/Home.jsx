@@ -1,46 +1,40 @@
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap'
-
 import { getAll } from '../../apis/tags'
 import { getSpecific } from '../../apis/products'
 import { addItem } from '../../app/cart/actions'
-import { changeAll, changePage } from '../../app/pagination/action'
+import { changeAll, changePage } from '../../app/pagination/actions'
 import { Heading, Pagination, Tag, Product } from '../../components'
 
+import { clearItems } from '../../app/cart/actions'
+
 const Home = () => {
-  let globalState = useSelector((state) => state.my)
+  const { userId } = useSelector((state) => state.user)
+  const { categoryKey, searchKey, tags } = useSelector((state) => state.filter)
   const { page, perPage } = useSelector((state) => state.pagination)
 
   const [isLoading, setIsLoading] = useState(true)
   const [products, setProducts] = useState([])
+  const [tagsData, setTagsData] = useState([])
   const [isNotification, setIsNotification] = useState(false)
-  const [tags, setTags] = useState([])
 
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const getTags = async () => {
     try {
       const res = await getAll()
 
-      setTags(res.data)
+      setTagsData(res.data)
     } catch (err) {
       console.log(err)
     }
   }
 
-  // login validation
-  const loginAlert = () => {
-    alert('Please login first')
-    navigate('/login')
-  }
-
   const setCart = async (product) => {
     setIsNotification(true)
-    await dispatch(addItem(product))
+    dispatch(addItem(product, userId))
   }
 
   const getProductByParams = async (params) => {
@@ -67,17 +61,17 @@ const Home = () => {
     params.append('perPage', perPage)
 
     // search by category
-    if (globalState.categoryKey) {
-      params.append('category', globalState.categoryKey)
+    if (categoryKey) {
+      params.append('category', categoryKey)
     }
 
     // search by search key
-    if (globalState.searchKey) {
-      params.append('q', globalState.searchKey)
+    if (searchKey) {
+      params.append('q', searchKey)
     }
 
     // search by tags
-    globalState.tags.forEach((tag) => params.append('tags[]', tag))
+    tags.forEach((tag) => params.append('tags[]', tag))
 
     return params.toString()
   }
@@ -94,7 +88,7 @@ const Home = () => {
     setIsLoading(true)
 
     dispatch(changePage(1))
-  }, [globalState.categoryKey, globalState.searchKey, globalState.tags])
+  }, [categoryKey, searchKey, tags])
 
   return (
     <div style={{ minHeight: '100vh' }}>
@@ -102,7 +96,7 @@ const Home = () => {
 
       <Container className='py-md-5 py-4'>
         <Tag
-          tags={tags}
+          tagsData={tagsData}
           isHome
         />
 
@@ -117,7 +111,6 @@ const Home = () => {
             <Product
               products={products}
               setCart={setCart}
-              loginAlert={loginAlert}
               isNotification={isNotification}
               setIsNotification={setIsNotification}
             />

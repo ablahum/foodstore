@@ -2,10 +2,10 @@ import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { combineReducers, applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import myReducer from './myReducer/reducer'
+import filterReducer from './filter/reducers'
 import cartReducer from './cart/reducer'
-import paginationReducer from './pagination/reducer'
-import userReducer from './user/reducer'
+import paginationReducer from './pagination/reducers'
+import userReducer from './user/reducers'
 
 const persistConfig = {
   key: 'persist-key',
@@ -13,10 +13,9 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-  my: myReducer,
   cart: cartReducer,
-
   user: userReducer,
+  filter: filterReducer,
   pagination: paginationReducer
 })
 

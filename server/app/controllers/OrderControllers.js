@@ -11,7 +11,7 @@ const getAll = async (req, res, next) => {
     let count = await Order.find({ user: _id }).countDocuments()
 
     let orders = await Order.find({
-      user: _id,
+      user: _id
     })
       .skip(parseInt(skip))
       .limit(parseInt(limit))
@@ -20,13 +20,13 @@ const getAll = async (req, res, next) => {
 
     return res.status(200).json({
       data: orders.map((order) => order.toJSON({ virtuals: true })),
-      count,
+      count
     })
   } catch (err) {
     if (err && err.name == 'ValidationError') {
       return res.status(400).json({
         message: err.message,
-        fields: err.errors,
+        fields: err.errors
       })
     }
 
@@ -43,11 +43,11 @@ const createOne = async (req, res, next) => {
 
     if (!items)
       return res.status(400).json({
-        message: `You're not create order because you have not items in cart`,
+        message: `You're not create order because you have not items in cart`
       })
 
     const address = await DeliveryAddress.find({
-      detail: delivery_address.detail,
+      detail: delivery_address.detail
     })
 
     let relatedAddress
@@ -62,9 +62,9 @@ const createOne = async (req, res, next) => {
         kabupaten: relatedAddress.kabupaten,
         kecamatan: relatedAddress.kecamatan,
         kelurahan: relatedAddress.kelurahan,
-        detail: relatedAddress.detail,
+        detail: relatedAddress.detail
       },
-      user: _id,
+      user: _id
     })
 
     let orderItems = await OrderItem.insertMany(
@@ -74,7 +74,7 @@ const createOne = async (req, res, next) => {
         qty: parseInt(item.qty),
         price: parseInt(item.product.price),
         order: order._id,
-        product: item.product._id,
+        product: item.product._id
       }))
     )
 
@@ -87,7 +87,7 @@ const createOne = async (req, res, next) => {
     if (err && err.name == 'ValidationError') {
       return res.status(400).json({
         message: err.message,
-        fields: err.errors,
+        fields: err.errors
       })
     }
 
@@ -97,5 +97,5 @@ const createOne = async (req, res, next) => {
 
 module.exports = {
   createOne,
-  getAll,
+  getAll
 }

@@ -1,0 +1,2 @@
+export const CHANGE_USERID = 'CHANGE_USERID'
+export const CHANGE_ROLE = 'CHANGE_ROLE'

@@ -17,7 +17,7 @@ export { default as Categories } from './Categories'
 export { default as Tags } from './Tags'
 
 export { default as Order } from './Order'
-export { default as Carts } from './Carts'
+export { default as Sidebar } from './Cart'
 
 export { default as Form } from './Form'
 export { default as Roles } from './Roles'
@@ -29,5 +29,5 @@ export { default as Category } from './Category'
 export { default as Search } from './Search'
 export { default as NavBar } from './NavBar'
 
-export { default as Cart } from './Carts/Cart'
-export { default as EmptyCart } from './Carts/EmptyCart'
+export { default as Cart } from './Cart/Cart'
+export { default as Empty } from './Cart/Empty'

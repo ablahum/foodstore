@@ -1,7 +1,7 @@
 import { Alert, Table, Form } from 'react-bootstrap'
 import rupiah from 'rupiah-format'
 
-import { ErrorMessages, Tag } from '../../components'
+import { ErrorMessages } from '../../components'
 import { Wrapper, PopUp, Cancel, Confirm, TableBox } from './style'
 
 const { Group, Label, Control } = Form

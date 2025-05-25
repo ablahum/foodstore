@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 
-import { tagsChanges } from '../../app/myReducer/action'
+import { tagsChanges } from '../../app/filter/actions'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 
-const Tag = ({ isHome, tags, handleSelect }) => {
-  let globalState = useSelector((state) => state.my)
+const Tag = ({ isHome, tagsData, handleSelect }) => {
+  const { tags } = useSelector((state) => state.filter)
 
   const dispatch = useDispatch()
 
@@ -15,11 +15,11 @@ const Tag = ({ isHome, tags, handleSelect }) => {
       <ToggleButtonGroup
         type='checkbox'
         className='d-flex flex-wrap'
-        value={globalState.tags}
+        value={tags}
         onChange={(e) => (isHome ? dispatch(tagsChanges(e)) : handleSelect(e))}
       >
-        {tags &&
-          tags.map((tag, i) => (
+        {tagsData &&
+          tagsData.map((tag, i) => (
             <ToggleButton
               id={`tbg-btn-${i + 1}`}
               key={tag._id}

@@ -4,56 +4,48 @@ import { Container, Table, Spinner } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import rupiah from 'rupiah-format'
 import { Main, Back } from './style'
-
 import { Heading, Title } from '../../components'
-import { clearItem } from '../../app/cart/actions'
+import { clearItems } from '../../app/cart/actions'
 import { getAll } from '../../apis/orders'
 import { getOne } from '../../apis/invoices'
 
 const Invoice = () => {
-  const cartState = useSelector((state) => state.cart)
+  const { userCarts } = useSelector((state) => state.cart)
+  const { userId } = useSelector((state) => state.user)
 
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
-  const [orderId, setOrderId] = useState('')
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
 
-  const getOrders = async () => {
-    try {
-      const res = await getAll()
-
-      setOrderId(res.data.data[0]._id)
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  const getInvoice = async () => {
-    try {
-      const res = await getOne(orderId)
-
-      setData(res.data)
-      setLoading(false)
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
   useEffect(() => {
-    getOrders()
+    const fetchData = async () => {
+      try {
+        const orderRes = await getAll()
+        const id = orderRes.data.data[0]?._id
+
+        if (id) {
+          const invoiceRes = await getOne(id)
+          setData(invoiceRes.data)
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
   }, [])
 
   useEffect(() => {
-    getInvoice()
-  }, [orderId])
-
-  if (cartState.length === 0) navigate('/')
+    if (userCarts.length === 0) navigate('/')
+  }, [userCarts, navigate])
 
   const goHome = () => {
-    dispatch(clearItem())
+    dispatch(clearItems(userId))
     navigate('/')
   }
 
@@ -76,7 +68,7 @@ const Invoice = () => {
             <tbody>
               <tr>
                 <td className='py-3 text-uppercase'>order id</td>
-                <td className='fw-bold py-3 text-end'>{data.order._id}</td>
+                <td className='fw-bold py-3 text-end'>{data?.order?._id || '-'}</td>
               </tr>
               <tr>
                 <td className='py-3 text-uppercase'>status</td>
@@ -96,7 +88,7 @@ const Invoice = () => {
               </tr>
               <tr>
                 <td className='py-3 text-uppercase'>payment method</td>
-                <td className='fw-bold py-3 text-end'>{location.state.payment}</td>
+                <td className='fw-bold py-3 text-end'>{location?.state?.payment || '-'}</td>
               </tr>
             </tbody>
           </Table>

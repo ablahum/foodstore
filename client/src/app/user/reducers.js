@@ -1,3 +1,5 @@
+import { CHANGE_ROLE, CHANGE_USERID } from './constants'
+
 const initialState = {
   userId: '',
   role: ''
@@ -5,12 +7,12 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'CHANGE_USERID':
+    case CHANGE_USERID:
       return {
         ...state,
         userId: action.value
       }
-    case 'CHANGE_ROLE':
+    case CHANGE_ROLE:
       return {
         ...state,
         role: action.value

@@ -9,7 +9,7 @@ const getOne = async (req, res, next) => {
 
   try {
     const invoice = await Invoice.findOne({
-      order: order_id,
+      order: order_id
     })
       .populate('order')
       .populate('user')
@@ -19,18 +19,18 @@ const getOne = async (req, res, next) => {
 
     if (!policy.can('read', subjectInvoice)) {
       return res.status(401).json({
-        message: `Anda tidak memiliki akses untuk melihat invoice ini.`,
+        message: `Anda tidak memiliki akses untuk melihat invoice ini.`
       })
     }
 
     return res.status(200).json(invoice)
   } catch (err) {
     return res.status(400).json({
-      message: err.message,
+      message: err.message
     })
   }
 }
 
 module.exports = {
-  getOne,
+  getOne
 }

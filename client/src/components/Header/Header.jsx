@@ -3,18 +3,21 @@ import { Container } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navbar } from 'react-bootstrap'
-
-import { changeRole, changeUserId } from '../../app/user/action'
-import { Category, Search, NavBar, Carts, Modal } from '../../components'
+import { logoutUser } from '../../app/cart/actions'
+import { changeRole, changeUserId } from '../../app/user/actions'
+import { Category, Search, NavBar, Sidebar, Modal } from '../../components'
 import { getAll } from '../../apis/categories'
 import { logout } from '../../apis/auth'
+import { putAll } from '../../apis/carts'
 
 const { Brand } = Navbar
 
 const Header = () => {
-  let cartState = useSelector((state) => state.cart)
+  const { guestCart, userCarts } = useSelector((state) => state.cart)
+  const { userId } = useSelector((state) => state.user)
 
   const [categories, setCategories] = useState([])
+  const [cartItems, setCartItems] = useState([])
   const [cartTrigger, setCartTrigger] = useState(false)
   const [isNotification, setIsNotification] = useState(false)
   const [notification, setNotification] = useState({
@@ -32,7 +35,7 @@ const Header = () => {
 
       setCategories(res.data)
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -43,7 +46,7 @@ const Header = () => {
       setIsNotification(true)
       setNotification({
         title: res.data.message,
-        message: 'Thank you! We will gonna miss you'
+        message: 'Thank you! We will gonna miss you.'
       })
 
       localStorage.removeItem('token')
@@ -53,7 +56,27 @@ const Header = () => {
 
       navigate('/')
     } catch (err) {
-      console.log(err)
+      console.error(err)
+    }
+  }
+
+  const handleCheckout = async () => {
+    if (userId) {
+      try {
+        await putAll(userCarts[userId])
+
+        navigate('/checkout')
+      } catch (err) {
+        console.error(err)
+      }
+    } else {
+      setIsNotification(true)
+      setNotification({
+        title: 'Please login before continue',
+        message: 'You must logged in first to proceed to checkout.'
+      })
+
+      // navigate('/login')
     }
   }
 
@@ -66,60 +89,77 @@ const Header = () => {
     getCategories()
   }, [])
 
+  useEffect(() => {
+    setCartItems(userId ? userCarts[userId] : guestCart)
+  }, [guestCart, userCarts, userId])
+
   const isHome = location.pathname === '/'
 
   return (
-    <Navbar className='shadow position-sticky top-0 z-1 bg-white'>
-      <Container>
-        <Brand
-          onClick={() => navigate('/')}
-          className='d-none d-sm-inline fw-bold fs-3 text-uppercase'
-          style={{
-            fontFamily: 'var(--serif)',
-            letterSpacing: '-2px',
-            cursor: 'pointer'
-          }}
-        >
-          food
-          <span
-            className='fst-italic fw-normal'
+    <>
+      <Navbar className='shadow position-sticky top-0 z-1 bg-white'>
+        <Container>
+          <Brand
+            onClick={() => navigate('/')}
+            className='d-none d-sm-inline fw-bold fs-3 text-uppercase'
             style={{
-              fontFamily: 'var(--serif)'
+              fontFamily: 'var(--serif)',
+              letterSpacing: '-2px',
+              cursor: 'pointer'
             }}
           >
-            store
-          </span>
-        </Brand>
+            food
+            <span
+              className='fst-italic fw-normal'
+              style={{
+                fontFamily: 'var(--serif)'
+              }}
+            >
+              store
+            </span>
+          </Brand>
 
-        {isHome && (
-          <>
-            <Category categories={categories} />
+          {isHome && (
+            <>
+              <Category categories={categories} />
 
-            <Search />
-          </>
-        )}
+              <Search />
+            </>
+          )}
 
-        <NavBar
-          cartState={cartState}
-          navigate={navigate}
+          <NavBar
+            cartItems={userId ? userCarts?.[userId] || [] : guestCart}
+            navigate={navigate}
+            setTrigger={setCartTrigger}
+            handleLogout={handleLogout}
+          />
+        </Container>
+
+        <Sidebar
+          trigger={cartTrigger}
           setTrigger={setCartTrigger}
-          handleLogout={handleLogout}
+          cartItems={cartItems}
+          handleCheckout={handleCheckout}
         />
-      </Container>
 
-      <Carts
-        trigger={cartTrigger}
-        setTrigger={setCartTrigger}
-      />
+        <Modal
+          notification
+          setTrigger={closeNotification}
+          trigger={isNotification}
+          title={notification.title}
+          message={notification.message}
+        />
+      </Navbar>
 
       <Modal
         notification
-        setTrigger={closeNotification}
+        setTrigger={setIsNotification}
         trigger={isNotification}
         title={notification.title}
         message={notification.message}
+        // title={'Please login before continue'}
       />
-    </Navbar>
+    </>
   )
 }
 

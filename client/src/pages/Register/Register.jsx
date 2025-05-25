@@ -11,7 +11,7 @@ const Register = () => {
     name: '',
     email: '',
     password: '',
-    role: 'user',
+    role: 'user'
   })
   const [messages, setMessages] = useState([])
   const [isNotification, setIsNotification] = useState(false)
@@ -20,55 +20,47 @@ const Register = () => {
 
   if (localStorage.getItem('token')) return <Navigate to='/' />
 
+  const validate = ({ name, email, password }) => {
+    const message = []
+
+    if (!name.trim()) message.push('Name must be filled')
+    if (!email.trim()) message.push('Email cannot be empty')
+    else if (!validateEmail(email)) message.push('Invalid email address')
+
+    if (!password) message.push('Password cannot be empty')
+    else if (password.length < 8) message.push('Password must be at least 8 characters')
+
+    return message
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const { name, email, password, role } = data
-
-    // validation
-    let message = []
-    if (name.length === 0) message = [...message, 'Name must be filled']
-
-    if (email.length === 0) message = [...message, 'Email cannot be empty']
-
-    if (email.length > 0 && validateEmail(email) === false) message = [...message, 'Invalid email address']
-
-    if (password.length === 0) {
-      message = [...message, 'Password cannot be empty']
-    } else if (password.length < 8) {
-      message = [...message, 'Password must be at least 8 characters']
-    }
+    const message = validate(data)
 
     if (message.length > 0) {
       setMessages(message)
-    } else {
-      try {
-        const res = await register({
-          name,
-          email,
-          password,
-          role,
-        })
+      return
+    }
 
-        setMessages([res.data.message])
-        setIsNotification(true)
-      } catch (err) {
-        console.error(err)
-      }
+    try {
+      const res = await register(data)
+
+      setMessages([res.data.message])
+      setIsNotification(true)
+    } catch (err) {
+      const errorMsg = err?.response?.data?.message || 'Registration failed. Please try again later.'
+      setMessages([errorMsg])
     }
   }
 
   const handleChanges = (e) => {
-    if (e.target.id.includes('radio')) {
-      setData({
-        ...data,
-        [e.target.name]: e.target.value,
-      })
-    } else {
-      setData(() => ({
-        ...data,
-        [e.target.id]: e.target.value,
-      }))
-    }
+    const { id, name, value } = e.target
+
+    const key = id.includes('radio') ? name : id
+    setData((prev) => ({
+      ...prev,
+      [key]: value
+    }))
   }
 
   const closeNotification = () => {
@@ -84,7 +76,7 @@ const Register = () => {
         background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        height: '100vh',
+        height: '100vh'
       }}
     >
       <div
@@ -92,7 +84,7 @@ const Register = () => {
         style={{
           padding: '2em',
           backgroundColor: 'rgba(0, 0, 0, 0.6)',
-          width: '30em',
+          width: '30em'
         }}
       >
         <h2 className='text-center fw-bold mb-3 text-uppercase'>sign up</h2>

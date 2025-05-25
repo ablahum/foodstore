@@ -1,13 +1,12 @@
 import { Button, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-import { addItem, removeItem } from '../../../app/cart/actions'
+import { addItem, removeItem } from '../../app/cart/actions'
 import rupiah from 'rupiah-format'
+import { subTotal, total } from '../../utils'
 
-import { subTotal, total } from '../../../utils'
-
-const Cart = ({ cartItems, handleSubmit }) => {
-  const cartState = useSelector((state) => state.cart)
+const Cart = ({ cartItems, handleCheckout }) => {
+  const { userId } = useSelector((state) => state.user)
 
   const dispatch = useDispatch()
 
@@ -16,7 +15,7 @@ const Cart = ({ cartItems, handleSubmit }) => {
       <div
         className='mx-3 table-responsive flex-grow-1'
         style={{
-          height: '0',
+          height: '0'
         }}
       >
         <Table
@@ -40,7 +39,7 @@ const Cart = ({ cartItems, handleSubmit }) => {
                     <div className='d-flex align-items-center justify-content-center'>
                       <Button
                         className='bg-transparent py-0 px-1'
-                        onClick={() => dispatch(removeItem(item))}
+                        onClick={() => dispatch(removeItem(item, userId))}
                       >
                         <AiOutlineMinus className='text-dark' />
                       </Button>
@@ -49,7 +48,7 @@ const Cart = ({ cartItems, handleSubmit }) => {
 
                       <Button
                         className='bg-transparent py-0 px-1'
-                        onClick={() => dispatch(addItem(item))}
+                        onClick={() => dispatch(addItem(item, userId))}
                       >
                         <AiOutlinePlus className='text-dark' />
                       </Button>
@@ -66,12 +65,12 @@ const Cart = ({ cartItems, handleSubmit }) => {
         <div className='d-flex justify-content-between mb-3'>
           <p className='align-self-center m-0 text-uppercase'>sub total:</p>
 
-          <p className='m-0 fw-bold fs-4'>{rupiah.convert(total(cartState))}</p>
+          <p className='m-0 fw-bold fs-4'>{rupiah.convert(total(cartItems))}</p>
         </div>
 
         <Button
           className='w-100 text-white fw-semibold text-uppercase'
-          onClick={handleSubmit}
+          onClick={() => handleCheckout()}
         >
           checkout
         </Button>

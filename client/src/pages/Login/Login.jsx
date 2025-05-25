@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { changeRole, changeUserId } from '../../app/user/action'
+import { setUser } from '../../app/cart/actions'
+import { changeRole, changeUserId } from '../../app/user/actions'
 import { login } from '../../apis/auth'
 import { Form, Modal } from '../../components'
 import { validateEmail } from '../../utils'
@@ -20,41 +21,52 @@ const Login = () => {
 
   if (localStorage.getItem('token') && isNotification === false) return <Navigate to='/' />
 
+  const validate = ({ email, password }) => {
+    const message = []
+
+    if (!email.trim() || !password.trim()) {
+      message.push('Email or password cannot be empty')
+    } else {
+      if (!validateEmail(email)) {
+        message.push('Invalid email address')
+      }
+    }
+
+    return message
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const { email, password } = data
-
-    // validation
-    let message = []
-
-    if (email.length === 0 || password.length === 0) message = [...message, 'Email or password cannot be empty']
-
-    if (email.length > 0 && validateEmail(email) === false) message = [...message, 'Invalid email address']
+    const message = validate(data)
 
     if (message.length > 0) {
       setMessages(message)
-    } else {
-      try {
-        const res = await login({ email, password })
+      return
+    }
 
-        setMessages([res.data.message])
-        setIsNotification(true)
+    try {
+      const res = await login(data)
 
-        localStorage.setItem('token', res.data.token)
-        dispatch(changeRole(res.data.user.role))
-        dispatch(changeUserId(res.data.user._id))
-      } catch (err) {
-        message = [...message, err.response.data.message]
-        setMessages(message)
-      }
+      setMessages([res.data.message])
+      setIsNotification(true)
+
+      localStorage.setItem('token', res.data.token)
+      dispatch(changeRole(res.data.user.role))
+      dispatch(changeUserId(res.data.user._id))
+      dispatch(setUser(res.data.user._id))
+    } catch (err) {
+      const errorMsg = err?.response?.data?.message || 'Login failed. Please try again later.'
+      setMessages([errorMsg])
     }
   }
 
-  const handleChanges = (e) =>
-    setData(() => ({
-      ...data,
-      [e.target.id]: e.target.value
+  const handleChanges = (e) => {
+    const { id, value } = e.target
+    setData((prev) => ({
+      ...prev,
+      [id]: value
     }))
+  }
 
   const closeNotification = () => {
     setIsNotification(false)

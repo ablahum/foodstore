@@ -1,26 +1,21 @@
-import { ADD_ITEM, CLEAR_ITEM, REMOVE_ITEM } from "./constants";
+import { ADD_ITEM, REMOVE_ITEM, CLEAR_ITEMS, SET_USER } from './constants'
 
-export const addItem = (item) => ({
+export const addItem = (item, userId) => ({
   type: ADD_ITEM,
-  payload: {
-    item: {
-      ...item,
-      product: item.product || item
-    }
-  }
+  payload: { item, userId }
 })
 
-export function removeItem(item){
-  return {
-    type: REMOVE_ITEM, 
-    payload: {
-      item: item
-    }
-  }
-}
+export const removeItem = (item, userId) => ({
+  type: REMOVE_ITEM,
+  payload: { item, userId }
+})
 
-export function clearItem(){
-  return {
-    type: CLEAR_ITEM
-  }
-}
+export const clearItems = (userId) => ({
+  type: CLEAR_ITEMS,
+  payload: { userId }
+})
+
+export const setUser = (userId) => ({
+  type: SET_USER,
+  payload: { userId }
+})

@@ -5,22 +5,20 @@ import { Nav } from 'react-bootstrap'
 
 const { Toggle, Menu, Item } = Dropdown
 
-const NavBar = ({ cartState, navigate, setTrigger, handleLogout }) => (
+const NavBar = ({ cartItems, navigate, setTrigger, handleLogout }) => (
   <Nav>
     <Button
       className='bg-transparent border-0 position-relative p-2 me-2'
-      onClick={() => (localStorage.getItem('token') ? setTrigger(true) : navigate('/login'))}
+      onClick={() => setTrigger(true)}
     >
       <AiOutlineShoppingCart className='fs-4' />
 
-      {localStorage.getItem('token') && (
-        <p
-          className='fw-semibold text-white bg-danger py-0 px-1 rounded-circle position-absolute top-0 end-0'
-          style={{ fontSize: '0.7rem' }}
-        >
-          {cartState.length}
-        </p>
-      )}
+      <p
+        className='fw-semibold text-white bg-danger py-0 px-1 rounded-circle position-absolute top-0 end-0'
+        style={{ fontSize: '0.7rem' }}
+      >
+        {cartItems.length}
+      </p>
     </Button>
 
     {localStorage.getItem('token') ? (

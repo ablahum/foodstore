@@ -1,22 +1,24 @@
+import { ADD_CATEGORY, ADD_SEARCH, ADD_TAGS } from './constants'
+
 const initialState = {
   categoryKey: '',
   searchKey: '',
   tags: []
 }
 
-const myReducer = (state = initialState, action) => {
+const filterReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_CATEGORY':
+    case ADD_CATEGORY:
       return {
         ...state,
         categoryKey: action.value
       }
-    case 'ADD_SEARCH':
+    case ADD_SEARCH:
       return {
         ...state,
         searchKey: action.value
       }
-    case 'CHANGE_TAGS':
+    case ADD_TAGS:
       return {
         ...state,
         tags: action.value
@@ -26,4 +28,4 @@ const myReducer = (state = initialState, action) => {
   }
 }
 
-export default myReducer
+export default filterReducer

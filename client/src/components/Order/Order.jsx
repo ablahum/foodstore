@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Accordion, Spinner, Table } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
 import rupiah from 'rupiah-format'
 
 import { getAll } from '../../apis/orders'
@@ -9,8 +8,6 @@ import { Title } from '../../components'
 const { Item, Header, Body } = Accordion
 
 const Order = () => {
-  let globalState = useSelector((state) => state.my)
-
   const [orders, setOrders] = useState([])
   const [count, setCount] = useState(0)
   const [loading, setLoading] = useState(true)

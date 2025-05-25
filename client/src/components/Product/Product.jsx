@@ -5,7 +5,7 @@ import { Modal } from '../../components'
 
 const { Body, Img, Title, Text } = Card
 
-const Product = ({ products, setCart, loginAlert, isNotification, setIsNotification }) => (
+const Product = ({ products, setCart, isNotification, setIsNotification }) => (
   <>
     <Row>
       {products &&
@@ -49,9 +49,7 @@ const Product = ({ products, setCart, loginAlert, isNotification, setIsNotificat
               <Button
                 className='align-self-start text-white fw-semibold'
                 style={{ fontSize: '0.7rem' }}
-                onClick={() => {
-                  localStorage.getItem('token') ? setCart(product) : loginAlert()
-                }}
+                onClick={() => setCart(product)}
               >
                 + Add to Cart
               </Button>
@@ -68,89 +66,4 @@ const Product = ({ products, setCart, loginAlert, isNotification, setIsNotificat
     />
   </>
 )
-// let globalState = useSelector((state) => state.my)
-// const { page, perPage } = useSelector((state) => state.pagination)
-
-// const [loading, setLoading] = useState(true)
-// const [products, setProducts] = useState([])
-// const [isNotification, setIsNotification] = useState(false)
-
-// const dispatch = useDispatch()
-// const navigate = useNavigate()
-
-// // login validation
-// const loginAlert = () => {
-//   alert('Please login first')
-//   navigate('/login')
-// }
-
-// const setCart = async (product) => {
-//   setIsNotification(true)
-//   await dispatch(addItem(product))
-// }
-
-// // const getProducts = async () => {
-// //   try {
-// //     const res = await getAll()
-
-// //     setProducts(res.data.products)
-
-// //     dispatch(changeTotal(res.data.total))
-// //     setLoading(false)
-// //   } catch (err) {
-// //     console.error(err)
-// //   }
-// // }
-
-// const getProductByParams = async (params) => {
-//   try {
-//     const res = await getSpecific(params)
-
-//     setProducts(res.data.products)
-//     dispatch(
-//       changeAll({
-//         totalItems: res.data.total,
-//         page: res.data.pagination.page,
-//         perPage: res.data.pagination.perPage
-//       })
-//     )
-//     setLoading(false)
-//   } catch (err) {
-//     console.error(err)
-//   }
-// }
-
-// const buildParams = () => {
-//   const params = new URLSearchParams()
-//   params.append('page', page)
-//   params.append('perPage', perPage)
-
-//   // search by category
-//   if (globalState.categoryKey) {
-//     params.append('category', globalState.categoryKey)
-//   }
-
-//   // search by search key
-//   if (globalState.searchKey) {
-//     params.append('q', globalState.searchKey)
-//   }
-
-//   // search by tags
-//   globalState.tags.forEach((tag) => params.append('tags[]', tag))
-
-//   return params.toString()
-// }
-
-// // useEffect(() => {
-// //   getProducts()
-// // }, [])
-
-// useEffect(() => {
-//   getProductByParams(`?${buildParams()}`)
-// }, [page, globalState.categoryKey, globalState.searchKey, globalState.tags])
-
-// useEffect(() => {
-//   dispatch(changePage(1))
-// }, [globalState.categoryKey, globalState.searchKey, globalState.tags])
-
 export default Product

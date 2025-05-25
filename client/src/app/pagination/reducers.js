@@ -1,3 +1,5 @@
+import { CHANGE_ALL, CHANGE_PAGE } from './constants'
+
 const initialState = {
   totalItems: 0,
   page: 1,
@@ -6,13 +8,13 @@ const initialState = {
 
 const paginationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'CHANGE_ALL':
+    case CHANGE_ALL:
       return {
         ...state,
         ...action.payload
       }
 
-    case 'CHANGE_PAGE':
+    case CHANGE_PAGE:
       return {
         ...state,
         page: action.value
