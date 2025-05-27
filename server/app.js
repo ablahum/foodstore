@@ -18,12 +18,6 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use(decodeToken())
 
-app.get('/api/ping', (req, res) => {
-  console.log('Ping route hit')
-
-  res.send('pong')
-})
-
 app.use('/auth', authentication)
 app.use('/api', products)
 app.use('/api', categories)
@@ -44,10 +38,6 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {}
 
   res.status(err.status || 500)
-  res.json({
-    message: err.message,
-    error: req.app.get('env') === 'development' ? err : {}
-  })
 })
 
 module.exports = app
