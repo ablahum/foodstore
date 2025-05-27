@@ -18,7 +18,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use(decodeToken())
 
-app.get('/ping', (req, res) => {
+app.get('/api/ping', (req, res) => {
+  console.log('Ping route hit')
+
   res.send('pong')
 })
 
