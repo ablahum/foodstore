@@ -1,7 +1,7 @@
 const app = require('../server/app')
 const serverless = require('serverless-http')
 
-// const connectDB = require('../server/db')
+const connectDB = require('../server/db')
 
 // let handler
 
