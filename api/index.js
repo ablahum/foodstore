@@ -1,4 +1,18 @@
 const app = require('../server/app')
 const serverless = require('serverless-http')
 
-module.exports = serverless(app) // ← Ini yang diharapkan Vercel
+const connectDB = require('../server/db')
+
+let handler
+
+module.exports = async (event, context) => {
+  await connectDB()
+
+  if (!handler) {
+    handler = serverless(app)
+  }
+
+  return handler(event, context)
+}
+
+module.exports = serverless(app)

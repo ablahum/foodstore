@@ -1,8 +1,27 @@
+// const mongoose = require('mongoose')
+// const { dbHost, dbUser, dbPass, dbName } = require('../config')
+
+// mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority&appName=${dbName}`)
+
+// const db = mongoose.connection
+
+// module.exports = db
+
 const mongoose = require('mongoose')
 const { dbHost, dbUser, dbPass, dbName } = require('../config')
 
-mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority&appName=${dbName}`)
+let isConnected = false
 
-const db = mongoose.connection
+const connectDB = async () => {
+  if (isConnected) return
 
-module.exports = db
+  const conn = await mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority&appName=${dbName}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+
+  isConnected = true
+  console.log('MongoDB Connected')
+}
+
+module.exports = connectDB
