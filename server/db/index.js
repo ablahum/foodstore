@@ -1,24 +1,8 @@
-// const mongoose = require('mongoose')
-// const { dbHost, dbUser, dbPass, dbName } = require('../config')
-
-// mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority&appName=${dbName}`)
-
-// const db = mongoose.connection
-
-// module.exports = db
-
 const mongoose = require('mongoose')
 const { dbHost, dbUser, dbPass, dbName } = require('../config')
 
-let isConnected = false
+mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority&appName=${dbName}`)
 
-const connectDB = async () => {
-  if (isConnected) return
+const db = mongoose.connection
 
-  const conn = await mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority&appName=${dbName}`)
-
-  isConnected = true
-  console.log('MongoDB Connected')
-}
-
-module.exports = connectDB
+module.exports = db
