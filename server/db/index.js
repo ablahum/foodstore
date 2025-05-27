@@ -15,10 +15,7 @@ let isConnected = false
 const connectDB = async () => {
   if (isConnected) return
 
-  const conn = await mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority&appName=${dbName}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  const conn = await mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbHost}/${dbName}?retryWrites=true&w=majority&appName=${dbName}`)
 
   isConnected = true
   console.log('MongoDB Connected')
