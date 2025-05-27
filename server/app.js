@@ -18,6 +18,10 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use(decodeToken())
 
+app.get('/ping', (req, res) => {
+  res.send('pong')
+})
+
 app.use('/auth', authentication)
 app.use('/api', products)
 app.use('/api', categories)
