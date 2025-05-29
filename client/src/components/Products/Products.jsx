@@ -6,7 +6,6 @@ import { MdDeleteForever } from 'react-icons/md'
 import { config } from '../../config'
 import { createOne, updateOne, deleteOne, getSpecific } from '../../apis/products'
 import { getAll } from '../../apis/tags'
-import { Wrapper, Detail, Update, Delete } from './style'
 import { Modal } from '../../components'
 import Title from '../Title'
 
@@ -144,7 +143,7 @@ const Products = () => {
           <Spinner animation='border' />
         </div>
       ) : (
-        <Wrapper>
+        <div className='overflow-auto mb-3'>
           {products.map((product) => (
             <div
               className='row g-0'
@@ -158,31 +157,34 @@ const Products = () => {
                 />
               </div>
 
-              <Detail className='col-md-7'>
+              <div className='col-md-7 p-4 d-flex flex-column justify-content-between'>
                 <h3 className='m-0 fs-4 fw-bold'>{product.name}</h3>
 
                 <h5 className='my-2 text-muted'>{product.description}</h5>
 
                 <h3 className='m-0 fs-4'>Rp. {product.price}</h3>
-              </Detail>
+              </div>
 
-              <div className='col-md-2 d-flex justify-content-evenly'>
-                <Update onClick={() => triggerModal('update', product._id, product)}>
+              <div className='col-md-2 d-flex justify-content-center gap-3'>
+                <Button
+                  onClick={() => triggerModal('update', product._id, product)}
+                  className='bg-transparent fw-bold align-self-center'
+                >
                   <FiEdit className='fs-5 text-dark' />
-                </Update>
+                </Button>
 
-                <Delete
+                <Button
                   onClick={() => triggerModal('delete', product._id, product)}
-                  className='m-0'
+                  className='bg-transparent fw-bold align-self-center'
                 >
                   <MdDeleteForever className='fs-5 text-dark' />
-                </Delete>
+                </Button>
               </div>
 
               <hr className='my-2' />
             </div>
           ))}
-        </Wrapper>
+        </div>
       )}
 
       {modalType === 'create' ? (

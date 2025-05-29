@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Container, Table, Spinner } from 'react-bootstrap'
+import { Container, Table, Spinner, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import rupiah from 'rupiah-format'
-import { Main, Back } from './style'
 import { Heading, Title } from '../../components'
 import { clearItems } from '../../app/cart/actions'
 import { getAll } from '../../apis/orders'
@@ -50,7 +49,7 @@ const Invoice = () => {
   }
 
   return (
-    <Main>
+    <>
       <Heading title='invoice' />
 
       {loading ? (
@@ -93,10 +92,15 @@ const Invoice = () => {
             </tbody>
           </Table>
 
-          <Back onClick={goHome}>back to home</Back>
+          <Button
+            onClick={() => goHome()}
+            className='text-white w-100 fw-bold text-uppercase'
+          >
+            back to home
+          </Button>
         </Container>
       )}
-    </Main>
+    </>
   )
 }
 

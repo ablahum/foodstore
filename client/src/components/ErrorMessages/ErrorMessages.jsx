@@ -1,9 +1,12 @@
-import { List } from './style'
-
 const ErrorMessages = ({ errors }) => (
   <>
     {errors.map((error, i) => (
-      <List key={i}>{error}</List>
+      <p
+        key={i}
+        className='text-danger fw-semibold mb-0'
+      >
+        {error}
+      </p>
     ))}
   </>
 )
