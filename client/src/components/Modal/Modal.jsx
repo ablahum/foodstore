@@ -1,8 +1,7 @@
 import { Alert, Table, Form } from 'react-bootstrap'
 import rupiah from 'rupiah-format'
-
+import { Button } from 'react-bootstrap'
 import { ErrorMessages } from '../../components'
-import { Wrapper, PopUp, Cancel, Confirm, TableBox } from './style'
 
 const { Group, Label, Control } = Form
 
@@ -47,20 +46,26 @@ const Modal = ({
   handleSelect
 }) =>
   trigger ? (
-    <PopUp>
-      <Wrapper>
+    <div
+      className='d-flex justify-content-center align-items-center position-fixed top-0 start-0 w-100 vh-100'
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
+    >
+      <div
+        className='bg-white rounded-3 p-4 shadow d-flex flex-column'
+        style={{ width: '40em', boxShadow: '0px 10px 50px -15px rgba(0, 0, 0, 1)' }}
+      >
         {notification ? (
           <>
             <h3 className='fw-bold fs-4 m-0 align-self-center'>{title}!</h3>
 
             {message ? <p className='mt-3 mb-0'>{message}</p> : ''}
 
-            <Confirm
+            <Button
               onClick={isCheckout ? () => nextPage() : () => setTrigger(false)}
-              className='mt-3 w-100 text-uppercase'
+              className='mt-3 w-100 text-uppercase text-white fw-bold border-none'
             >
               ok
-            </Confirm>
+            </Button>
           </>
         ) : (
           <>
@@ -249,7 +254,10 @@ const Modal = ({
               </Form>
             ) : isCheckout ? (
               <>
-                <TableBox>
+                <div
+                  className='table-box overflow-auto'
+                  style={{ maxHeight: '450px' }}
+                >
                   <Table
                     hover
                     responsive
@@ -287,32 +295,32 @@ const Modal = ({
                       ))}
                     </tbody>
                   </Table>
-                </TableBox>
+                </div>
 
                 <div className='mt-3'>
                   <div className='d-flex justify-content-between mb-2'>
                     <p className='m-0 align-self-center text-uppercase'>ship to</p>
 
-                    <p className='m-0 fw-bold'>{address}</p>
+                    <p className='m-0 fw-semibold'>{address}</p>
                   </div>
 
                   <div className='d-flex justify-content-between mb-2'>
                     <p className='m-0 align-self-center text-uppercase'>payment method</p>
 
-                    <p className='m-0 fw-bold'>{payment}</p>
+                    <p className='m-0 fw-semibold'>{payment}</p>
                   </div>
 
                   <div className='d-flex justify-content-between'>
                     <p className='m-0 align-self-center text-uppercase'>fee</p>
 
-                    <p className='m-0 fw-bold'>{rupiah.convert(fee)}</p>
+                    <p className='m-0 fw-semibold'>{rupiah.convert(fee)}</p>
                   </div>
                 </div>
 
                 <div className='d-flex justify-content-between mt-3'>
-                  <p className='fs-5 m-0 text-uppercase'>grand total</p>
+                  <p className='m-0 text-uppercase'>grand total</p>
 
-                  <p className='fs-5 fw-bold m-0'>{rupiah.convert(total(cartItems) + fee)}</p>
+                  <p className='fw-bold m-0'>{rupiah.convert(total(cartItems) + fee)}</p>
                 </div>
 
                 <Alert
@@ -341,15 +349,25 @@ const Modal = ({
 
             {isDelete ? '' : <div className='align-self-center'>{messages.length > 0 ? <ErrorMessages errors={messages} /> : ''}</div>}
 
-            <div className='mt-3 d-flex'>
-              <Cancel onClick={() => setTrigger(false)}>{cancel}</Cancel>
+            <div className='mt-3 d-flex gap-3'>
+              <Button
+                onClick={() => setTrigger(false)}
+                className='w-50 bg-transparent fw-semibold text-uppercase'
+              >
+                {cancel}
+              </Button>
 
-              <Confirm onClick={(e) => submit(e)}>{confirm}</Confirm>
+              <Button
+                onClick={(e) => submit(e)}
+                className='w-50 text-white fw-semibold border-none m-0 text-uppercase'
+              >
+                {confirm}
+              </Button>
             </div>
           </>
         )}
-      </Wrapper>
-    </PopUp>
+      </div>
+    </div>
   ) : (
     ''
   )

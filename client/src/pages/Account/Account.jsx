@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
-
 import { Heading, Navigator } from '../../components'
-import { Wrapper } from './style'
 
 const Account = () => {
   const navigate = useNavigate()
@@ -17,7 +15,7 @@ const Account = () => {
   }
 
   return (
-    <Wrapper>
+    <div style={{ minHeight: '85vh' }}>
       <Heading title='account' />
 
       <Container className='py-md-5 py-4'>
@@ -31,7 +29,7 @@ const Account = () => {
           </div>
         </div>
       </Container>
-    </Wrapper>
+    </div>
   )
 }
 

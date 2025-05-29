@@ -5,12 +5,12 @@ import rupiah from 'rupiah-format'
 import { useSelector } from 'react-redux'
 import { Heading, ErrorMessages, Title } from '../../components'
 import { total } from '../../utils'
-import { Wrapper, Summary, Total, Back, Next, Data, Buttons, Content } from './style'
 import { getAll as getCart } from '../../apis/carts'
 import { getAll as getAddress } from '../../apis/delivery-addresses'
 import { Modal } from '../../components'
 import { createOne } from '../../apis/orders'
 import { config } from '../../config'
+import { Button } from 'react-bootstrap'
 
 const { Label, Select } = Form
 
@@ -121,7 +121,7 @@ const Checkout = () => {
   const nextPage = () => navigate('/invoice', { state: { payment: data.payment } })
 
   return (
-    <Wrapper>
+    <div className='min-vh-100'>
       <Heading title='checkout' />
 
       <Container className='py-md-5 py-4 d-flex flex-column justify-content-between'>
@@ -130,8 +130,11 @@ const Checkout = () => {
           className='mb-3'
         />
 
-        <Content>
-          <Summary>
+        <div
+          className='d-flex md-justify-content-between flex-column flex-md-row gap-3'
+          style={{ height: '51vh' }}
+        >
+          <div className='overflow-auto p-2 w-md-50 w-100'>
             <Table
               hover
               responsive
@@ -170,15 +173,16 @@ const Checkout = () => {
                 ))}
               </tbody>
             </Table>
-          </Summary>
+          </div>
 
-          <Data>
-            <div className='mb-3'>
-              <Label className='fs-5 fw-bold mb-3 text-uppercase'>select address</Label>
+          <div className='p-2 w-md-50 w-100 d-flex flex-column gap-3'>
+            <div className='d-flex flex-column'>
+              <Label className='fw-semibold mb-2 text-capitalize'>select address:</Label>
 
               <Select
                 name='address'
                 onChange={(e) => handleChanges(e)}
+                className={messages.length > 0 && messages.filter((message) => message.includes('address')) ? 'border-danger' : ''}
               >
                 <option>Delivery address</option>
                 {addresses.map((address) => (
@@ -194,12 +198,13 @@ const Checkout = () => {
               {messages.length > 0 && <ErrorMessages errors={messages.filter((message) => message.includes('address'))} />}
             </div>
 
-            <div className='mb-3 mb-md-0'>
-              <Label className='fs-5 fw-bold mb-3 text-uppercase'>select payment method</Label>
+            <div className='d-flex flex-column'>
+              <Label className='fw-semibold mb-2 text-capitalize'>select payment method:</Label>
 
               <Select
                 name='payment'
                 onChange={(e) => handleChanges(e)}
+                className={messages.length > 0 && messages.filter((message) => message.includes('address')) ? 'border-danger' : ''}
               >
                 <option>Payment method</option>
                 {payments.map((payment) => (
@@ -214,21 +219,33 @@ const Checkout = () => {
 
               {messages.length > 0 && <ErrorMessages errors={messages.filter((message) => message.includes('payment'))} />}
             </div>
-          </Data>
-        </Content>
+          </div>
+        </div>
 
-        <div className='d-flex flex-column flex-md-row justify-content-between mt-md-3 mt-0'>
-          <Total>
+        <div className='d-flex flex-column flex-md-row justify-content-between gap-3'>
+          <div className='d-flex justify-content-between align-items-center w-md-50 w-100'>
             <p className='m-0 fs-5 text-uppercase'>sub total</p>
 
             <p className='fw-bold fs-5 m-0'>{rupiah.convert(total(cartItems))}</p>
-          </Total>
+          </div>
 
-          <Buttons>
-            <Back onClick={() => navigate('/')}>back to home</Back>
+          <div className='buttons d-flex justify-content-between w-md-50 w-100 gap-3'>
+            <Button
+              onClick={() => navigate('/')}
+              className='btn-back w-50 text-uppercase fw-semibold bg-transparent'
+              style={{ color: 'var(--black)' }}
+            >
+              back to home
+            </Button>
 
-            <Next onClick={validation}>next</Next>
-          </Buttons>
+            <Button
+              onClick={() => validation()}
+              className='btn-next w-50 text-uppercase fw-semibold border-0'
+              style={{ color: 'var(--white)' }}
+            >
+              next
+            </Button>
+          </div>
         </div>
 
         <Modal
@@ -255,7 +272,7 @@ const Checkout = () => {
           isCheckout
         />
       </Container>
-    </Wrapper>
+    </div>
   )
 }
 
