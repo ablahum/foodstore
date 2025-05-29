@@ -3,7 +3,6 @@ import { Container } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navbar } from 'react-bootstrap'
-import { logoutUser } from '../../app/cart/actions'
 import { changeRole, changeUserId } from '../../app/user/actions'
 import { Category, Search, NavBar, Sidebar, Modal } from '../../components'
 import { getAll } from '../../apis/categories'
@@ -63,7 +62,7 @@ const Header = () => {
   const handleCheckout = async () => {
     if (userId) {
       try {
-        await putAll(userCarts[userId])
+        await putAll(userCarts[userId] || [])
 
         navigate('/checkout')
       } catch (err) {
@@ -75,13 +74,16 @@ const Header = () => {
         title: 'Please login before continue',
         message: 'You must logged in first to proceed to checkout.'
       })
-
-      // navigate('/login')
     }
   }
 
   const closeNotification = () => {
     setIsNotification(false)
+
+    if (notification.title === 'Please login before continue') {
+      navigate('/login')
+    }
+
     setNotification({ title: '', message: '' })
   }
 
@@ -128,7 +130,7 @@ const Header = () => {
           )}
 
           <NavBar
-            cartItems={userId ? userCarts?.[userId] || [] : guestCart}
+            cartItems={cartItems}
             navigate={navigate}
             setTrigger={setCartTrigger}
             handleLogout={handleLogout}
@@ -150,15 +152,6 @@ const Header = () => {
           message={notification.message}
         />
       </Navbar>
-
-      <Modal
-        notification
-        setTrigger={setIsNotification}
-        trigger={isNotification}
-        title={notification.title}
-        message={notification.message}
-        // title={'Please login before continue'}
-      />
     </>
   )
 }
