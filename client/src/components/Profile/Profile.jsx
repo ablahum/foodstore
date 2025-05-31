@@ -11,7 +11,6 @@ const { Group, Label, Control } = Form
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true)
-
   const [address, setAddress] = useState([])
   const [addressId, setAddressId] = useState('')
   const [addressData, setAddressData] = useState({
@@ -73,17 +72,17 @@ const Profile = () => {
     const { nama, kelurahan, kecamatan, kabupaten, provinsi, detail } = addressData
 
     let message = []
-    if (nama.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name must be filled']
+    if ((nama ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Name must be filled')
 
-    if (kelurahan.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Kelurahan cannot be empty']
+    if ((kelurahan ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Kelurahan must be filled')
 
-    if (kecamatan.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Kecamatan cannot be empty']
+    if ((kecamatan ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Kecamatan must be filled')
 
-    if (kabupaten.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Kabupaten cannot be empty']
+    if ((kabupaten ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Kabupaten must be filled')
 
-    if (provinsi.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Provinsi cannot be empty']
+    if ((provinsi ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Provinsi must be filled')
 
-    if (detail.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Detail address cannot be empty']
+    if ((detail ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Detail address must be filled')
 
     if (message.length > 0) {
       setMessages(message)

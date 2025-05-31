@@ -2,26 +2,23 @@ import { useState, useEffect } from 'react'
 import { Spinner, Button } from 'react-bootstrap'
 import { FiEdit } from 'react-icons/fi'
 import { MdDeleteForever } from 'react-icons/md'
-
-import { Modal } from '../../components'
-import { getAll, createOne, updateOne, deleteOne } from '../../apis/tags'
+import { Modal } from '..'
+import { getAll, createOne, updateOne, deleteOne } from '../../apis/categories'
 import Title from '../Title'
 
-const Tags = () => {
+const CategoryList = () => {
   const [isLoading, setIsLoading] = useState(true)
-
-  const [tags, setTags] = useState([])
-  const [tagId, setTagId] = useState('')
-  const [tagData, setTagData] = useState('')
-
+  const [categories, setCategories] = useState([])
+  const [categoryId, setCategoryId] = useState('')
+  const [categoryData, setCategoryData] = useState('')
   const [submitType, setSubmitType] = useState('')
   const [modalType, setModalType] = useState('')
   const [messages, setMessages] = useState([])
 
-  const getTags = async () => {
+  const getCategories = async () => {
     const res = await getAll()
 
-    setTags(res.data)
+    setCategories(res.data)
     setIsLoading(false)
   }
 
@@ -30,17 +27,16 @@ const Tags = () => {
 
     setModalType(type)
     setSubmitType(type)
-    setTagId(id)
-    setTagData(name)
+    setCategoryId(id)
+    setCategoryData(name)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const name = tagData
+    const name = categoryData
 
     let message = []
-
-    if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name cannot be empty']
+    if (!name.trim()) message.push('Name cannot be empty')
 
     if (message.length > 0) {
       setMessages(message)
@@ -51,17 +47,17 @@ const Tags = () => {
         if (submitType === 'create') {
           res = await createOne({ name })
         } else if (submitType === 'update') {
-          res = await updateOne(tagId, { name })
+          res = await updateOne(categoryId, { name })
         } else if (submitType === 'delete') {
-          res = await deleteOne(tagId)
+          res = await deleteOne(categoryId)
         }
 
         setMessages([res.data.message])
         setModalType('')
         setSubmitType('')
-        setTagData('')
-        setTagId('')
-        getTags()
+        setCategoryData('')
+        setCategoryId('')
+        getCategories()
       } catch (err) {
         console.error(err)
       }
@@ -69,14 +65,14 @@ const Tags = () => {
   }
 
   useEffect(() => {
-    getTags()
+    getCategories()
   }, [])
 
   return (
     <>
       <div className='mb-3 d-flex justify-content-between'>
         <Title
-          title={'list of tags'}
+          title={'list of categories'}
           className='mb-0'
         />
 
@@ -84,7 +80,7 @@ const Tags = () => {
           className='text-light py-0 px-3 text-uppercase'
           onClick={() => triggerModal('create')}
         >
-          add new tags
+          add new categories
         </Button>
       </div>
 
@@ -94,7 +90,7 @@ const Tags = () => {
         </div>
       ) : (
         <>
-          {tags.map((tag) => (
+          {categories.map((tag) => (
             <div key={tag._id}>
               <div className='d-flex justify-content-between p-2'>
                 <div className='d-flex flex-column'>
@@ -130,8 +126,8 @@ const Tags = () => {
         <Modal
           trigger={modalType === 'create'}
           setTrigger={setModalType}
-          type={'tag'}
-          handleChanges={setTagData}
+          type={'category'}
+          handleChanges={setCategoryData}
           submit={handleSubmit}
           messages={messages}
           cancel='cancel'
@@ -141,10 +137,10 @@ const Tags = () => {
         <Modal
           trigger={modalType === 'update'}
           setTrigger={setModalType}
-          type={'tag'}
+          type={'category'}
           isUpdate
-          name={tagData}
-          handleChanges={setTagData}
+          name={categoryData}
+          handleChanges={setCategoryData}
           submit={handleSubmit}
           messages={messages}
           cancel='cancel'
@@ -154,11 +150,11 @@ const Tags = () => {
         <Modal
           trigger={modalType === 'delete'}
           setTrigger={setModalType}
-          type={'tag'}
+          type={'category'}
           isDelete
           submit={handleSubmit}
           messages={messages}
-          modalFor={tagData}
+          modalFor={categoryData}
           cancel='cancel'
           confirm='confirm'
         />
@@ -176,4 +172,4 @@ const Tags = () => {
   )
 }
 
-export default Tags
+export default CategoryList

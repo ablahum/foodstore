@@ -2,16 +2,14 @@ import { useState, useEffect } from 'react'
 import { Spinner, Button } from 'react-bootstrap'
 import { FiEdit } from 'react-icons/fi'
 import { MdDeleteForever } from 'react-icons/md'
-
 import { config } from '../../config'
 import { createOne, updateOne, deleteOne, getSpecific } from '../../apis/products'
 import { getAll } from '../../apis/tags'
-import { Modal } from '../../components'
+import { Modal } from '..'
 import Title from '../Title'
 
-const Products = () => {
+const ProductList = () => {
   const [isLoading, setIsLoading] = useState(true)
-
   const [products, setProducts] = useState([])
   const [tags, setTags] = useState([])
   const [productId, setProductId] = useState('')
@@ -61,15 +59,15 @@ const Products = () => {
     const { name, price, description, category, tags } = productData
 
     let message = []
-    if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name must be filled']
+    if ((name ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Name must be filled')
 
-    if (price.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Price cannot be empty']
+    if ((price ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Price cannot be empty')
 
-    if (description.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Description must be filled']
+    if ((description ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Description must be filled')
 
-    if (category.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Category cannot be empty']
+    if ((category ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Category must be filled')
 
-    if (tags.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Tags cannot be empty']
+    if ((tags ?? '').length === 0 && (submitType === 'create' || submitType === 'update')) message.push('Tags must be filled')
 
     if (message.length > 0) {
       setMessages(message)
@@ -247,4 +245,4 @@ const Products = () => {
   )
 }
 
-export default Products
+export default ProductList

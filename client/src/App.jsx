@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from './app/store'
-import { Header, Footer, Profile, Order, Products, Categories, Tags } from './components'
+import { Header, Footer, Profile, OrderList, ProductList, CategoryList, TagList } from './components'
 import { Register, Login, Home, Account, Checkout, Invoice } from './pages'
 
 const Layout = ({ items }) => (
@@ -45,22 +45,22 @@ function App() {
 
               <Route
                 path='order'
-                element={<Order />}
+                element={<OrderList />}
               />
 
               <Route
                 path='products'
-                element={<Products />}
+                element={<ProductList />}
               />
 
               <Route
                 path='categories'
-                element={<Categories />}
+                element={<CategoryList />}
               />
 
               <Route
                 path='tags'
-                element={<Tags />}
+                element={<TagList />}
               />
             </Route>
 
