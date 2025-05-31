@@ -204,7 +204,7 @@ const Checkout = () => {
               <Select
                 name='payment'
                 onChange={(e) => handleChanges(e)}
-                className={messages.length > 0 && messages.filter((message) => message.includes('address')) ? 'border-danger' : ''}
+                className={messages.length > 0 && messages.filter((message) => message.includes('payment')) ? 'border-danger' : ''}
               >
                 <option>Payment method</option>
                 {payments.map((payment) => (

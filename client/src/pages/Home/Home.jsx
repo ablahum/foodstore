@@ -8,8 +8,6 @@ import { addItem } from '../../app/cart/actions'
 import { changeAll, changePage } from '../../app/pagination/actions'
 import { Heading, Pagination, Tag, Product } from '../../components'
 
-import { clearItems } from '../../app/cart/actions'
-
 const Home = () => {
   const { userId } = useSelector((state) => state.user)
   const { categoryKey, searchKey, tags } = useSelector((state) => state.filter)
