@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Accordion, Spinner, Table } from 'react-bootstrap'
 import rupiah from 'rupiah-format'
-
 import { getAll } from '../../apis/orders'
-import { Title } from '../../components'
+import { Title } from '..'
 
 const { Item, Header, Body } = Accordion
 
-const Order = () => {
+const OrderList = () => {
   const [orders, setOrders] = useState([])
   const [count, setCount] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -126,4 +125,4 @@ const Order = () => {
   )
 }
 
-export default Order
+export default OrderList

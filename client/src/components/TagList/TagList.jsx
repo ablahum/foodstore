@@ -1,83 +1,78 @@
-import { useState, useEffect } from 'react';
-import { Spinner, Button } from 'react-bootstrap';
-import { FiEdit } from 'react-icons/fi';
-import { MdDeleteForever } from 'react-icons/md';
+import { useState, useEffect } from 'react'
+import { Spinner, Button } from 'react-bootstrap'
+import { FiEdit } from 'react-icons/fi'
+import { MdDeleteForever } from 'react-icons/md'
+import { Modal } from '..'
+import { getAll, createOne, updateOne, deleteOne } from '../../apis/tags'
+import Title from '../Title'
 
-import { Modal } from '../../components';
-import { getAll, createOne, updateOne, deleteOne } from '../../apis/categories';
-import Title from '../Title';
+const TagList = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [tags, setTags] = useState([])
+  const [tagId, setTagId] = useState('')
+  const [tagData, setTagData] = useState('')
+  const [submitType, setSubmitType] = useState('')
+  const [modalType, setModalType] = useState('')
+  const [messages, setMessages] = useState([])
 
-const Categories = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const getTags = async () => {
+    const res = await getAll()
 
-  const [categories, setCategories] = useState([]);
-  const [categoryId, setCategoryId] = useState('');
-  const [categoryData, setCategoryData] = useState('');
-
-  const [submitType, setSubmitType] = useState('');
-  const [modalType, setModalType] = useState('');
-  const [messages, setMessages] = useState([]);
-
-  const getCategories = async () => {
-    const res = await getAll();
-
-    setCategories(res.data);
-    setIsLoading(false);
-  };
+    setTags(res.data)
+    setIsLoading(false)
+  }
 
   const triggerModal = (type, id = '', name = '') => {
-    setMessages([]);
+    setMessages([])
 
-    setModalType(type);
-    setSubmitType(type);
-    setCategoryId(id);
-    setCategoryData(name);
-  };
+    setModalType(type)
+    setSubmitType(type)
+    setTagId(id)
+    setTagData(name)
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const name = categoryData;
+    e.preventDefault()
+    const name = tagData
 
-    let message = [];
-    if (name.length === 0 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name cannot be empty'];
-
-    if (name.length <= 20 && (submitType === 'create' || submitType === 'update')) message = [...message, 'Name must be under 20 characters'];
+    let message = []
+    if (!name.trim()) message.push('Name cannot be empty')
 
     if (message.length > 0) {
-      setMessages(message);
+      setMessages(message)
     } else {
       try {
-        let res = {};
+        let res = {}
 
         if (submitType === 'create') {
-          res = await createOne({ name });
+          res = await createOne({ name })
         } else if (submitType === 'update') {
-          res = await updateOne(categoryId, { name });
+          res = await updateOne(tagId, { name })
         } else if (submitType === 'delete') {
-          res = await deleteOne(categoryId);
+          res = await deleteOne(tagId)
         }
 
-        setMessages([res.data.message]);
-        setModalType('');
-        setSubmitType('');
-        setCategoryData('');
-        setCategoryId('');
-        getCategories();
+        setMessages([res.data.message])
+        setModalType('')
+        setSubmitType('')
+        setTagData('')
+        setTagId('')
+        getTags()
       } catch (err) {
-        console.error(err);
+        console.error(err)
       }
     }
-  };
+  }
 
   useEffect(() => {
-    getCategories();
-  }, []);
+    getTags()
+  }, [])
 
   return (
     <>
       <div className='mb-3 d-flex justify-content-between'>
         <Title
-          title={'list of categories'}
+          title={'list of tags'}
           className='mb-0'
         />
 
@@ -85,7 +80,7 @@ const Categories = () => {
           className='text-light py-0 px-3 text-uppercase'
           onClick={() => triggerModal('create')}
         >
-          add new categories
+          add new tags
         </Button>
       </div>
 
@@ -95,7 +90,7 @@ const Categories = () => {
         </div>
       ) : (
         <>
-          {categories.map((tag) => (
+          {tags.map((tag) => (
             <div key={tag._id}>
               <div className='d-flex justify-content-between p-2'>
                 <div className='d-flex flex-column'>
@@ -131,8 +126,8 @@ const Categories = () => {
         <Modal
           trigger={modalType === 'create'}
           setTrigger={setModalType}
-          type={'category'}
-          handleChanges={setCategoryData}
+          type={'tag'}
+          handleChanges={setTagData}
           submit={handleSubmit}
           messages={messages}
           cancel='cancel'
@@ -142,10 +137,10 @@ const Categories = () => {
         <Modal
           trigger={modalType === 'update'}
           setTrigger={setModalType}
-          type={'category'}
+          type={'tag'}
           isUpdate
-          name={categoryData}
-          handleChanges={setCategoryData}
+          name={tagData}
+          handleChanges={setTagData}
           submit={handleSubmit}
           messages={messages}
           cancel='cancel'
@@ -155,11 +150,11 @@ const Categories = () => {
         <Modal
           trigger={modalType === 'delete'}
           setTrigger={setModalType}
-          type={'category'}
+          type={'tag'}
           isDelete
           submit={handleSubmit}
           messages={messages}
-          modalFor={categoryData}
+          modalFor={tagData}
           cancel='cancel'
           confirm='confirm'
         />
@@ -174,7 +169,7 @@ const Categories = () => {
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default Categories;
+export default TagList
