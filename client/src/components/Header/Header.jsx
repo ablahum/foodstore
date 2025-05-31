@@ -4,12 +4,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navbar } from 'react-bootstrap'
 import { changeRole, changeUserId } from '../../app/user/actions'
-import { Category, Search, NavBar, Sidebar, Modal } from '../../components'
+import { Category, Search, NavBar, Cart, Modal, BrandLogo } from '../../components'
 import { getAll } from '../../apis/categories'
 import { logout } from '../../apis/auth'
 import { putAll } from '../../apis/carts'
-
-const { Brand } = Navbar
 
 const Header = () => {
   const { guestCart, userCarts } = useSelector((state) => state.cart)
@@ -18,8 +16,8 @@ const Header = () => {
   const [categories, setCategories] = useState([])
   const [cartItems, setCartItems] = useState([])
   const [cartTrigger, setCartTrigger] = useState(false)
-  const [isNotification, setIsNotification] = useState(false)
   const [notification, setNotification] = useState({
+    isOpen: false,
     title: '',
     message: ''
   })
@@ -32,7 +30,7 @@ const Header = () => {
     try {
       const res = await getAll()
 
-      setCategories(res.data)
+      if (res && res.data) setCategories(res.data)
     } catch (err) {
       console.error(err)
     }
@@ -42,8 +40,8 @@ const Header = () => {
     try {
       const res = await logout()
 
-      setIsNotification(true)
       setNotification({
+        isOpen: true,
         title: res.data.message,
         message: 'Thank you! We will gonna miss you.'
       })
@@ -69,22 +67,20 @@ const Header = () => {
         console.error(err)
       }
     } else {
-      setIsNotification(true)
       setNotification({
+        isOpen: true,
         title: 'Please login before continue',
-        message: 'You must logged in first to proceed to checkout.'
+        message: 'You must logged in first to proceed to checkout'
       })
     }
   }
 
   const closeNotification = () => {
-    setIsNotification(false)
-
     if (notification.title === 'Please login before continue') {
       navigate('/login')
     }
 
-    setNotification({ title: '', message: '' })
+    setNotification({ isOpen: false, title: '', message: '' })
   }
 
   useEffect(() => {
@@ -101,25 +97,7 @@ const Header = () => {
     <>
       <Navbar className='shadow position-sticky top-0 z-1 bg-white'>
         <Container>
-          <Brand
-            onClick={() => navigate('/')}
-            className='d-none d-sm-inline fw-bold fs-3 text-uppercase'
-            style={{
-              fontFamily: 'var(--serif)',
-              letterSpacing: '-2px',
-              cursor: 'pointer'
-            }}
-          >
-            food
-            <span
-              className='fst-italic fw-normal'
-              style={{
-                fontFamily: 'var(--serif)'
-              }}
-            >
-              store
-            </span>
-          </Brand>
+          <BrandLogo navigate={navigate} />
 
           {isHome && (
             <>
@@ -137,7 +115,7 @@ const Header = () => {
           />
         </Container>
 
-        <Sidebar
+        <Cart
           trigger={cartTrigger}
           setTrigger={setCartTrigger}
           cartItems={cartItems}
@@ -147,7 +125,7 @@ const Header = () => {
         <Modal
           notification
           setTrigger={closeNotification}
-          trigger={isNotification}
+          trigger={notification.isOpen}
           title={notification.title}
           message={notification.message}
         />

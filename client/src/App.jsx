@@ -1,20 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-
 import { store, persistor } from './app/store'
 import { Header, Footer, Profile, Order, Products, Categories, Tags } from './components'
 import { Register, Login, Home, Account, Checkout, Invoice } from './pages'
 
-const Layout = ({ items }) => {
-  return (
-    <>
-      <Header />
-      {items}
-      <Footer />
-    </>
-  )
-}
+const Layout = ({ items }) => (
+  <>
+    <Header />
+    {items}
+    <Footer />
+  </>
+)
 
 function App() {
   return (

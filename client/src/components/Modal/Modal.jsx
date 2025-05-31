@@ -41,9 +41,7 @@ const Modal = ({
   cancel,
   confirm,
   isOrder,
-  nextPage,
-  tagsData,
-  handleSelect
+  nextPage
 }) =>
   trigger ? (
     <div
@@ -234,13 +232,6 @@ const Modal = ({
 
                 <Group className='mb-2 d-flex'>
                   <Label className='w-50 m-0 align-self-center text-uppercase'>tags</Label>
-
-                  {/* <div className='w-75 h-50'>
-                    <Tag
-                      tags={tagsData}
-                      handleSelect={handleSelect}
-                    />
-                  </div> */}
 
                   <Control
                     className='h-50 w-75'

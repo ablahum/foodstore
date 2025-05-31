@@ -1,82 +1,39 @@
-import { Button, Table } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-import { addItem, removeItem } from '../../app/cart/actions'
-import rupiah from 'rupiah-format'
-import { subTotal, total } from '../../utils'
+import { AiOutlineClose } from 'react-icons/ai'
+import emptyCart from '../../assets/empty-cart.png'
+import { Filled, Empty, Title } from '..'
+import { Button } from 'react-bootstrap'
 
-const Cart = ({ cartItems, handleCheckout }) => {
-  const { userId } = useSelector((state) => state.user)
+const Cart = ({ trigger, setTrigger, cartItems, handleCheckout }) => (
+  <div
+    className='d-flex flex-column justify-content-between position-fixed top-0 shadow bg-white'
+    style={{
+      transition: '350ms',
+      height: '100vh',
+      minWidth: '30%',
+      maxWidth: '100%',
+      ...(trigger ? { right: '0' } : { right: '-200%' })
+    }}
+  >
+    <div className='m-3 d-flex align-items-center justify-content-between'>
+      <Title
+        title={'your cart'}
+        className='mb-0'
+      />
 
-  const dispatch = useDispatch()
-
-  return (
-    <div className='h-100 d-flex flex-column justify-content-between'>
-      <div
-        className='mx-3 table-responsive flex-grow-1'
-        style={{
-          height: '0'
-        }}
-      >
-        <Table
-          hover
-          responsive
-        >
-          <thead>
-            <tr>
-              <th className='text-uppercase'>item name</th>
-              <th className='text-uppercase text-center'>qty</th>
-              <th className='text-uppercase text-end'>total</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {cartItems &&
-              cartItems.map((item) => (
-                <tr key={item._id}>
-                  <td>{item.name}</td>
-                  <td>
-                    <div className='d-flex align-items-center justify-content-center'>
-                      <Button
-                        className='bg-transparent py-0 px-1'
-                        onClick={() => dispatch(removeItem(item, userId))}
-                      >
-                        <AiOutlineMinus className='text-dark' />
-                      </Button>
-
-                      <span className='mx-1 fw-bold'>{item.qty}</span>
-
-                      <Button
-                        className='bg-transparent py-0 px-1'
-                        onClick={() => dispatch(addItem(item, userId))}
-                      >
-                        <AiOutlinePlus className='text-dark' />
-                      </Button>
-                    </div>
-                  </td>
-                  <td className='fw-bold text-end'>{rupiah.convert(subTotal(item.price, item.qty))}</td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
-      </div>
-
-      <div className='m-3'>
-        <div className='d-flex justify-content-between mb-3'>
-          <p className='align-self-center m-0 text-uppercase'>sub total:</p>
-
-          <p className='m-0 fw-bold fs-4'>{rupiah.convert(total(cartItems))}</p>
-        </div>
-
-        <Button
-          className='w-100 text-white fw-semibold text-uppercase'
-          onClick={() => handleCheckout()}
-        >
-          checkout
-        </Button>
-      </div>
+      <Button className='bg-transparent border-0 m-0 fs-4'>
+        <AiOutlineClose onClick={() => setTrigger(false)} />
+      </Button>
     </div>
-  )
-}
+
+    {cartItems?.length > 0 ? (
+      <Filled
+        cartItems={cartItems}
+        handleCheckout={handleCheckout}
+      />
+    ) : (
+      <Empty emptyCart={emptyCart} />
+    )}
+  </div>
+)
 
 export default Cart

@@ -1,3 +1,3 @@
-import Sidebar from './Sidebar'
+import Cart from './Cart'
 
-export default Sidebar
+export default Cart
