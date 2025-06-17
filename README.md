@@ -1,4 +1,4 @@
-# 🍽️ Foodstore
+# Foodstore
 **Foodstore** is a simple e-commerce web application designed for food ordering. Built as a portfolio project, this platform allows users to browse products, place orders, track their order status, and manage shipping addresses. Admins can manage products, categories, and tags, making it a complete small-scale food store management system.
 
 ## ✨ Features
