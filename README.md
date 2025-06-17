@@ -69,17 +69,21 @@ npm run dev
   <summary>A glimpse of screenshots of the apps</summary>
 
   ### Home page
-  ![home](https://github.com/ablahum/bumi-kahuripan/blob/main/public/assets/register.png)
+  ![home](https://github.com/ablahum/foodstore/blob/main/public/assets/home.png)
+  ![cart](https://github.com/ablahum/foodstore/blob/main/public/assets/cart.png)
   ### Profile page
-  ![profile](https://github.com/ablahum/bumi-kahuripan/blob/main/public/assets/dashboard.png)
+  ![profile](https://github.com/ablahum/foodstore/blob/main/public/assets/profile.png)
   ### Checkout page
-  ![checkout](https://github.com/ablahum/bumi-kahuripan/blob/main/public/assets/settings.png)
-  ### Manage products
-  ![products](https://github.com/ablahum/bumi-kahuripan/blob/main/public/assets/orders.png)
-  ### Manage categories
-  ![categories](https://github.com/ablahum/bumi-kahuripan/blob/main/public/assets/form.png)
-  ### Manage tags
-  ![tags](https://github.com/ablahum/bumi-kahuripan/blob/main/public/assets/settings.png)
+  ![checkout](https://github.com/ablahum/foodstore/blob/main/public/assets/checkout.png)
+  ![checkout-modal](https://github.com/ablahum/foodstore/blob/main/public/assets/checkout-modal.png)
+  ### Invoice page
+  ![profile](https://github.com/ablahum/foodstore/blob/main/public/assets/invoice.png)
+  ### Order history page
+  ![profile](https://github.com/ablahum/foodstore/blob/main/public/assets/order-history.png)
+  ### Login page
+  ![profile](https://github.com/ablahum/foodstore/blob/main/public/assets/login.png)
+  ### Register page
+  ![profile](https://github.com/ablahum/foodstore/blob/main/public/assets/register.png)
 </details>
 
 ## 📌 Notes
